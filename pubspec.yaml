@@ -1,4 +1,4 @@
-name: sizzle_starter
+name: test_bro
 description: >
   Highly scalable Flutter starter kit, designed with an optimal predefined structure 
   and inclusive of libraries that are widely applicable in numerous use cases.
@@ -50,7 +50,7 @@ dependencies:
   path: ^1.8.3
   path_provider: ^2.1.0
   mocktail: ^1.0.1
-  
+
 dev_dependencies:
   # Testing
   flutter_test:

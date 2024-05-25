@@ -1,6 +1,6 @@
 import 'dart:ui';
 
-import 'package:sizzle_starter/src/feature/settings/data/locale_datasource.dart';
+import 'package:test_bro/src/feature/settings/data/locale_datasource.dart';
 
 /// Repository that manages locale information
 abstract interface class LocaleRepository {

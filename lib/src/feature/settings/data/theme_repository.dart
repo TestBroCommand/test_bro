@@ -1,5 +1,5 @@
-import 'package:sizzle_starter/src/feature/app/model/app_theme.dart';
-import 'package:sizzle_starter/src/feature/settings/data/theme_datasource.dart';
+import 'package:test_bro/src/feature/app/model/app_theme.dart';
+import 'package:test_bro/src/feature/settings/data/theme_datasource.dart';
 
 /// Theme repository that persists and retrieves theme information
 abstract interface class ThemeRepository {

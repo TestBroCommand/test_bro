@@ -1,14 +1,14 @@
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:sizzle_starter/src/core/constant/config.dart';
-import 'package:sizzle_starter/src/core/utils/logger.dart';
-import 'package:sizzle_starter/src/feature/app/logic/tracking_manager.dart';
-import 'package:sizzle_starter/src/feature/initialization/model/dependencies.dart';
-import 'package:sizzle_starter/src/feature/settings/bloc/settings_bloc.dart';
-import 'package:sizzle_starter/src/feature/settings/data/locale_datasource.dart';
-import 'package:sizzle_starter/src/feature/settings/data/locale_repository.dart';
-import 'package:sizzle_starter/src/feature/settings/data/theme_datasource.dart';
-import 'package:sizzle_starter/src/feature/settings/data/theme_mode_codec.dart';
-import 'package:sizzle_starter/src/feature/settings/data/theme_repository.dart';
+import 'package:test_bro/src/core/constant/config.dart';
+import 'package:test_bro/src/core/utils/logger.dart';
+import 'package:test_bro/src/feature/app/logic/tracking_manager.dart';
+import 'package:test_bro/src/feature/initialization/model/dependencies.dart';
+import 'package:test_bro/src/feature/settings/bloc/settings_bloc.dart';
+import 'package:test_bro/src/feature/settings/data/locale_datasource.dart';
+import 'package:test_bro/src/feature/settings/data/locale_repository.dart';
+import 'package:test_bro/src/feature/settings/data/theme_datasource.dart';
+import 'package:test_bro/src/feature/settings/data/theme_mode_codec.dart';
+import 'package:test_bro/src/feature/settings/data/theme_repository.dart';
 
 /// {@template composition_root}
 /// A place where all dependencies are initialized.
