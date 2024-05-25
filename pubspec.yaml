@@ -64,7 +64,7 @@ dev_dependencies:
   flutter_launcher_icons: ^0.13.1
   flutter_native_splash: ^2.3.5
   tg_miniapp_ui:
-    path: ../tg_miniapp_ui
+    path: tg_miniapp_ui
 
   # Codegen
   drift_dev: ^2.13.1
