@@ -40,6 +40,7 @@ final class AppRunner {
     Future<void> initializeAndRun() async {
       try {
         final result = await initializationProcessor.compose();
+        
         // Attach this widget to the root of the tree.
         runApp(
           kDebugMode

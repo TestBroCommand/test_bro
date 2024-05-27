@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:test_bro/src/core/constant/localization/localization.dart';
 import 'package:test_bro/src/core/utils/extensions/context_extension.dart';
 import 'package:test_bro/src/feature/app/model/app_theme.dart';
+import 'package:test_bro/src/feature/home/bloc/home_bloc.dart';
 import 'package:test_bro/src/feature/settings/bloc/settings_bloc.dart';
 
 /// {@template theme_scope_controller}
@@ -34,7 +35,10 @@ abstract interface class LocaleScopeController {
 /// A controller that holds and operates the app settings.
 /// {@endtemplate}
 abstract interface class SettingsScopeController
-    implements ThemeScopeController, LocaleScopeController {}
+    implements ThemeScopeController, LocaleScopeController {
+  /// Get the [HomeBloc].
+  HomeBloc get homeBloc;
+}
 
 enum _SettingsScopeAspect {
   /// The theme aspect.
@@ -57,6 +61,7 @@ class SettingsScope extends StatefulWidget {
   const SettingsScope({
     required this.child,
     required this.settingsBloc,
+    required this.homeBloc,
     super.key,
   });
 
@@ -65,6 +70,9 @@ class SettingsScope extends StatefulWidget {
 
   /// The [SettingsBloc] instance.
   final SettingsBloc settingsBloc;
+
+  /// The [SettingsBloc] instance.
+  final HomeBloc homeBloc;
 
   /// Get the [SettingsScopeController] of the closest [SettingsScope] ancestor.
   static SettingsScopeController of(
@@ -122,13 +130,19 @@ class _SettingsScopeState extends State<SettingsScope>
       widget.settingsBloc.state.appTheme ?? AppTheme.defaultTheme;
 
   @override
+  HomeBloc get homeBloc => widget.homeBloc;
+
+  @override
   Widget build(BuildContext context) =>
       BlocBuilder<SettingsBloc, SettingsState>(
         bloc: widget.settingsBloc,
         builder: (context, state) => _InheritedSettingsScope(
           controller: this,
           state: state,
-          child: widget.child,
+          child: BlocProvider<HomeBloc>.value(
+            value: widget.homeBloc,
+            child: widget.child,
+          ),
         ),
       );
 }
