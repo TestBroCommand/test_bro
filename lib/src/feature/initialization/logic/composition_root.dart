@@ -2,6 +2,10 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:test_bro/src/core/constant/config.dart';
 import 'package:test_bro/src/core/utils/logger.dart';
 import 'package:test_bro/src/feature/app/logic/tracking_manager.dart';
+import 'package:test_bro/src/feature/home/bloc/home_bloc.dart';
+import 'package:test_bro/src/feature/home/data/data_source/pb_dataSource.dart';
+import 'package:test_bro/src/feature/home/data/repository/pb_repository.dart';
+import 'package:test_bro/src/feature/home/data/repository/pb_repositoryImpl.dart';
 import 'package:test_bro/src/feature/initialization/model/dependencies.dart';
 import 'package:test_bro/src/feature/settings/bloc/settings_bloc.dart';
 import 'package:test_bro/src/feature/settings/data/locale_datasource.dart';
@@ -49,11 +53,22 @@ final class CompositionRoot {
     final errorTrackingManager = await _initErrorTrackingManager();
     final sharedPreferences = await SharedPreferences.getInstance();
     final settingsBloc = await _initSettingsBloc(sharedPreferences);
-
+    final homeBloc = await _initHomeBloc();
     return Dependencies(
       settingsBloc: settingsBloc,
       errorTrackingManager: errorTrackingManager,
+      homeBloc: homeBloc,
     );
+  }
+
+  Future<PBrepository> _initPBRepository() async {
+    final dataSource = PBdataSource();
+    return PBrepositoryImpl(dataSource: dataSource);
+  }
+
+  Future<HomeBloc> _initHomeBloc() async {
+    final pbRepository = await _initPBRepository();
+    return HomeBloc(pbRepository);
   }
 
   Future<ErrorTrackingManager> _initErrorTrackingManager() async {

@@ -26,6 +26,7 @@ class App extends StatelessWidget {
           dependencies: result.dependencies,
           child: SettingsScope(
             settingsBloc: result.dependencies.settingsBloc,
+            homeBloc: result.dependencies.homeBloc,
             child: const MaterialContext(),
           ),
         ),
