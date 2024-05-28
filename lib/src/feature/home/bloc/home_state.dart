@@ -13,12 +13,12 @@ final class HomeInitial extends HomeState {}
 final class HomeLoading extends HomeState {}
 
 final class HomeLoaded extends HomeState {
-  final List<Quiz> quizes;
+  final List<QuizEntity> quizzes;
 
-  const HomeLoaded(this.quizes);
+  const HomeLoaded(this.quizzes);
 
   @override
-  List<Object> get props => [quizes];
+  List<Object> get props => [quizzes];
 }
 
 final class HomeFailure extends HomeState {
