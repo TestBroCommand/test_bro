@@ -1,19 +1,17 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
+// ignore_for_file: public_member_api_docs
+
 import 'package:equatable/equatable.dart';
-import 'package:flutter/material.dart';
+import 'package:test_bro/src/feature/home/model/DTOs/quiz_DTO.dart';
 
-import 'package:test_bro/src/feature/home/model/entities/final_page_entitiy.dart';
-import 'package:test_bro/src/feature/home/model/entities/quiz_page_entity.dart';
-import 'package:test_bro/src/feature/home/model/entities/start_page_entitiy.dart';
-
-class Quiz extends Equatable {
+class QuizEntity extends Equatable {
   final String title;
   final int takers;
-  final List<QuizPage> pages;
-  final Image image;
-  final StartQuizPage startPage;
-  final FinalQuizPage finalPage;
-  const Quiz({
+  final List<String> pages;
+  final String image;
+  final List<String> startPage;
+  final List<String> finalPage;
+
+  const QuizEntity({
     required this.title,
     required this.takers,
     required this.pages,
@@ -27,23 +25,34 @@ class Quiz extends Equatable {
         title,
         takers,
         pages,
+        image,
         startPage,
         finalPage,
       ];
 
-  Quiz copyWith({
+  QuizEntity copyWith({
     String? title,
     int? takers,
-    List<QuizPage>? pages,
-    Image? image,
-    StartQuizPage? startPage,
-    FinalQuizPage? finalPage,
-  }) => Quiz(
-      title: title ?? this.title,
-      takers: takers ?? this.takers,
-      pages: pages ?? this.pages,
-      image: image ?? this.image,
-      startPage: startPage ?? this.startPage,
-      finalPage: finalPage ?? this.finalPage,
-    );
+    List<String>? pages,
+    String? image,
+    List<String>? startPage,
+    List<String>? finalPage,
+  }) =>
+      QuizEntity(
+        title: title ?? this.title,
+        takers: takers ?? this.takers,
+        pages: pages ?? this.pages,
+        image: image ?? this.image,
+        startPage: startPage ?? this.startPage,
+        finalPage: finalPage ?? this.finalPage,
+      );
+
+  factory QuizEntity.fromDto(QuizDTO dto) => QuizEntity(
+        title: dto.name ?? '',
+        takers: dto.complete ?? 0,
+        pages: dto.pages ?? [],
+        image: dto.image ?? '',
+        startPage: dto.startPage != null ? [dto.startPage!] : [],
+        finalPage: dto.finalPage ?? [],
+      );
 }

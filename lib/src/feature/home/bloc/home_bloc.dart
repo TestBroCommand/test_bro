@@ -16,8 +16,8 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   Future<void> _loadData(LoadDataEvent event, Emitter<HomeState> emit) async {
     emit(HomeLoading());
     try {
-      final quizes = await repository.getAllQuizes();
-      emit(HomeLoaded(quizes));
+      final quizzes = await repository.getAllQuizzes();
+      emit(HomeLoaded(quizzes));
     } catch (e) {
       emit(HomeFailure(e));
     }

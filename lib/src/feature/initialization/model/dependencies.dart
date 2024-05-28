@@ -1,6 +1,5 @@
 import 'package:test_bro/src/feature/app/logic/tracking_manager.dart';
 import 'package:test_bro/src/feature/home/bloc/home_bloc.dart';
-import 'package:test_bro/src/feature/home/data/repository/pb_repository.dart';
 import 'package:test_bro/src/feature/initialization/logic/composition_root.dart';
 import 'package:test_bro/src/feature/settings/bloc/settings_bloc.dart';
 

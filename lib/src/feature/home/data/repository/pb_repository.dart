@@ -1,5 +1,5 @@
 import 'package:test_bro/src/feature/home/model/entities/quiz_entity.dart';
 
 abstract interface class PBrepository {
-  Future<List<Quiz>> getAllQuizes();
+  Future<List<QuizEntity>> getAllQuizzes();
 }
