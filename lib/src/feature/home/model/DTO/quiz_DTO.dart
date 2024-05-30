@@ -17,8 +17,7 @@ class QuizDTO{
     this.finalPage,
   });
 
-  factory QuizDTO.fromJson(Map<String, dynamic> json) {
-    return QuizDTO(
+  factory QuizDTO.fromJson(Map<String, dynamic> json) => QuizDTO(
       id: json['id'] as String?,
       name: json['name'] as String?,
       image: json['image'] as String?,
@@ -27,10 +26,8 @@ class QuizDTO{
       startPage: json['start_page'] as String?,
       finalPage: (json['final_page'] as List<dynamic>?)?.cast<String>(),
     );
-  }
 
-  Map<String, dynamic> toJson() {
-    return {
+  Map<String, dynamic> toJson() => {
       'id': id,
       'name': name,
       'image': image,
@@ -39,5 +36,4 @@ class QuizDTO{
       'start_page': startPage,
       'final_page': finalPage,
     };
-  }
 }

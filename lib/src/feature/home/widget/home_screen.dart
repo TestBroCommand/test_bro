@@ -15,7 +15,6 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final windowWidth = MediaQuery.sizeOf(context).width;
     return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.surface,
       body: SafeArea(
         child: BlocBuilder<HomeBloc, HomeState>(
           builder: (context, state) {

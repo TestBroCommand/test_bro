@@ -1,7 +1,7 @@
 // ignore_for_file: public_member_api_docs
 
 import 'package:equatable/equatable.dart';
-import 'package:test_bro/src/feature/home/model/DTOs/quiz_DTO.dart';
+import 'package:test_bro/src/feature/home/model/DTO/quiz_DTO.dart';
 
 class QuizEntity extends Equatable {
   final String title;

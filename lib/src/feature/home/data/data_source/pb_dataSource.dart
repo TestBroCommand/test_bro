@@ -1,10 +1,10 @@
 import 'package:pocketbase/pocketbase.dart';
 import 'package:test_bro/src/core/constant/config.dart';
-import 'package:test_bro/src/feature/home/model/DTOs/quiz_DTO.dart';
+import 'package:test_bro/src/feature/home/model/DTO/quiz_DTO.dart';
 
 class PBdataSource {
   Future<List<QuizDTO>> getAllQuizes() async {
-    final config = Config();
+    const config = Config();
     final pb = PocketBase('https://testbro.pockethost.io');
     await pb.admins.authWithPassword(
       config.pbEmail,

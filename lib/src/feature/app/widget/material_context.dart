@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:test_bro/src/core/constant/localization/localization.dart';
+import 'package:test_bro/src/core/utils/layout/detect_platform.dart';
 import 'package:test_bro/src/feature/home/widget/home_screen.dart';
 import 'package:test_bro/src/feature/settings/widget/settings_scope.dart';
+import 'package:tg_miniapp_ui/src/tg_miniapp_ui.dart';
 
 /// {@template material_context}
 /// [MaterialContext] is an entry point to the material context.
@@ -22,8 +24,8 @@ class MaterialContext extends StatelessWidget {
     final locale = SettingsScope.localeOf(context).locale;
 
     return MaterialApp(
-      theme: theme.lightTheme,
-      darkTheme: theme.darkTheme,
+      theme: isCupertino(context) ? lightIos : lightAndroid,
+      darkTheme: isCupertino(context) ? darkIos : darkAndroid,
       themeMode: theme.mode,
       localizationsDelegates: Localization.localizationDelegates,
       supportedLocales: Localization.supportedLocales,
