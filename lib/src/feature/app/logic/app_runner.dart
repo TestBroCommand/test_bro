@@ -1,6 +1,8 @@
 import 'dart:async';
 
 import 'package:bloc_concurrency/bloc_concurrency.dart' as bloc_concurrency;
+import 'package:device_sim/device_sim.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:test_bro/src/core/constant/config.dart';
@@ -38,8 +40,15 @@ final class AppRunner {
     Future<void> initializeAndRun() async {
       try {
         final result = await initializationProcessor.compose();
+        
         // Attach this widget to the root of the tree.
-        runApp(App(result: result));
+        runApp(
+          kDebugMode
+              ? DeviceSim(
+                  builder: (context) => App(result: result),
+                )
+              : App(result: result),
+        );
       } catch (e, stackTrace) {
         logger.error('Initialization failed', error: e, stackTrace: stackTrace);
         runApp(
