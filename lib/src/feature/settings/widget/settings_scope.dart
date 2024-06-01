@@ -4,6 +4,7 @@ import 'package:test_bro/src/core/constant/localization/localization.dart';
 import 'package:test_bro/src/core/utils/extensions/context_extension.dart';
 import 'package:test_bro/src/feature/app/model/app_theme.dart';
 import 'package:test_bro/src/feature/home/bloc/home_bloc.dart';
+import 'package:test_bro/src/feature/quize/bloc/quize_bloc.dart';
 import 'package:test_bro/src/feature/settings/bloc/settings_bloc.dart';
 
 /// {@template theme_scope_controller}
@@ -38,6 +39,7 @@ abstract interface class SettingsScopeController
     implements ThemeScopeController, LocaleScopeController {
   /// Get the [HomeBloc].
   HomeBloc get homeBloc;
+  QuizBloc get quizBloc;
 }
 
 enum _SettingsScopeAspect {
@@ -62,6 +64,7 @@ class SettingsScope extends StatefulWidget {
     required this.child,
     required this.settingsBloc,
     required this.homeBloc,
+    required this.quizBloc,
     super.key,
   });
 
@@ -73,6 +76,8 @@ class SettingsScope extends StatefulWidget {
 
   /// The [SettingsBloc] instance.
   final HomeBloc homeBloc;
+
+  final QuizBloc quizBloc;
 
   /// Get the [SettingsScopeController] of the closest [SettingsScope] ancestor.
   static SettingsScopeController of(
@@ -141,10 +146,17 @@ class _SettingsScopeState extends State<SettingsScope>
           state: state,
           child: BlocProvider<HomeBloc>.value(
             value: widget.homeBloc,
-            child: widget.child,
+            child: BlocProvider<QuizBloc>.value(
+              value: widget.quizBloc,
+              child: widget.child,
+            ),
           ),
         ),
       );
+
+  @override
+  // TODO: implement quizBloc
+  QuizBloc get quizBloc => widget.quizBloc;
 }
 
 class _InheritedSettingsScope extends InheritedModel<_SettingsScopeAspect> {

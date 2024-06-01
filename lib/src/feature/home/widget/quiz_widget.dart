@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:test_bro/src/core/utils/logger.dart';
 import 'package:test_bro/src/feature/home/model/entities/quiz_entity.dart';
 
 /// Widget for display quiz card in main screen
@@ -15,7 +17,17 @@ class QuizWidget extends StatelessWidget {
           final double height = constraints.maxHeight;
           final double cardHeight = height * 0.3;
           return GestureDetector(
-            onTap: () {},
+            onTap: () {
+              logger.info("${currentQuiz.startPage} Router");
+              context.pushNamed(
+                "quiz",
+                pathParameters: {
+                  "startPage": currentQuiz.startPage[0],
+                  "pages": currentQuiz.finalPage.join(":"),
+                  "resultPage": currentQuiz.pages.join(":"),
+                },
+              );
+            },
             child: Card(
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 15),
