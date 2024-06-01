@@ -1,3 +1,4 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:preload_page_view/preload_page_view.dart';
 
@@ -26,6 +27,7 @@ class QuestionPage extends StatefulWidget {
 class _QuestionPageState extends State<QuestionPage> {
   bool answerChecker = false;
 
+  // ignore: avoid_positional_boolean_parameters
   void updateAnswerChecker(bool value) {
     setState(() {
       answerChecker = value;
@@ -84,15 +86,16 @@ class _QuestionPageState extends State<QuestionPage> {
               onAnswerSelected: updateAnswerChecker,
             ),
             const SizedBox(height: 20),
-            answerChecker
-                ? ElevatedButton(
-                    onPressed: () => widget.pageController.nextPage(
-                      duration: const Duration(milliseconds: 300),
-                      curve: Curves.easeInOut,
-                    ),
-                    child: Text('Дальше'),
-                  )
-                : Container(),
+            if (answerChecker)
+              ElevatedButton(
+                onPressed: () => widget.pageController.nextPage(
+                  duration: const Duration(milliseconds: 300),
+                  curve: Curves.easeInOut,
+                ),
+                child: const Text('Дальше'),
+              )
+            else
+              Container(),
           ],
         ),
       );
@@ -100,12 +103,13 @@ class _QuestionPageState extends State<QuestionPage> {
 
 class QuestionPageCheckBox extends StatefulWidget {
   final Map<int, String> answers;
+  // ignore: inference_failure_on_function_return_type, avoid_positional_boolean_parameters
   final Function(bool) onAnswerSelected;
 
-  QuestionPageCheckBox({
+  const QuestionPageCheckBox({
+    super.key,
     required this.answers,
     required this.onAnswerSelected,
-    super.key,
   });
 
   @override
