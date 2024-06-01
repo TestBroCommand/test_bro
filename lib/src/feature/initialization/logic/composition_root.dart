@@ -7,6 +7,13 @@ import 'package:test_bro/src/feature/home/data/data_source/pb_dataSource.dart';
 import 'package:test_bro/src/feature/home/data/repository/pb_repository.dart';
 import 'package:test_bro/src/feature/home/data/repository/pb_repositoryImpl.dart';
 import 'package:test_bro/src/feature/initialization/model/dependencies.dart';
+import 'package:test_bro/src/feature/quize/bloc/quize_bloc.dart';
+import 'package:test_bro/src/feature/quize/data/data_source/pb_dataSource.dart'
+    as quiz;
+import 'package:test_bro/src/feature/quize/data/repository/pb_repositoryImpl.dart'
+    as quizRepoImpl;
+import 'package:test_bro/src/feature/quize/data/repository/pb_respository.dart'
+    as quizRepository;
 import 'package:test_bro/src/feature/settings/bloc/settings_bloc.dart';
 import 'package:test_bro/src/feature/settings/data/locale_datasource.dart';
 import 'package:test_bro/src/feature/settings/data/locale_repository.dart';
@@ -54,10 +61,12 @@ final class CompositionRoot {
     final sharedPreferences = await SharedPreferences.getInstance();
     final settingsBloc = await _initSettingsBloc(sharedPreferences);
     final homeBloc = await _initHomeBloc();
+    final quizBloc = await _initQuizBloc();
     return Dependencies(
       settingsBloc: settingsBloc,
       errorTrackingManager: errorTrackingManager,
       homeBloc: homeBloc,
+      quizBloc: quizBloc,
     );
   }
 
@@ -66,9 +75,19 @@ final class CompositionRoot {
     return PBrepositoryImpl(dataSource: dataSource);
   }
 
+  Future<quizRepository.PBrepository> _initPBRepositoryQuiz() async {
+    final dataSource = quiz.PBdataSource();
+    return quizRepoImpl.PBrepositoryImpl(dataSource: dataSource);
+  }
+
   Future<HomeBloc> _initHomeBloc() async {
     final pbRepository = await _initPBRepository();
     return HomeBloc(pbRepository);
+  }
+
+  Future<QuizBloc> _initQuizBloc() async {
+    final pbRepository = await _initPBRepositoryQuiz();
+    return QuizBloc(pbRepository);
   }
 
   Future<ErrorTrackingManager> _initErrorTrackingManager() async {

@@ -15,7 +15,6 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final windowWidth = MediaQuery.sizeOf(context).width;
     return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.surface,
       body: SafeArea(
         child: BlocBuilder<HomeBloc, HomeState>(
           builder: (context, state) {
@@ -45,7 +44,9 @@ class HomeScreen extends StatelessWidget {
                           itemCount: state.quizzes.length,
                           itemBuilder: (context, index) {
                             final currentQuiz = state.quizzes[index];
-                            return QuizWidget(currentQuiz: currentQuiz);
+                            return QuizWidget(
+                              currentQuiz: currentQuiz,
+                            );
                           },
                         ),
                       ),

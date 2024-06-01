@@ -1,6 +1,7 @@
 import 'package:test_bro/src/feature/app/logic/tracking_manager.dart';
 import 'package:test_bro/src/feature/home/bloc/home_bloc.dart';
 import 'package:test_bro/src/feature/initialization/logic/composition_root.dart';
+import 'package:test_bro/src/feature/quize/bloc/quize_bloc.dart';
 import 'package:test_bro/src/feature/settings/bloc/settings_bloc.dart';
 
 /// {@template dependencies}
@@ -10,12 +11,13 @@ import 'package:test_bro/src/feature/settings/bloc/settings_bloc.dart';
 ///
 /// {@macro composition_process}
 /// {@endtemplate}
- base class Dependencies {
+base class Dependencies {
   /// {@macro dependencies}
   const Dependencies({
     required this.settingsBloc,
     required this.errorTrackingManager,
     required this.homeBloc,
+    required this.quizBloc,
   });
 
   /// [SettingsBloc] instance, used to manage theme and locale.
@@ -23,10 +25,10 @@ import 'package:test_bro/src/feature/settings/bloc/settings_bloc.dart';
 
   /// [HomeBloc] instance, used to manage home feature.
   final HomeBloc homeBloc;
+  final QuizBloc quizBloc;
 
   /// [ErrorTrackingManager] instance, used to report errors.
   final ErrorTrackingManager errorTrackingManager;
-
 }
 
 /// {@template composition_result}
