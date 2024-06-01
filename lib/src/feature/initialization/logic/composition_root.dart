@@ -71,7 +71,6 @@ final class CompositionRoot {
   }
 
   Future<PBrepository> _initPBRepository() async {
-    logger.info("Initializing PB repository...");
     final dataSource = PBdataSource();
     return PBrepositoryImpl(dataSource: dataSource);
   }

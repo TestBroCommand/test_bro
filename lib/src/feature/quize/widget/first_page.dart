@@ -4,8 +4,12 @@ class FirstPageQuiz extends StatelessWidget {
   final String image;
   final String name;
   final String description;
-  const FirstPageQuiz(
-      {required this.image, required this.name, required this.description, super.key,});
+  const FirstPageQuiz({
+    required this.image,
+    required this.name,
+    required this.description,
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) => Scaffold(
@@ -18,7 +22,7 @@ class FirstPageQuiz extends StatelessWidget {
                 height: 225,
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(20),
-                  child: Image.asset(
+                  child: Image.network(
                     image,
                     fit: BoxFit.fill,
                   ),
@@ -30,7 +34,8 @@ class FirstPageQuiz extends StatelessWidget {
               child: Text(
                 name,
                 textAlign: TextAlign.center,
-                style: const TextStyle(fontSize: 35, fontWeight: FontWeight.bold),
+                style:
+                    const TextStyle(fontSize: 35, fontWeight: FontWeight.bold),
               ),
             ),
             Padding(

@@ -23,8 +23,8 @@ class QuizWidget extends StatelessWidget {
                 "quiz",
                 pathParameters: {
                   "startPage": currentQuiz.startPage[0],
-                  "pages": currentQuiz.finalPage.join(":"),
-                  "resultPage": currentQuiz.pages.join(":"),
+                  "pages": currentQuiz.pages.join(":"),
+                  "resultPage": currentQuiz.finalPage.join(":"),
                 },
               );
             },
@@ -34,7 +34,14 @@ class QuizWidget extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    SizedBox(height: cardHeight * 1),
+                    //SizedBox(height: cardHeight * 1),
+                    Image.network(
+                      height: 80,
+                      width: 100,
+                      fit: BoxFit.fill,
+                      "https://testbro.pockethost.io/api/files/quizes/" +
+                          "${currentQuiz.id.toString()}/${currentQuiz.image}",
+                    ),
                     Row(
                       children: [
                         Text(currentQuiz.takers.toString()),

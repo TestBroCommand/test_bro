@@ -4,6 +4,7 @@ import 'package:equatable/equatable.dart';
 import 'package:test_bro/src/feature/home/model/DTO/quiz_DTO.dart';
 
 class QuizEntity extends Equatable {
+  final String id;
   final String title;
   final int takers;
   final List<String> pages;
@@ -18,10 +19,12 @@ class QuizEntity extends Equatable {
     required this.image,
     required this.startPage,
     required this.finalPage,
+    required this.id,
   });
 
   @override
   List<Object?> get props => [
+        id,
         title,
         takers,
         pages,
@@ -31,6 +34,7 @@ class QuizEntity extends Equatable {
       ];
 
   QuizEntity copyWith({
+    String? id,
     String? title,
     int? takers,
     List<String>? pages,
@@ -39,6 +43,7 @@ class QuizEntity extends Equatable {
     List<String>? finalPage,
   }) =>
       QuizEntity(
+        id: id ?? this.id,
         title: title ?? this.title,
         takers: takers ?? this.takers,
         pages: pages ?? this.pages,
@@ -48,6 +53,7 @@ class QuizEntity extends Equatable {
       );
 
   factory QuizEntity.fromDto(QuizDTO dto) => QuizEntity(
+        id: dto.id ?? '',
         title: dto.name ?? '',
         takers: dto.complete ?? 0,
         pages: dto.pages ?? [],

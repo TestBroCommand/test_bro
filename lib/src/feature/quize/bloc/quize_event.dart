@@ -13,3 +13,7 @@ class LoadDataEvent extends QuizEvent {
     required this.pagesId,
   });
 }
+
+class ResetStateEvent extends QuizEvent {
+  ResetStateEvent();
+}

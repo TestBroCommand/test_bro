@@ -1,6 +1,5 @@
 import 'package:pocketbase/pocketbase.dart';
 import 'package:test_bro/src/core/constant/config.dart';
-import 'package:test_bro/src/core/utils/logger.dart';
 import 'package:test_bro/src/feature/quize/model/DTO/page_DTO.dart';
 import 'package:test_bro/src/feature/quize/model/DTO/result_DTO.dart';
 import 'package:test_bro/src/feature/quize/model/DTO/start_DTO.dart';
@@ -13,10 +12,7 @@ class PBdataSource {
       config.pbEmail,
       config.pbPass,
     );
-    logger.info(id);
-    logger.info("Wow this work");
     final RecordModel response = await pb.collection('start_pages').getOne(id);
-    logger.info(response.collectionName);
     final startDTO = StartDTO.fromJson(response.toJson());
     return startDTO;
   }
@@ -43,11 +39,12 @@ class PBdataSource {
       config.pbEmail,
       config.pbPass,
     );
-    final ResultList<RecordModel> response =
-        await pb.collection('quiz_page').getList(expand: id.join(","));
-    final pageDTO = response.items
-        .map((record) => PageDTO.fromJson(record.toJson()))
-        .toList();
+    final List<RecordModel> response = List<RecordModel>.empty(growable: true);
+    for (int i = 0; i < id.length; i++) {
+      response.add(await pb.collection('quiz_page').getOne(id[i]));
+    }
+    final pageDTO =
+        response.map((record) => PageDTO.fromJson(record.toJson())).toList();
     return pageDTO;
   }
 }

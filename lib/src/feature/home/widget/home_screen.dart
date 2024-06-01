@@ -44,7 +44,9 @@ class HomeScreen extends StatelessWidget {
                           itemCount: state.quizzes.length,
                           itemBuilder: (context, index) {
                             final currentQuiz = state.quizzes[index];
-                            return QuizWidget(currentQuiz: currentQuiz);
+                            return QuizWidget(
+                              currentQuiz: currentQuiz,
+                            );
                           },
                         ),
                       ),
