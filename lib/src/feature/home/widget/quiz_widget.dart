@@ -26,6 +26,7 @@ class QuizWidget extends StatelessWidget {
                   "pages": currentQuiz.pages.join(":"),
                   "resultPage": currentQuiz.finalPage.join(":"),
                 },
+                
               );
             },
             child: Card(

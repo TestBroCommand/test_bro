@@ -40,7 +40,7 @@ final class AppTheme with Diagnosticable {
 
   /// The [ThemeData] for this [AppTheme].
   /// This is computed based on the [mode].
-  ThemeData computeTheme() {
+  ThemeData computeTheme() {  
     switch (mode) {
       case ThemeMode.light:
         return lightTheme;

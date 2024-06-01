@@ -9,7 +9,7 @@ import 'package:test_bro/src/feature/quize/widget/final_page.dart';
 import 'package:test_bro/src/feature/quize/widget/first_page.dart';
 import 'package:test_bro/src/feature/quize/widget/question_page.dart';
 
-class QuizScreen extends StatelessWidget {
+class QuizScreen extends StatefulWidget {
   final String startPage;
   final List<String> resultPage;
   final List<String> pages;
@@ -21,44 +21,56 @@ class QuizScreen extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) => BlocBuilder<QuizBloc, QuizState>(
-        builder: (context, state) {
-          final PreloadPageController _pageController = PreloadPageController();
-          //    logger.info(startPage + " Quiz result");
-          //   context.read<QuizBloc>().add(ResetStateEvent());
-          _loadData(context);
-          if (state is QuizLoading) {
-            return const Center(child: CircularProgressIndicator());
-          } else if (state is QuizFailure) {
-            return const Center(child: Text("ferg"));
-          } else if (state is QuizLoaded) {
-            print(pages);
-            final StartEntity startEntity = state.props[0] as StartEntity;
-            final FinalEntity finalEntity =
-                (state.props[1] as List<FinalEntity>)[0];
-            final List<PageEntity> pageEntities =
-                state.props[2] as List<PageEntity>;
-            return PreloadPageView(
-              controller: _pageController,
-              children: _buildPages(
-                context: context,
-                startEntity: startEntity,
-                pageEntities: pageEntities,
-                pageController: _pageController,
-                finalEntity: finalEntity,
-              ),
-            );
-          }
-          return Container();
-        },
+  State<QuizScreen> createState() => _QuizScreenState();
+}
+
+class _QuizScreenState extends State<QuizScreen> {
+  @override
+  void initState() {
+    _loadData(context);
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) => Scaffold(
+        body: BlocBuilder<QuizBloc, QuizState>(
+          builder: (context, state) {
+            final PreloadPageController _pageController =
+                PreloadPageController();
+            //    logger.info(startPage + " Quiz result");
+            //   context.read<QuizBloc>().add(ResetStateEvent());
+            if (state is QuizLoading) {
+              return const Center(child: CircularProgressIndicator());
+            } else if (state is QuizFailure) {
+              return const Center(child: Text("ferg"));
+            } else if (state is QuizLoaded) {
+              final StartEntity startEntity = state.props[0] as StartEntity;
+              final FinalEntity finalEntity =
+                  (state.props[1] as List<FinalEntity>)[0];
+              final List<PageEntity> pageEntities =
+                  state.props[2] as List<PageEntity>;
+              return PreloadPageView(
+                controller: _pageController,
+                children: _buildPages(
+                  context: context,
+                  startEntity: startEntity,
+                  pageEntities: pageEntities,
+                  pageController: _pageController,
+                  finalEntity: finalEntity,
+                ),
+              );
+            }
+            return Container();
+          },
+        ),
       );
 
   void _loadData(BuildContext context) {
     context.read<QuizBloc>().add(
           LoadDataEvent(
-            startPageId: startPage,
-            finalPageId: resultPage,
-            pagesId: pages,
+            startPageId: widget.startPage,
+            finalPageId: widget.resultPage,
+            pagesId: widget.pages,
           ),
         );
   }

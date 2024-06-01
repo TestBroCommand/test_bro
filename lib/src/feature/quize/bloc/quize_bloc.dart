@@ -1,4 +1,3 @@
-
 import 'package:equatable/equatable.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -33,7 +32,7 @@ class QuizBloc extends Bloc<QuizEvent, QuizState> {
     ResetStateEvent event,
     Emitter<QuizState> emit,
   ) async {
-    emit(QuizInitial());
+    emit(QuizLoading());
   }
 
   Future<void> _loadData(LoadDataEvent event, Emitter<QuizState> emit) async {
