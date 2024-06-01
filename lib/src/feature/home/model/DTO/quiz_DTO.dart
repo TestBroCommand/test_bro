@@ -1,3 +1,4 @@
+/// Quiz Data Transfer Object from database
 class QuizDTO{
   final String? id;
   final String? name;

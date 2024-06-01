@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:preload_page_view/preload_page_view.dart';
 
 class FirstPageQuiz extends StatelessWidget {
   final String image;
   final String name;
   final String description;
+  final PreloadPageController pageController;
   const FirstPageQuiz({
     required this.image,
     required this.name,
     required this.description,
+    required this.pageController,
     super.key,
   });
 
@@ -57,7 +60,12 @@ class FirstPageQuiz extends StatelessWidget {
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  onPressed: () {},
+                  onPressed: () {
+                    pageController.nextPage(
+                      duration: const Duration(milliseconds: 300),
+                      curve: Curves.easeInOut,
+                    );
+                  },
                 ),
               ),
             ),
