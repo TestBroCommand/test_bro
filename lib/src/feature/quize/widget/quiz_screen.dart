@@ -5,6 +5,7 @@ import 'package:test_bro/src/feature/quize/bloc/quize_bloc.dart';
 import 'package:test_bro/src/feature/quize/model/enities/page_enity.dart';
 import 'package:test_bro/src/feature/quize/model/enities/result_enity.dart';
 import 'package:test_bro/src/feature/quize/model/enities/start_enity.dart';
+import 'package:test_bro/src/feature/quize/widget/final_page.dart';
 import 'package:test_bro/src/feature/quize/widget/first_page.dart';
 import 'package:test_bro/src/feature/quize/widget/question_page.dart';
 
@@ -25,63 +26,85 @@ class QuizScreen extends StatelessWidget {
           final PreloadPageController _pageController = PreloadPageController();
           //    logger.info(startPage + " Quiz result");
           //   context.read<QuizBloc>().add(ResetStateEvent());
-
-          context.read<QuizBloc>().add(
-                LoadDataEvent(
-                  startPageId: startPage,
-                  finalPageId: resultPage,
-                  pagesId: pages,
-                ),
-              );
+          _loadData(context);
           if (state is QuizLoading) {
             return const Center(child: CircularProgressIndicator());
           } else if (state is QuizFailure) {
             return const Center(child: Text("ferg"));
           } else if (state is QuizLoaded) {
+            print(pages);
             final StartEntity startEntity = state.props[0] as StartEntity;
             final FinalEntity finalEntity =
                 (state.props[1] as List<FinalEntity>)[0];
             final List<PageEntity> pageEntities =
                 state.props[2] as List<PageEntity>;
-            List<Widget> pages() {
-              final List<Widget> _pages = [];
-              _pages.add(
-                FirstPageQuiz(
-                  description: startEntity.description,
-                  image:
-                      "https://testbro.pockethost.io/api/files/start_pages/" +
-                          "${startEntity.id.toString()}/${startEntity.image}",
-                  name: startEntity.name,
-                ),
-              );
-              for (int i = 0; i < pageEntities.length; i++) {
-                _pages.add(
-                  QuestionPage(
-                    question: pageEntities[i].question,
-                    pathToImage:
-                        "https://testbro.pockethost.io/api/files/quiz_page/" +
-                            "${pageEntities[i].id.toString()}/${pageEntities[i].image}",
-                    answers: Map<int, String>.from(
-                      pageEntities[i].answers.map(
-                            (key, value) => MapEntry(
-                              int.parse(key.toString()),
-                              value.toString(),
-                            ),
-                          ),
-                    ),
-                  ),
-                );
-              }
-
-              return _pages;
-            }
-
             return PreloadPageView(
               controller: _pageController,
-              children: pages(),
+              children: _buildPages(
+                context: context,
+                startEntity: startEntity,
+                pageEntities: pageEntities,
+                pageController: _pageController,
+                finalEntity: finalEntity,
+              ),
             );
           }
           return Container();
         },
       );
+
+  void _loadData(BuildContext context) {
+    context.read<QuizBloc>().add(
+          LoadDataEvent(
+            startPageId: startPage,
+            finalPageId: resultPage,
+            pagesId: pages,
+          ),
+        );
+  }
+
+  List<Widget> _buildPages({
+    required BuildContext context,
+    required StartEntity startEntity,
+    required List<PageEntity> pageEntities,
+    required PreloadPageController pageController,
+    required FinalEntity finalEntity,
+  }) {
+    final List<Widget> pages = [];
+
+    pages.add(
+      FirstPageQuiz(
+        description: startEntity.description,
+        image:
+            "https://testbro.pockethost.io/api/files/start_pages/${startEntity.id.toString()}/${startEntity.image}",
+        name: startEntity.name,
+        pageController: pageController,
+      ),
+    );
+    for (int i = 0; i < pageEntities.length; i++) {
+      if (i != pages.length) {}
+      pages.add(
+        QuestionPage(
+          currentQuestion: i,
+          sumQuestions: pageEntities.length,
+          question: pageEntities[i].question,
+          pathToImage:
+              "https://testbro.pockethost.io/api/files/quiz_page/${pageEntities[i].id.toString()}/${pageEntities[i].image}",
+          answers: Map<int, String>.from(
+            pageEntities[i].answers.map(
+                  (key, value) => MapEntry(
+                    int.parse(key.toString()),
+                    value.toString(),
+                  ),
+                ),
+          ),
+          pageController: pageController,
+        ),
+      );
+    }
+    pages.add(
+      const FinalPageQuiz(),
+    );
+    return pages;
+  }
 }

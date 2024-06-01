@@ -13,7 +13,7 @@ class FinalPageQuiz extends StatelessWidget {
             height: 225,
             child: ClipRRect(
                 borderRadius: BorderRadius.circular(20),
-                child: Image.asset(
+                child: Image.network(
                   "",
                   fit: BoxFit.fill,
                 ),),

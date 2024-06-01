@@ -1,15 +1,36 @@
 import 'package:flutter/material.dart';
+import 'package:preload_page_view/preload_page_view.dart';
 
-class QuestionPage extends StatelessWidget {
+class QuestionPage extends StatefulWidget {
+  final int sumQuestions;
+  final int currentQuestion;
   final String question;
   final String pathToImage;
   final Map<int, String> answers;
-  const QuestionPage({
+  final PreloadPageController pageController;
+
+  QuestionPage({
     required this.question,
     required this.pathToImage,
     required this.answers,
+    required this.currentQuestion,
+    required this.sumQuestions,
+    required this.pageController,
     super.key,
   });
+
+  @override
+  _QuestionPageState createState() => _QuestionPageState();
+}
+
+class _QuestionPageState extends State<QuestionPage> {
+  bool answerChecker = false;
+
+  void updateAnswerChecker(bool value) {
+    setState(() {
+      answerChecker = value;
+    });
+  }
 
   @override
   Widget build(BuildContext context) => Scaffold(
@@ -23,10 +44,10 @@ class QuestionPage extends StatelessWidget {
                 backgroundColor: Colors.blueGrey,
               ),
             ),
-            const Center(
+            Center(
               child: Text(
-                '1/27',
-                style: TextStyle(
+                '${widget.currentQuestion}/${widget.sumQuestions}',
+                style: const TextStyle(
                   fontSize: 14,
                   fontWeight: FontWeight.bold,
                 ),
@@ -40,7 +61,7 @@ class QuestionPage extends StatelessWidget {
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(20),
                   child: Image.network(
-                    pathToImage,
+                    widget.pathToImage,
                     fit: BoxFit.fill,
                   ),
                 ),
@@ -49,7 +70,7 @@ class QuestionPage extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.fromLTRB(30, 0, 30, 25),
               child: Text(
-                question,
+                widget.question,
                 textAlign: TextAlign.center,
                 style: const TextStyle(
                   color: Color.fromRGBO(0, 122, 255, 1),
@@ -58,110 +79,75 @@ class QuestionPage extends StatelessWidget {
                 ),
               ),
             ),
-            QuestionPageChekBox(
-              answers: answers,
+            QuestionPageCheckBox(
+              answers: widget.answers,
+              onAnswerSelected: updateAnswerChecker,
             ),
+            const SizedBox(height: 20),
+            answerChecker
+                ? ElevatedButton(
+                    onPressed: () => widget.pageController.nextPage(
+                      duration: const Duration(milliseconds: 300),
+                      curve: Curves.easeInOut,
+                    ),
+                    child: Text('Дальше'),
+                  )
+                : Container(),
           ],
         ),
       );
 }
 
-class QuestionPageChekBox extends StatefulWidget {
+class QuestionPageCheckBox extends StatefulWidget {
   final Map<int, String> answers;
-  const QuestionPageChekBox({required this.answers, super.key});
+  final Function(bool) onAnswerSelected;
+
+  QuestionPageCheckBox({
+    required this.answers,
+    required this.onAnswerSelected,
+    super.key,
+  });
 
   @override
-  _QuestionPageChekBoxState createState() => _QuestionPageChekBoxState();
+  _QuestionPageCheckBoxState createState() => _QuestionPageCheckBoxState();
 }
 
-class _QuestionPageChekBoxState extends State<QuestionPageChekBox> {
+class _QuestionPageCheckBoxState extends State<QuestionPageCheckBox> {
   int? setFlag;
+
   void settingFlag(int newFlag) {
     setState(() {
       setFlag = newFlag;
     });
+    widget.onAnswerSelected(true);
   }
 
   @override
   Widget build(BuildContext context) => Column(
         children: [
-          CheckboxListTile(
-            controlAffinity: ListTileControlAffinity.leading,
-            activeColor: const Color.fromRGBO(0, 122, 255, 1),
-            title: Text(
-              '${widget.answers[0]}',
-              style: const TextStyle(
-                fontSize: 20,
+          for (int i = 0; i < widget.answers.length; i++) ...[
+            CheckboxListTile(
+              controlAffinity: ListTileControlAffinity.leading,
+              activeColor: const Color.fromRGBO(0, 122, 255, 1),
+              title: Text(
+                '${widget.answers[i]}',
+                style: const TextStyle(
+                  fontSize: 20,
+                ),
               ),
+              value: setFlag == i,
+              onChanged: (value) {
+                settingFlag(i);
+              },
             ),
-            value: setFlag == 1,
-            onChanged: (value) {
-              settingFlag(1);
-            },
-          ),
-          const Divider(
-            height: 5,
-            thickness: 3,
-            color: Colors.black,
-            indent: 20,
-            endIndent: 20,
-          ),
-          CheckboxListTile(
-            controlAffinity: ListTileControlAffinity.leading,
-            activeColor: const Color.fromRGBO(0, 122, 255, 1),
-            title: Text(
-              '${widget.answers[1]}',
-              style: const TextStyle(
-                fontSize: 20,
-              ),
+            const Divider(
+              height: 5,
+              thickness: 3,
+              color: Colors.black,
+              indent: 20,
+              endIndent: 20,
             ),
-            value: setFlag == 2,
-            onChanged: (value) {
-              settingFlag(2);
-            },
-          ),
-          const Divider(
-            height: 5,
-            thickness: 3,
-            color: Colors.black,
-            indent: 20,
-            endIndent: 20,
-          ),
-          CheckboxListTile(
-            controlAffinity: ListTileControlAffinity.leading,
-            activeColor: const Color.fromRGBO(0, 122, 255, 1),
-            title: Text(
-              '${widget.answers[2]}',
-              style: const TextStyle(
-                fontSize: 20,
-              ),
-            ),
-            value: setFlag == 3,
-            onChanged: (value) {
-              settingFlag(3);
-            },
-          ),
-          const Divider(
-            height: 5,
-            thickness: 3,
-            color: Colors.black,
-            indent: 20,
-            endIndent: 20,
-          ),
-          CheckboxListTile(
-            controlAffinity: ListTileControlAffinity.leading,
-            activeColor: const Color.fromRGBO(0, 122, 255, 1),
-            title: Text(
-              '${widget.answers[4]}',
-              style: const TextStyle(
-                fontSize: 20,
-              ),
-            ),
-            value: setFlag == 4,
-            onChanged: (value) {
-              settingFlag(4);
-            },
-          ),
+          ],
         ],
       );
 }
