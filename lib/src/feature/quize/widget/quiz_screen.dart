@@ -57,6 +57,7 @@ class _QuizScreenState extends State<QuizScreen> {
                   pageEntities: pageEntities,
                   pageController: _pageController,
                   finalEntity: finalEntity,
+                  answers: state.answers,
                 ),
               );
             }
@@ -81,6 +82,7 @@ class _QuizScreenState extends State<QuizScreen> {
     required List<PageEntity> pageEntities,
     required PreloadPageController pageController,
     required FinalEntity finalEntity,
+    required Map<int, int> answers,
   }) {
     final List<Widget> pages = [];
 
@@ -114,8 +116,14 @@ class _QuizScreenState extends State<QuizScreen> {
         ),
       );
     }
+
     pages.add(
-      const FinalPageQuiz(),
+      FinalPageQuiz(
+        image: finalEntity.image,
+        name: finalEntity.name,
+        description: finalEntity.description,
+        answers: answers,
+      ),
     );
     return pages;
   }
