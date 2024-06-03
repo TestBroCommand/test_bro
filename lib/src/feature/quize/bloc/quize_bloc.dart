@@ -27,12 +27,29 @@ class QuizBloc extends Bloc<QuizEvent, QuizState> {
     on<ResetStateEvent>((event, emit) async {
       await _resetState(event, emit);
     });
+    on<AnswerSelected>((event, emit) async {
+      await _selectAnswer(event, emit);
+    });
+    on<GenerateFinalScreen>((event, emit) async {
+      await _generateFinalScreen(event, emit);
+    });
   }
-  Future<void> _resetState(
-    ResetStateEvent event,
+
+  Future<void> _generateFinalScreen(
+    GenerateFinalScreen event,
     Emitter<QuizState> emit,
   ) async {
-    emit(QuizLoading());
+    if (state is QuizLoaded) {
+      final loadedState = state as QuizLoaded;
+      final answers = loadedState.answers;
+
+      emit(QuizLoaded(
+        startPage: loadedState.startPage,
+        finalPage: loadedState.finalPage,
+        pages: loadedState.pages,
+        answers: answers,
+      ));
+    }
   }
 
   Future<void> _loadData(LoadDataEvent event, Emitter<QuizState> emit) async {
@@ -40,9 +57,44 @@ class QuizBloc extends Bloc<QuizEvent, QuizState> {
       final startPage = await repository.getStartPage(startPageId ?? "");
       final pages = await repository.getAllPages(pagesId ?? []);
       final resultPage = await repository.getAllFinalles(finalPageId ?? []);
-      emit(QuizLoaded(startPage, resultPage, pages));
+      emit(QuizLoaded(
+        startPage: startPage,
+        finalPage: resultPage,
+        pages: pages,
+        answers: const {},
+      ));
     } catch (e) {
       emit(QuizFailure(e));
+    }
+  }
+
+  Future<void> _resetState(
+    ResetStateEvent event,
+    Emitter<QuizState> emit,
+  ) async {
+    emit(QuizLoading());
+  }
+
+  Future<void> _selectAnswer(
+    AnswerSelected event,
+    Emitter<QuizState> emit,
+  ) async {
+    try {
+      if (state is QuizLoaded) {
+        final loadedState = state as QuizLoaded;
+        final updatedAnswers = Map<int, int>.from(loadedState.answers)
+          ..[event.questionIndex] = event.answerIndex;
+        emit(
+          QuizLoaded(
+            startPage: loadedState.startPage,
+            finalPage: loadedState.finalPage,
+            pages: loadedState.pages,
+            answers: updatedAnswers,
+          ),
+        );
+      }
+    } catch (e) {
+      emit(QuizFailure(e.toString()));
     }
   }
 }

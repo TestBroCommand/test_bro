@@ -1,7 +1,7 @@
 part of 'quize_bloc.dart';
 
 @immutable
-sealed class QuizState extends Equatable {
+abstract class QuizState extends Equatable {
   const QuizState();
 
   @override
@@ -16,10 +16,29 @@ final class QuizLoaded extends QuizState {
   final StartEntity startPage;
   final List<FinalEntity> finalPage;
   final List<PageEntity> pages;
+  final Map<int, int> answers; 
 
   @override
-  List<Object> get props => [startPage, finalPage, pages];
-  const QuizLoaded(this.startPage, this.finalPage, this.pages);
+  List<Object> get props => [startPage, finalPage, pages, answers];
+
+  const QuizLoaded({
+    required this.startPage,
+    required this.finalPage,
+    required this.pages,
+    required this.answers,
+  });
+
+  QuizLoaded copyWith({
+    StartEntity? startPage,
+    List<FinalEntity>? finalPage,
+    List<PageEntity>? pages,
+    Map<int, int>? answers,
+  }) => QuizLoaded(
+      startPage: startPage ?? this.startPage,
+      finalPage: finalPage ?? this.finalPage,
+      pages: pages ?? this.pages,
+      answers: answers ?? this.answers,
+    );
 }
 
 final class QuizFailure extends QuizState {

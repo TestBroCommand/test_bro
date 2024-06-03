@@ -24,11 +24,12 @@ class PBdataSource {
       config.pbEmail,
       config.pbPass,
     );
-    final ResultList<RecordModel> response =
-        await pb.collection('final_page').getList(expand: id.join(","));
-    final finalDTO = response.items
-        .map((record) => FinalDTO.fromJson(record.toJson()))
-        .toList();
+    final List<RecordModel> response = List<RecordModel>.empty(growable: true);
+    for (int i = 0; i < id.length; i++) {
+      response.add(await pb.collection('final_page').getOne(id[i]));
+    }
+    final finalDTO =
+        response.map((record) => FinalDTO.fromJson(record.toJson())).toList();
     return finalDTO;
   }
 
