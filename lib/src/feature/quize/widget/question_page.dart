@@ -102,16 +102,7 @@ class _QuestionPageState extends State<QuestionPage> {
           const SizedBox(height: 20),
           if (answerChecker)
             ElevatedButton(
-              onPressed: () {
-                widget.pageController.nextPage(
-                  duration: const Duration(milliseconds: 300),
-                  curve: Curves.easeInOut,
-                );
-                context.read<QuizBloc>().add(AnswerSelected(
-                      widget.currentQuestion,
-                      selectedAnswer!,
-                    ));
-              },
+              onPressed: nextPage,
               child: const Text('Дальше'),
             )
           else
@@ -119,6 +110,19 @@ class _QuestionPageState extends State<QuestionPage> {
         ],
       ),
     );
+  }
+
+  void nextPage() {
+    widget.pageController.nextPage(
+      duration: const Duration(milliseconds: 300),
+      curve: Curves.easeInOut,
+    );
+    context.read<QuizBloc>().add(
+          AnswerSelected(
+            widget.currentQuestion,
+            selectedAnswer!,
+          ),
+        );
   }
 }
 
