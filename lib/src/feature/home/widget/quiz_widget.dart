@@ -26,7 +26,6 @@ class QuizWidget extends StatelessWidget {
                   "pages": currentQuiz.pages.join(":"),
                   "resultPage": currentQuiz.finalPage.join(":"),
                 },
-                
               );
             },
             child: Card(
@@ -40,7 +39,7 @@ class QuizWidget extends StatelessWidget {
                       height: 80,
                       width: 100,
                       fit: BoxFit.fill,
-                      "https://testbro.pockethost.io/api/files/quizes/" +
+                      "http://testbroapp.ru/api/files/quizes/" +
                           "${currentQuiz.id.toString()}/${currentQuiz.image}",
                     ),
                     Row(

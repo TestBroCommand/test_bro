@@ -43,7 +43,7 @@ class FirstPageQuiz extends StatelessWidget {
                   name,
                   textAlign: TextAlign.center,
                   style: const TextStyle(
-                      fontSize: 35, fontWeight: FontWeight.bold),
+                      fontSize: 35, fontWeight: FontWeight.bold,),
                 ),
               ),
               Padding(
