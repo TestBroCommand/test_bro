@@ -6,3 +6,4 @@ services:
     volumes:
       - ./:/app/
     command: flutter build web --release
+  
