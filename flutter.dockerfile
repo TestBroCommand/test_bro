@@ -1,4 +1,4 @@
-FROM debian:latest AS build-env
+FROM ubuntu:latest AS build-env
 
 #install all needed stuff
 RUN apt-get update
