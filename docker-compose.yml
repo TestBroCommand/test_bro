@@ -1,32 +1,8 @@
-# HOW TO BUILD STABLE:
-# docker compose -f ./docker-compose.yml build --compress --parallel flutter-stable \
-#   && docker compose -f ./docker-compose.yml build --compress --parallel flutter-stable-web flutter-stable-android
-#
-# HOW TO BUILD BETA:
-# docker compose -f ./docker-compose.yml build --compress --parallel flutter-beta \
-#   && docker compose -f ./docker-compose.yml build --compress --parallel flutter-beta-web flutter-beta-android
-#
-# HOW TO BUILD MASTER:
-# docker compose -f ./docker-compose.yml build --compress --parallel flutter-master \
-#   && docker compose -f ./docker-compose.yml build --compress --parallel flutter-master-web flutter-master-android
-#
-# HOW TO BUILD AND PUSH ALL:
-# docker compose -f ./docker-compose.yml build --compress --parallel \
-#     flutter-stable flutter-beta flutter-master \
-#   && docker compose -f ./docker-compose.yml build --compress --parallel \
-#     flutter-stable-web flutter-stable-android flutter-beta-web flutter-beta-android flutter-master-web flutter-master-android \
-#   && docker compose push
-
-version: "3.9"
-
+version: '3.8'
 services:
-  flutter-stable:
-    build:
-      dockerfile: flutter.dockerfile
-      context: .
-      args:
-        - VERSION=stable
-  nginx:
-    build:
-      dockerfile: nginx.dockerfile
-      context: .
+  flutter-workspace:
+    image: developerswork/flutter-workspace
+    container_name: flutter_workspace
+    volumes:
+      - .
+    command: flutter build web --release
