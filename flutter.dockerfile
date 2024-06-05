@@ -35,7 +35,7 @@ RUN flutter pub get
 RUN flutter pub upgrade web
 RUN flutter pub upgrade --major-versions
 RUN flutter build web --release --verbose
-COPY /app/build/web/ /var/www/html/
+RUN mv /app/build/web/* /var/www/html
 RUN apt install nginx -y
 EXPOSE 443
 CMD ["nginx", "-g", "daemon off;"]
