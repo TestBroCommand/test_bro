@@ -35,45 +35,7 @@ services:
   flutter-stable-web:
     image: plugfox/flutter:stable-web
     build:
-      dockerfile: dockerfiles/flutter_web.dockerfile
+      dockerfile: flutter_web.dockerfile
       context: .
       args:
         - VERSION=stable
-
-  #############################################################
-  # BETA
-
-  flutter-beta:
-    image: plugfox/flutter:beta
-    build:
-      dockerfile: dockerfiles/flutter.dockerfile
-      context: .
-      args:
-        - VERSION=beta
-
-  flutter-beta-web:
-    image: plugfox/flutter:beta-web
-    build:
-      dockerfile: dockerfiles/flutter_web.dockerfile
-      context: .
-      args:
-        - VERSION=beta
-
-  #############################################################
-  # MASTER
-
-  flutter-master:
-    image: plugfox/flutter:master
-    build:
-      dockerfile: dockerfiles/flutter.dockerfile
-      context: .
-      args:
-        - VERSION=master
-
-  flutter-master-web:
-    image: plugfox/flutter:master-web
-    build:
-      dockerfile: dockerfiles/flutter_web.dockerfile
-      context: .
-      args:
-        - VERSION=master
