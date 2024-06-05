@@ -2,7 +2,10 @@
 FROM ubuntu:22.10 as builder
 
 # Install necessary packages
-RUN apt-get update && apt-get install -y unzip xz-utils git openssh-client curl && apt-get upgrade -y && rm -rf /var/cache/apt
+RUN apt-get update 
+RUN apt-get install -y unzip xz-utils git openssh-client curl
+RUN apt-get upgrade -y 
+RUN rm -rf /var/cache/apt
 
 # Clone the Flutter repository
 RUN git clone https://github.com/flutter/flutter.git /usr/local/flutter
