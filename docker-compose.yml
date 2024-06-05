@@ -4,5 +4,5 @@ services:
     image: instrumentisto/flutter
     container_name: flutter_workspace
     volumes:
-      - .
+      - ./:/app/
     command: flutter build web --release
