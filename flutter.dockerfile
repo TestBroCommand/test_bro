@@ -1,47 +1,47 @@
-FROM ubuntu:latest AS build-env
+# Stage 1 - Build the Flutter App
+FROM ubuntu:22.10 as builder
 
-#install all needed stuff
-RUN apt-get update
-RUN apt-get install -y curl git unzip
+# Install necessary packages
+RUN apt-get update && apt-get install -y unzip xz-utils git openssh-client curl && apt-get upgrade -y && rm -rf /var/cache/apt
 
-#define variables
-ARG FLUTTER_VERSION=3.22.1
-ARG FLUTTER_SDK_LOCATION=/usr/local/flutter
-ARG APP_LOCATION=/app/
+# Clone the Flutter repository
+RUN git clone https://github.com/flutter/flutter.git /usr/local/flutter
 
-#clone flutter
-RUN git clone https://github.com/flutter/flutter.git $FLUTTER_SDK_LOCATION
-#change dir to current flutter folder and make a checkout to the specific version
-RUN cd $FLUTTER_SDK_LOCATION && git checkout tags/$FLUTTER_VERSION
+# Set the Flutter path
+ENV PATH="/usr/local/flutter/bin:/usr/local/flutter/bin/cache/dart-sdk/bin:${PATH}"
 
-#setup the flutter path as an environment variable
-ENV PATH="$FLUTTER_SDK_LOCATION/bin:$FLUTTER_SDK_LOCATION/bin/cache/dart-sdk/bin:${PATH}"
+# Enable web capabilities
+RUN flutter config --enable-web
 
-#Start to run Flutter commands
-#doctor to see if all was installed ok
-RUN flutter channel master
-RUN flutter doctor -v
+# Change to the stable channel
+RUN flutter channel stable
 
-#create folder to copy source code
-RUN mkdir $APP_LOCATION
-#copy source code to folder
-COPY . $APP_LOCATION
-#stup new folder as the working directory
-WORKDIR $APP_LOCATION
+# Upgrade Flutter
+RUN flutter upgrade
 
-#Run build: 1 - clean, 2 - pub get, 3 - build web
-RUN flutter clean
+# Create the app directory
+WORKDIR /usr/src/app
+
+# Copy the app files
+COPY . .
+
+# Get the Flutter dependencies
 RUN flutter pub get
-RUN flutter pub upgrade web
-RUN flutter pub upgrade --major-versions
-RUN flutter build web --release
-#RUN apt install nginx -y
-#RUN rm -rf /var/www/html/*
-#RUN mv /app/build/web/* /var/www/html
-#EXPOSE 80
-#CMD ["nginx", "-g", "daemon off;"]
 
+# Build the Flutter web app
+RUN flutter build web
 
+# Stage 2 - Create the Nginx Runtime
+FROM nginx:1.23.3-alpine as runtime
 
+# Copy the built web app from the builder stage
+COPY --from=builder /usr/src/app/build/web /usr/share/nginx/html
 
+# Copy the Nginx configuration file
+COPY nginx.conf /etc/nginx/nginx.conf
 
+# Expose port 80
+EXPOSE 80
+
+# Run Nginx when the container starts
+CMD ["nginx", "-g", "daemon off;"]
