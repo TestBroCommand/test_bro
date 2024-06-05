@@ -40,14 +40,6 @@ services:
       args:
         - VERSION=stable
 
-  flutter-stable-android:
-    image: plugfox/flutter:stable-android
-    build:
-      dockerfile: dockerfiles/flutter_android.dockerfile
-      context: .
-      args:
-        - VERSION=stable
-
   #############################################################
   # BETA
 
@@ -67,14 +59,6 @@ services:
       args:
         - VERSION=beta
 
-  flutter-beta-android:
-    image: plugfox/flutter:beta-android
-    build:
-      dockerfile: dockerfiles/flutter_android.dockerfile
-      context: .
-      args:
-        - VERSION=beta
-
   #############################################################
   # MASTER
 
@@ -90,14 +74,6 @@ services:
     image: plugfox/flutter:master-web
     build:
       dockerfile: dockerfiles/flutter_web.dockerfile
-      context: .
-      args:
-        - VERSION=master
-
-  flutter-master-android:
-    image: plugfox/flutter:master-android
-    build:
-      dockerfile: dockerfiles/flutter_android.dockerfile
       context: .
       args:
         - VERSION=master
