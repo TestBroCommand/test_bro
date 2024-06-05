@@ -1,19 +1,41 @@
-version: '3'
+# HOW TO BUILD STABLE:
+# docker compose -f ./docker-compose.yml build --compress --parallel flutter-stable \
+#   && docker compose -f ./docker-compose.yml build --compress --parallel flutter-stable-web flutter-stable-android
+#
+# HOW TO BUILD BETA:
+# docker compose -f ./docker-compose.yml build --compress --parallel flutter-beta \
+#   && docker compose -f ./docker-compose.yml build --compress --parallel flutter-beta-web flutter-beta-android
+#
+# HOW TO BUILD MASTER:
+# docker compose -f ./docker-compose.yml build --compress --parallel flutter-master \
+#   && docker compose -f ./docker-compose.yml build --compress --parallel flutter-master-web flutter-master-android
+#
+# HOW TO BUILD AND PUSH ALL:
+# docker compose -f ./docker-compose.yml build --compress --parallel \
+#     flutter-stable flutter-beta flutter-master \
+#   && docker compose -f ./docker-compose.yml build --compress --parallel \
+#     flutter-stable-web flutter-stable-android flutter-beta-web flutter-beta-android flutter-master-web flutter-master-android \
+#   && docker compose push
+
+version: "3.9"
 
 services:
-  web:
-    build: .
-    volumes:
-      - ./flutter_web_app:/usr/local/flutter_web_app
-    working_dir: /usr/local/flutter_web_app
-    command: >
-      bash -c 'cd /usr/local/flutter_web_app/ && flutter create . &&  /usr/local/flutter/bin/flutter build web'
-    restart: always
 
-  nginx:
-    image: nginx
-    ports:
-      - 5001:80
-    volumes:
-      - ./flutter_web_app/build/web/:/usr/share/nginx/html:ro
-    restart: always
+  #############################################################
+  # STABLE
+
+  flutter-stable:
+    image: plugfox/flutter:stable
+    build:
+      dockerfile: flutter.dockerfile
+      context: .
+      args:
+        - VERSION=stable
+
+  flutter-stable-web:
+    image: plugfox/flutter:stable-web
+    build:
+      dockerfile: flutter_web.dockerfile
+      context: .
+      args:
+        - VERSION=stable
