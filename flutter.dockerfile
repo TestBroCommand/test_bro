@@ -1,5 +1,5 @@
 # Stage 1 - Build the Flutter App
-FROM ubuntu:22.10 as builder
+FROM ubuntu:latest as builder
 
 # Install necessary packages
 RUN apt install -y unzip xz-utils git curl
