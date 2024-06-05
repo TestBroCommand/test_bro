@@ -35,16 +35,14 @@ RUN flutter pub get
 RUN flutter pub upgrade web
 RUN flutter pub upgrade --major-versions
 RUN flutter build web --release --verbose
-
+RUN apt install nginx
+EXPOSE 443
+COPY /app/build/web/* /var/www/html/
+CMD ["nginx", "-g", "daemon off;"]
 #once heare the app will be compiled and ready to deploy
 
 #STEP 2: DEPLOY
 #use nginx to deploy
-FROM nginx:1.25.2-alpine
 
-#copy the info of the builded web app to nginx
-COPY --from=build-env /app/build/web /usr/share/nginx/html
 
-#Expose port and run nginx
-EXPOSE 443
-CMD ["nginx", "-g", "daemon off;"]
+
