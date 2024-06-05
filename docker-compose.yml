@@ -25,7 +25,7 @@ services:
   # STABLE
 
   flutter-stable:
-    run:
+    build:
       dockerfile: flutter.dockerfile
       context: .
       args:
