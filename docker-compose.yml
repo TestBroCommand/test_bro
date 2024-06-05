@@ -1,7 +1,7 @@
 version: '3.8'
 services:
   flutter-workspace:
-    image: developerswork/flutter-workspace
+    image: instrumentisto/flutter
     container_name: flutter_workspace
     volumes:
       - .
