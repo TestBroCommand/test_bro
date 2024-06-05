@@ -30,3 +30,7 @@ services:
       context: .
       args:
         - VERSION=stable
+   nginx:
+    build:
+      dockerfile: nginx.dockerfile
+      context: .
