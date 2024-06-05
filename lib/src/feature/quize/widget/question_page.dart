@@ -13,7 +13,7 @@ class QuestionPage extends StatefulWidget {
   final Map<int, String> answers;
   final PreloadPageController pageController;
 
-  QuestionPage({
+  const QuestionPage({
     required this.question,
     required this.pathToImage,
     required this.answers,
@@ -131,9 +131,7 @@ class QuestionPageCheckBox extends StatefulWidget {
   final Function(bool, int) onAnswerSelected;
 
   const QuestionPageCheckBox({
-    super.key,
-    required this.answers,
-    required this.onAnswerSelected,
+    required this.answers, required this.onAnswerSelected, super.key,
   });
 
   @override

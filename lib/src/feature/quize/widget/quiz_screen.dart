@@ -90,7 +90,7 @@ class _QuizScreenState extends State<QuizScreen> {
       FirstPageQuiz(
         description: startEntity.description,
         image:
-            "https://testbro.pockethost.io/api/files/start_pages/${startEntity.id.toString()}/${startEntity.image}",
+            "http://testbroapp.ru/api/files/start_pages/${startEntity.id.toString()}/${startEntity.image}",
         name: startEntity.name,
         pageController: pageController,
       ),
@@ -103,7 +103,7 @@ class _QuizScreenState extends State<QuizScreen> {
           sumQuestions: pageEntities.length,
           question: pageEntities[i].question,
           pathToImage:
-              "https://testbro.pockethost.io/api/files/quiz_page/${pageEntities[i].id.toString()}/${pageEntities[i].image}",
+              "http://testbroapp.ru/api/files/quiz_page/${pageEntities[i].id.toString()}/${pageEntities[i].image}",
           answers: Map<int, String>.from(
             pageEntities[i].answers.map(
                   (key, value) => MapEntry(

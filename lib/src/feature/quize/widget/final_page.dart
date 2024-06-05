@@ -6,11 +6,7 @@ class FinalPageQuiz extends StatelessWidget {
   final String name;
   final String description;
   const FinalPageQuiz({
-    super.key,
-    required this.answers,
-    required this.image,
-    required this.name,
-    required this.description,
+    required this.answers, required this.image, required this.name, required this.description, super.key,
   });
 
   @override
@@ -94,7 +90,7 @@ class FinalPageQuiz extends StatelessWidget {
             ElevatedButton(
               onPressed: () => print('$name $description $image'),
               child: const Text('Ответы'),
-            )
+            ),
           ],
         ),
       );

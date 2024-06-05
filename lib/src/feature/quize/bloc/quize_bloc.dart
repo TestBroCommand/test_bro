@@ -48,7 +48,7 @@ class QuizBloc extends Bloc<QuizEvent, QuizState> {
         finalPage: loadedState.finalPage,
         pages: loadedState.pages,
         answers: answers,
-      ));
+      ),);
     }
   }
 
@@ -62,7 +62,7 @@ class QuizBloc extends Bloc<QuizEvent, QuizState> {
         finalPage: resultPage,
         pages: pages,
         answers: const {},
-      ));
+      ),);
     } catch (e) {
       emit(QuizFailure(e));
     }
