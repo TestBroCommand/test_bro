@@ -32,8 +32,8 @@ WORKDIR $APP_LOCATION
 RUN flutter clean
 RUN flutter pub get
 RUN ls
-flutter pub upgrade web
-flutter pub upgrade --major-versions
+RUN flutter pub upgrade web
+RUN flutter pub upgrade --major-versions
 RUN flutter build web --release
 
 #once heare the app will be compiled and ready to deploy
