@@ -1,0 +1,19 @@
+version: '3'
+
+services:
+  web:
+    build: .
+    volumes:
+      - ./flutter_web_app:/usr/local/flutter_web_app
+    working_dir: /usr/local/flutter_web_app
+    command: >
+      bash -c 'cd /usr/local/flutter_web_app/ && flutter create . &&  /usr/local/flutter/bin/flutter build web'
+    restart: always
+
+  nginx:
+    image: nginx
+    ports:
+      - 5001:80
+    volumes:
+      - ./flutter_web_app/build/web/:/usr/share/nginx/html:ro
+    restart: always
