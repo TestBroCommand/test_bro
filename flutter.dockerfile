@@ -32,17 +32,17 @@ WORKDIR $APP_LOCATION
 RUN flutter clean
 RUN flutter pub get
 RUN ls
-#RUN flutter build web --release
+RUN flutter build web --release
 
 #once heare the app will be compiled and ready to deploy
 
 #STEP 2: DEPLOY
 #use nginx to deploy
-#FROM nginx:1.25.2-alpine
+FROM nginx:1.25.2-alpine
 
 #copy the info of the builded web app to nginx
-#COPY --from=build-env /app/build/web /usr/share/nginx/html
+COPY --from=build-env /app/build/web /usr/share/nginx/html
 
 #Expose port and run nginx
-#EXPOSE 80
-#CMD ["nginx", "-g", "daemon off;"]
+EXPOSE 80
+CMD ["nginx", "-g", "daemon off;"]
