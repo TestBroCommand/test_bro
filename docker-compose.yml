@@ -27,6 +27,5 @@ services:
       args:
         - VERSION=stable
   nginx:
-    build:
-      dockerfile: nginx.dockerfile
-      context: .
+    dockerfile: nginx.dockerfile
+    context: .
