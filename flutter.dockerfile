@@ -5,7 +5,7 @@ RUN apt-get update
 RUN apt-get install -y curl git unzip
 
 #define variables
-ARG FLUTTER_VERSION=3.23.0
+ARG FLUTTER_VERSION=3.23.0-13.0.pre.103
 ARG FLUTTER_SDK_LOCATION=/usr/local/flutter
 ARG APP_LOCATION=/app/
 
