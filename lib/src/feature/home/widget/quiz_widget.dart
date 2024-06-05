@@ -29,34 +29,37 @@ class QuizWidget extends StatelessWidget {
               );
             },
             child: Card(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 15),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    //SizedBox(height: cardHeight * 1),
-                    Image.network(
-                      height: 80,
-                      width: 100,
-                      fit: BoxFit.fill,
-                      "http://testbroapp.ru/api/files/quizes/" +
-                          "${currentQuiz.id.toString()}/${currentQuiz.image}",
-                    ),
-                    Row(
-                      children: [
-                        Text(currentQuiz.takers.toString()),
-                        const SizedBox(width: 5),
-                        const Icon(Icons.ads_click_rounded),
-                      ],
-                    ),
-                    const SizedBox(width: 15),
-                    Text(
-                      currentQuiz.title,
-                      style: const TextStyle(overflow: TextOverflow.ellipsis),
-                      maxLines: 1,
-                    ),
-                  ],
-                ),
+              clipBehavior: Clip.hardEdge,
+              color: Colors.black,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(5.0),
+              ),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  //SizedBox(height: cardHeight * 1),
+                  Image.network(
+                    height: 80,
+                    width: double.infinity,
+                    fit: BoxFit.fill,
+                    "https://testbro.pockethost.io/api/files/quizes/" +
+                        "${currentQuiz.id.toString()}/${currentQuiz.image}",
+                  ),
+                  Row(
+                    children: [
+                      Text(currentQuiz.takers.toString()),
+                      const SizedBox(width: 5),
+                      const Icon(Icons.ads_click_rounded),
+                    ],
+                  ),
+                  const SizedBox(width: 15),
+                  Text(
+                    currentQuiz.title,
+                    style: const TextStyle(overflow: TextOverflow.ellipsis),
+                    maxLines: 1,
+                  ),
+                ],
               ),
             ),
           );
