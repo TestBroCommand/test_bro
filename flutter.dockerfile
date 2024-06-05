@@ -5,7 +5,7 @@ RUN apt-get update
 RUN apt-get install -y curl git unzip
 
 #define variables
-ARG FLUTTER_VERSION=3.23.0-13.0.pre.103
+ARG FLUTTER_VERSION=3.22.1
 ARG FLUTTER_SDK_LOCATION=/usr/local/flutter
 ARG APP_LOCATION=/app/
 
@@ -19,6 +19,7 @@ ENV PATH="$FLUTTER_SDK_LOCATION/bin:$FLUTTER_SDK_LOCATION/bin/cache/dart-sdk/bin
 
 #Start to run Flutter commands
 #doctor to see if all was installed ok
+RUN flutter channel master
 RUN flutter doctor -v
 
 #create folder to copy source code
