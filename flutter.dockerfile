@@ -38,6 +38,7 @@ RUN flutter build web --release --verbose
 RUN apt install nginx
 EXPOSE 443
 COPY /app/build/web/* /var/www/html/
+RUN ls /var/www/html
 CMD ["nginx", "-g", "daemon off;"]
 #once heare the app will be compiled and ready to deploy
 
