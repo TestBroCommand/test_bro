@@ -25,9 +25,12 @@ services:
   # STABLE
 
   flutter-stable:
-    image: plugfox/flutter:stable
     build:
       dockerfile: flutter.dockerfile
       context: .
       args:
         - VERSION=stable
+   nginx:
+    build:
+      dockerfile: nginx.dockerfile
+      context: .
