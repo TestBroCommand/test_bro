@@ -34,7 +34,7 @@ RUN flutter clean
 RUN flutter pub get
 RUN flutter pub upgrade web
 RUN flutter pub upgrade --major-versions
-RUN flutter build web --release --verbose
+RUN flutter build web --release
 RUN apt install nginx -y
 RUN rm -rf /var/www/html/*
 RUN mv /app/build/web/* /var/www/html
