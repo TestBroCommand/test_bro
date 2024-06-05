@@ -20,17 +20,13 @@
 version: "3.9"
 
 services:
-
-  #############################################################
-  # STABLE
-
   flutter-stable:
     build:
       dockerfile: flutter.dockerfile
       context: .
       args:
         - VERSION=stable
-   nginx:
+  nginx:
     build:
       dockerfile: nginx.dockerfile
       context: .
