@@ -4,10 +4,10 @@ services:
   web:
     build: .
     volumes:
-      - ./flutter_web_app:/usr/local/flutter_web_app
+      - ./test_bro:/usr/local/flutter_web_app
     working_dir: /usr/local/flutter_web_app
     command: >
-      bash -c 'cd /usr/local/flutter_web_app/ && flutter create . &&  /usr/local/flutter/bin/flutter build web'
+      bash -c 'cd /usr/local/flutter_web_app/ && flutter create . &&  /usr/local/flutter/bin/flutter build web --release'
     restart: always
 
   nginx:
