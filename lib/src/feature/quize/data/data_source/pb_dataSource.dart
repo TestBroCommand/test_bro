@@ -35,7 +35,7 @@ class PBdataSource {
 
   Future<List<PageDTO>> getPages(List<String> id) async {
     const config = Config();
-    final pb = PocketBase('https://pb.testbroapp.ru');
+    final pb = PocketBase('https://testbro.pockethost.io');
     await pb.admins.authWithPassword(
       config.pbEmail,
       config.pbPass,
