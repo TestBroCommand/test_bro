@@ -1,8 +1,0 @@
-version: '3.8'
-services:
-  flutter-workspace:
-    image: developerswork/flutter-workspace
-    container_name: flutter_workspace
-    volumes:
-      - .
-    command: flutter build web --release
