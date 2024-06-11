@@ -5,7 +5,7 @@ import 'package:test_bro/src/feature/home/model/DTO/quiz_DTO.dart';
 class PBdataSource {
   Future<List<QuizDTO>> getAllQuizes() async {
     const config = Config();
-    final pb = PocketBase('http://testbroapp.ru');
+    final pb = PocketBase('https://pb.testbroapp.ru');
     await pb.admins.authWithPassword(
       config.pbEmail,
       config.pbPass,
@@ -21,7 +21,7 @@ class PBdataSource {
 
 // Future<void> _authAsAdmin() async {
 //   final config = Config();
-//   pb = PocketBase('http://testbroapp.ru');
+//   pb = PocketBase('https://pb.testbroapp.ru');
 //   await pb!.admins.authWithPassword(
 //     'uohucku3ne@mail.authpass.app',
 //     '\'PIGwYyX@VDw)rM~7feT)VG\$pntQTrhwkLq432ad',
