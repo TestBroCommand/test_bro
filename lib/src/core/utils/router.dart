@@ -3,10 +3,10 @@ import 'package:test_bro/src/feature/home/widget/home_screen.dart';
 import 'package:test_bro/src/feature/quize/widget/quiz_screen.dart';
 
 final router = GoRouter(
-  initialLocation: '/home',
+  initialLocation: '/',
   routes: [
     GoRoute(
-      path: '/home',
+      path: '/',
       builder: (context, state) => const HomeScreen(),
     ),
     GoRoute(

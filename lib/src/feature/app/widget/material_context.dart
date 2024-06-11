@@ -24,7 +24,7 @@ class MaterialContext extends StatelessWidget {
     final locale = SettingsScope.localeOf(context).locale;
 
     return MaterialApp.router(
-      theme: isCupertino(context) ? lightIos : lightAndroid,
+      theme: isCupertino(context) ? lightAndroid : lightAndroid,
       darkTheme: isCupertino(context) ? darkIos : darkAndroid,
       themeMode: theme.mode,
       localizationsDelegates: Localization.localizationDelegates,
