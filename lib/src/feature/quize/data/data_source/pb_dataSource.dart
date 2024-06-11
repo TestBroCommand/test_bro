@@ -7,7 +7,7 @@ import 'package:test_bro/src/feature/quize/model/DTO/start_DTO.dart';
 class PBdataSource {
   Future<StartDTO> getStartPage(String id) async {
     const config = Config();
-    final pb = PocketBase('https://testbro.pockethost.io');
+    final pb = PocketBase('https://pb.testbroapp.ru');
     await pb.admins.authWithPassword(
       config.pbEmail,
       config.pbPass,
@@ -19,7 +19,7 @@ class PBdataSource {
 
   Future<List<FinalDTO>> getFinalPage(List<String> id) async {
     const config = Config();
-    final pb = PocketBase('https://testbro.pockethost.io');
+    final pb = PocketBase('https://pb.testbroapp.ru');
     await pb.admins.authWithPassword(
       config.pbEmail,
       config.pbPass,

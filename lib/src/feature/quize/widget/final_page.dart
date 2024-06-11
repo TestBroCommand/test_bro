@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class FinalPageQuiz extends StatelessWidget {
   final Map<int, int> answers;
@@ -6,7 +7,11 @@ class FinalPageQuiz extends StatelessWidget {
   final String name;
   final String description;
   const FinalPageQuiz({
-    required this.answers, required this.image, required this.name, required this.description, super.key,
+    required this.answers,
+    required this.image,
+    required this.name,
+    required this.description,
+    super.key,
   });
 
   @override
@@ -39,14 +44,14 @@ class FinalPageQuiz extends StatelessWidget {
                 ),
               ),
             ),
-            Padding(
+            /* Padding(
               padding: const EdgeInsets.symmetric(horizontal: 35, vertical: 24),
               child: Text(
                 description,
                 style:
                     const TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
               ),
-            ),
+            ), */
             const Padding(
               padding: EdgeInsets.symmetric(horizontal: 35.0),
               child: Text(
@@ -88,8 +93,9 @@ class FinalPageQuiz extends StatelessWidget {
               ),
             ),
             ElevatedButton(
-              onPressed: () => print('$name $description $image'),
-              child: const Text('Ответы'),
+              onPressed: () =>
+                  context.push('/'), // print('$name $description $image'),
+              child: const Text("Главная"), //'Ответы'),
             ),
           ],
         ),

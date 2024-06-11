@@ -21,7 +21,7 @@ class PBdataSource {
 
 // Future<void> _authAsAdmin() async {
 //   final config = Config();
-//   pb = PocketBase('http://testbroapp.ru');
+//   pb = PocketBase('https://pb.testbroapp.ru');
 //   await pb!.admins.authWithPassword(
 //     'uohucku3ne@mail.authpass.app',
 //     '\'PIGwYyX@VDw)rM~7feT)VG\$pntQTrhwkLq432ad',
