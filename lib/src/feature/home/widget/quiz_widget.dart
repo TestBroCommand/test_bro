@@ -30,7 +30,6 @@ class QuizWidget extends StatelessWidget {
             },
             child: Card(
               clipBehavior: Clip.hardEdge,
-              color: Colors.black,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(5.0),
               ),
@@ -43,7 +42,7 @@ class QuizWidget extends StatelessWidget {
                     height: 80,
                     width: double.infinity,
                     fit: BoxFit.fill,
-                    "https://testbro.pockethost.io/api/files/quizes/" +
+                    "https://pb.testbroapp.ru/api/files/quizes/" +
                         "${currentQuiz.id.toString()}/${currentQuiz.image}",
                   ),
                   Row(
