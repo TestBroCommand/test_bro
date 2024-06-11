@@ -6,7 +6,7 @@ final router = GoRouter(
   initialLocation: '/',
   initialRouteParams: (uri) {
   return null;
-  }
+  },
   routes: [
     GoRoute(
       path: '/',
