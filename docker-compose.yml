@@ -1,9 +1,0 @@
-version: '3.8'
-services:
-  flutter-workspace:
-    image: instrumentisto/flutter
-    container_name: flutter_workspace
-    volumes:
-      - ./:/app/
-    command: flutter build web --release
-  
