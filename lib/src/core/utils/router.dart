@@ -4,9 +4,6 @@ import 'package:test_bro/src/feature/quize/widget/quiz_screen.dart';
 
 final router = GoRouter(
   initialLocation: '/',
-  initialRouteParams: (uri) {
-  return null;
-  },
   routes: [
     GoRoute(
       path: '/',
