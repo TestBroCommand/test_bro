@@ -7,9 +7,30 @@ import 'package:test_bro/src/feature/home/widget/quiz_widget.dart';
 /// {@template home_screen}
 /// HomeScreen is a simple screen that displays a grid of items.
 /// {@endtemplate}
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   /// {@macro home_screen}
   const HomeScreen({super.key});
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  late TextEditingController _textController;
+  String _searchText = '';
+
+  @override
+  void initState() {
+    _textController = TextEditingController();
+
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _textController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -26,8 +47,29 @@ class HomeScreen extends StatelessWidget {
               return LayoutBuilder(
                 builder: (context, constraints) {
                   final windowSize = constraints.materialBreakpoint;
+                  final allQuizzes = state.quizzes;
+                  final filteredQuizzes = allQuizzes.where((quiz) {
+                    final quizTitleWords = quiz.title.toLowerCase().split(' ');
+                    return quizTitleWords
+                        .any((word) => word.startsWith(_searchText));
+                  }).toList();
                   return CustomScrollView(
                     slivers: [
+                      SliverToBoxAdapter(
+                        child: Padding(
+                          padding: const EdgeInsets.all(16.0),
+                          child: TextField(
+                            controller: _textController,
+                            decoration: InputDecoration(
+                              labelText: 'Search',
+                              border: OutlineInputBorder(),
+                            ),
+                            onChanged: (value) => setState(() {
+                              _searchText = _textController.text.toLowerCase();
+                            }),
+                          ),
+                        ),
+                      ),
                       SliverPadding(
                         padding: HorizontalSpacing.centered(windowWidth),
                         sliver: SliverGrid.builder(
@@ -41,9 +83,9 @@ class HomeScreen extends StatelessWidget {
                               _ => 4,
                             },
                           ),
-                          itemCount: state.quizzes.length,
+                          itemCount: filteredQuizzes.length,
                           itemBuilder: (context, index) {
-                            final currentQuiz = state.quizzes[index];
+                            final currentQuiz = filteredQuizzes[index];
                             return QuizWidget(
                               currentQuiz: currentQuiz,
                             );
