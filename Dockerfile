@@ -26,6 +26,6 @@ RUN flutter build web
 # Stage 2
 FROM nginx:1.21.1-alpine
 COPY --from=build-env /app/build/web /usr/share/nginx/html
-COPY --from=build-env /app/nginx.conf /etc/nginx
+#COPY --from=build-env /app/nginx.conf /etc/nginx
 EXPOSE 80
 CMD ["nginx", "-g", "daemon off;"]
