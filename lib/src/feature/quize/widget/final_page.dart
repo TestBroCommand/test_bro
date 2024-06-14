@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:posthog_flutter/posthog_flutter.dart';
-import 'package:test_bro/src/feature/home/bloc/home_bloc.dart';
 import 'package:test_bro/src/feature/quize/bloc/quize_bloc.dart';
 
 class FinalPageQuiz extends StatefulWidget {

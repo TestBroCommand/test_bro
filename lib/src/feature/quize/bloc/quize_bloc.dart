@@ -51,7 +51,7 @@ class QuizBloc extends Bloc<QuizEvent, QuizState> {
       );
       emit(QuizCompleted(
         finalpage: finalPageEntity,
-      ));
+      ),);
     }
   }
 

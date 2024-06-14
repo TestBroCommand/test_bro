@@ -40,13 +40,11 @@ class FinalEntity extends Equatable {
     String? name,
     String? description,
     int? mostFrequentDigit,
-  }) {
-    return FinalEntity(
+  }) => FinalEntity(
       id: id ?? this.id,
       image: image ?? this.image,
       name: name ?? this.name,
       description: description ?? this.description,
       mostFrequentDigit: mostFrequentDigit ?? this.mostFrequentDigit,
     );
-  }
 }
