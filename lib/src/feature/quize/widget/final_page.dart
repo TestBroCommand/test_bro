@@ -2,15 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 class FinalPageQuiz extends StatelessWidget {
-  final Map<int, int> answers;
   final String image;
   final String name;
   final String description;
+  final int mostFrequentDigit;
   const FinalPageQuiz({
-    required this.answers,
     required this.image,
     required this.name,
     required this.description,
+    required this.mostFrequentDigit,
     super.key,
   });
 
@@ -93,8 +93,8 @@ class FinalPageQuiz extends StatelessWidget {
               ),
             ),
             ElevatedButton(
-              onPressed: () =>
-                  context.push('/'), // print('$name $description $image'),
+              onPressed: () => context.push('/'),
+              // print('$name $description $image'),
               child: const Text("Главная"), //'Ответы'),
             ),
           ],

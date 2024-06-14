@@ -42,11 +42,4 @@ class AnswerSelected extends QuizEvent {
   List<Object> get props => [questionIndex, answerIndex];
 }
 
-class GenerateFinalScreen extends QuizEvent {
-  final Map<int, int> answers;
-  GenerateFinalScreen({required this.answers});
-
-
-  @override
-  List<Object> get props => [answers];
-}
+class GenerateFinalScreen extends QuizEvent {}

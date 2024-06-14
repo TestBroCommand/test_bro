@@ -120,7 +120,7 @@ class _QuestionPageState extends State<QuestionPage> {
     context.read<QuizBloc>().add(
           AnswerSelected(
             widget.currentQuestion,
-            selectedAnswer!,
+            selectedAnswer! + 1,
           ),
         );
   }
@@ -131,7 +131,9 @@ class QuestionPageCheckBox extends StatefulWidget {
   final Function(bool, int) onAnswerSelected;
 
   const QuestionPageCheckBox({
-    required this.answers, required this.onAnswerSelected, super.key,
+    required this.answers,
+    required this.onAnswerSelected,
+    super.key,
   });
 
   @override

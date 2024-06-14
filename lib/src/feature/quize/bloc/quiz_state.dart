@@ -16,7 +16,7 @@ final class QuizLoaded extends QuizState {
   final StartEntity startPage;
   final List<FinalEntity> finalPage;
   final List<PageEntity> pages;
-  final Map<int, int> answers; 
+  final Map<int, int> answers;
 
   @override
   List<Object> get props => [startPage, finalPage, pages, answers];
@@ -33,12 +33,13 @@ final class QuizLoaded extends QuizState {
     List<FinalEntity>? finalPage,
     List<PageEntity>? pages,
     Map<int, int>? answers,
-  }) => QuizLoaded(
-      startPage: startPage ?? this.startPage,
-      finalPage: finalPage ?? this.finalPage,
-      pages: pages ?? this.pages,
-      answers: answers ?? this.answers,
-    );
+  }) =>
+      QuizLoaded(
+        startPage: startPage ?? this.startPage,
+        finalPage: finalPage ?? this.finalPage,
+        pages: pages ?? this.pages,
+        answers: answers ?? this.answers,
+      );
 }
 
 final class QuizFailure extends QuizState {
@@ -47,4 +48,12 @@ final class QuizFailure extends QuizState {
 
   @override
   List<Object> get props => [error];
+}
+
+final class QuizCompleted extends QuizState {
+  final FinalPageQuiz finalpage;
+
+  const QuizCompleted({required this.finalpage});
+  @override
+  List<Object> get props => [finalpage];
 }

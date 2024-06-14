@@ -6,6 +6,7 @@ import 'package:test_bro/src/feature/quize/data/repository/pb_respository.dart';
 import 'package:test_bro/src/feature/quize/model/enities/page_enity.dart';
 import 'package:test_bro/src/feature/quize/model/enities/result_enity.dart';
 import 'package:test_bro/src/feature/quize/model/enities/start_enity.dart';
+import 'package:test_bro/src/feature/quize/widget/final_page.dart';
 
 part 'quize_event.dart';
 part 'quiz_state.dart';
@@ -42,13 +43,20 @@ class QuizBloc extends Bloc<QuizEvent, QuizState> {
     if (state is QuizLoaded) {
       final loadedState = state as QuizLoaded;
       final answers = loadedState.answers;
-
-      emit(QuizLoaded(
-        startPage: loadedState.startPage,
-        finalPage: loadedState.finalPage,
-        pages: loadedState.pages,
+      final finalsEntities = loadedState.finalPage;
+      final finalPageEntity = _determineFinalPage(
+        finalEntities: finalsEntities,
         answers: answers,
-      ),);
+      );
+      final finalPageQuiz = FinalPageQuiz(
+        image: finalPageEntity.image,
+        name: finalPageEntity.name,
+        description: finalPageEntity.description,
+        mostFrequentDigit: finalPageEntity.mostFrequentDigit,
+      );
+      emit(QuizCompleted(
+        finalpage: finalPageQuiz,
+      ));
     }
   }
 
@@ -57,12 +65,14 @@ class QuizBloc extends Bloc<QuizEvent, QuizState> {
       final startPage = await repository.getStartPage(startPageId ?? "");
       final pages = await repository.getAllPages(pagesId ?? []);
       final resultPage = await repository.getAllFinalles(finalPageId ?? []);
-      emit(QuizLoaded(
-        startPage: startPage,
-        finalPage: resultPage,
-        pages: pages,
-        answers: const {},
-      ),);
+      emit(
+        QuizLoaded(
+          startPage: startPage,
+          finalPage: resultPage,
+          pages: pages,
+          answers: const {},
+        ),
+      );
     } catch (e) {
       emit(QuizFailure(e));
     }
@@ -96,5 +106,35 @@ class QuizBloc extends Bloc<QuizEvent, QuizState> {
     } catch (e) {
       emit(QuizFailure(e.toString()));
     }
+  }
+
+  FinalEntity _determineFinalPage({
+    required List<FinalEntity> finalEntities,
+    required Map<int, int> answers,
+  }) {
+    final Map<int, int> valueCounts = {};
+
+    for (final value in answers.values) {
+      if (valueCounts.containsKey(value)) {
+        valueCounts[value] = valueCounts[value]! + 1;
+      } else {
+        valueCounts[value] = 1;
+      }
+    }
+    int mostFrequentValue = valueCounts.keys.first;
+    int maxCount = valueCounts[mostFrequentValue]!;
+
+    valueCounts.forEach((key, count) {
+      if (count > maxCount) {
+        mostFrequentValue = key;
+        maxCount = count;
+      }
+    });
+
+    final finalPage = finalEntities.firstWhere(
+      (finalpage) => finalpage.mostFrequentDigit == mostFrequentValue,
+      orElse: () => finalEntities.first,
+    );
+    return finalPage;
   }
 }
