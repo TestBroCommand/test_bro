@@ -18,11 +18,9 @@ final router = GoRouter(
     ),
     GoRoute(
       name: 'quiz',
-      path: '/quiz/:startPage/:pages/:resultPage',
+      path: '/quiz/:id',
       builder: (context, state) => QuizScreen(
-        startPage: state.pathParameters['startPage']!,
-        pages: state.pathParameters['pages']!.split(":"),
-        resultPage: state.pathParameters['resultPage']!.split(":"),
+        id: state.pathParameters['id']!,
       ),
     ),
     // BottomNavigationBar

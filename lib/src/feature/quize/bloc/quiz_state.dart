@@ -51,7 +51,7 @@ final class QuizFailure extends QuizState {
 }
 
 final class QuizCompleted extends QuizState {
-  final FinalPageQuiz finalpage;
+  final FinalEntity finalpage;
 
   const QuizCompleted({required this.finalpage});
   @override

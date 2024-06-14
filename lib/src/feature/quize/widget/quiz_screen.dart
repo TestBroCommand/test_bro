@@ -10,13 +10,9 @@ import 'package:test_bro/src/feature/quize/widget/first_page.dart';
 import 'package:test_bro/src/feature/quize/widget/question_page.dart';
 
 class QuizScreen extends StatefulWidget {
-  final String startPage;
-  final List<String> resultPage;
-  final List<String> pages;
+  final String id;
   const QuizScreen({
-    required this.startPage,
-    required this.pages,
-    required this.resultPage,
+    required this.id,
     super.key,
   });
 
@@ -51,6 +47,12 @@ class _QuizScreenState extends State<QuizScreen> {
                   state.props[2] as List<PageEntity>;
               return PreloadPageView(
                 controller: _pageController,
+                onPageChanged: (index) {
+                  print(index);
+                  if (index == pageEntities.length) {
+                    context.read<QuizBloc>().add(QuizCompletedEvent());
+                  }
+                },
                 children: _buildPages(
                   context: context,
                   startEntity: startEntity,
@@ -60,18 +62,24 @@ class _QuizScreenState extends State<QuizScreen> {
                   answers: state.answers,
                 ),
               );
+            } else if (state is QuizCompleted) {
+              final finalPage = state.finalpage;
+              return FinalPageQuiz(
+                image: finalPage.image,
+                name: finalPage.name,
+                description: finalPage.description,
+                mostFrequentDigit: finalPage.mostFrequentDigit,
+              );
             }
             return Container();
           },
         ),
       );
 
-  void _loadData(BuildContext context) {
+  Future<void> _loadData(BuildContext context) async {
     context.read<QuizBloc>().add(
           LoadDataEvent(
-            startPageId: widget.startPage,
-            finalPageId: widget.resultPage,
-            pagesId: widget.pages,
+            id: widget.id,
           ),
         );
   }
@@ -125,6 +133,4 @@ class _QuizScreenState extends State<QuizScreen> {
     // );
     return pages;
   }
-
-  
 }

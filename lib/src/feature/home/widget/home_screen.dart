@@ -22,7 +22,6 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     _textController = TextEditingController();
-
     super.initState();
   }
 
@@ -60,7 +59,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           padding: const EdgeInsets.all(16.0),
                           child: TextField(
                             controller: _textController,
-                            decoration: InputDecoration(
+                            decoration: const InputDecoration(
                               labelText: 'Search',
                               border: OutlineInputBorder(),
                             ),
