@@ -16,15 +16,8 @@ final router = GoRouter(
         stackTrace: stackTrace,
       );
     }
-    SentryException(
-      type: 'quiz',
-      value: TelegramWebApp.instance.initDataUnsafe!.start_param,
-    );
     if (TelegramWebApp.instance.initDataUnsafe?.start_param != null) {
       if (TelegramWebApp.instance.initDataUnsafe!.start_param == "quiz") {
-        logger.info(
-          "Start param: ${TelegramWebApp.instance.initDataUnsafe!.start_param}",
-        );
         return null;
       }
     }
