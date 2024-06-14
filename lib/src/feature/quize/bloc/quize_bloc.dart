@@ -12,6 +12,7 @@ part 'quiz_state.dart';
 
 class QuizBloc extends Bloc<QuizEvent, QuizState> {
   PBrepository repository;
+  String? id;
   String? startPageId;
   List<String>? finalPageId;
   List<String>? pagesId;
@@ -19,9 +20,7 @@ class QuizBloc extends Bloc<QuizEvent, QuizState> {
   QuizBloc(this.repository) : super(QuizInitial()) {
     emit(QuizLoading());
     on<LoadDataEvent>((event, emit) async {
-      startPageId = event.startPageId;
-      finalPageId = event.finalPageId;
-      pagesId = event.pagesId;
+      id = event.id;
       await _loadData(event, emit);
     });
     on<ResetStateEvent>((event, emit) async {
@@ -43,26 +42,30 @@ class QuizBloc extends Bloc<QuizEvent, QuizState> {
       final loadedState = state as QuizLoaded;
       final answers = loadedState.answers;
 
-      emit(QuizLoaded(
-        startPage: loadedState.startPage,
-        finalPage: loadedState.finalPage,
-        pages: loadedState.pages,
-        answers: answers,
-      ),);
+      emit(
+        QuizLoaded(
+          startPage: loadedState.startPage,
+          finalPage: loadedState.finalPage,
+          pages: loadedState.pages,
+          answers: answers,
+        ),
+      );
     }
   }
 
   Future<void> _loadData(LoadDataEvent event, Emitter<QuizState> emit) async {
     try {
-      final startPage = await repository.getStartPage(startPageId ?? "");
-      final pages = await repository.getAllPages(pagesId ?? []);
-      final resultPage = await repository.getAllFinalles(finalPageId ?? []);
-      emit(QuizLoaded(
-        startPage: startPage,
-        finalPage: resultPage,
-        pages: pages,
-        answers: const {},
-      ),);
+      final startPage = await repository.getStartPage(id ?? "");
+      final pages = await repository.getAllPages(id ?? "");
+      final resultPage = await repository.getAllFinalles(id ?? "");
+      emit(
+        QuizLoaded(
+          startPage: startPage,
+          finalPage: resultPage,
+          pages: pages,
+          answers: const {},
+        ),
+      );
     } catch (e) {
       emit(QuizFailure(e));
     }

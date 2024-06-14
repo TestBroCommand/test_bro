@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:preload_page_view/preload_page_view.dart';
-import 'package:test_bro/src/core/utils/router.dart';
 import 'package:test_bro/src/feature/quize/bloc/quize_bloc.dart';
 
 class FirstPageQuiz extends StatelessWidget {
@@ -31,7 +30,7 @@ class FirstPageQuiz extends StatelessWidget {
                   IconButton(
                     alignment: Alignment.topLeft,
                     onPressed: () => context.pop(),
-                    icon: Icon(Icons.arrow_back_ios_rounded),
+                    icon: const Icon(Icons.arrow_back_ios_rounded),
                   ),
                 ],
               ),

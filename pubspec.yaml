@@ -12,6 +12,7 @@ environment:
   flutter: ">=3.10.5 <4.0.0"
 
 dependencies:
+  analytics: ^2.0.3
   async: any
   bloc_concurrency: ^0.2.2
   collection: any
@@ -24,12 +25,14 @@ dependencies:
     sdk: flutter
   go_router: ^14.1.4
   intl: any
+  js_import: ^1.0.2
   logging: ^1.2.0
   meta: any
   mocktail: ^1.0.1
   pocketbase: ^0.18.1
+  posthog_flutter: ^4.5.0
   preload_page_view: ^0.2.0
-  sentry_flutter: ^7.12.0
+  sentry_flutter: ^8.2.0
   shared_preferences: ^2.2.2
   stack_trace: ^1.11.0
   url_strategy: ^0.2.0

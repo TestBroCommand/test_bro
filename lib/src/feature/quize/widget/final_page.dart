@@ -1,7 +1,11 @@
+import 'dart:js' as js;
+
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:posthog_flutter/posthog_flutter.dart';
 
-class FinalPageQuiz extends StatelessWidget {
+class FinalPageQuiz extends StatefulWidget {
   final Map<int, int> answers;
   final String image;
   final String name;
@@ -15,6 +19,19 @@ class FinalPageQuiz extends StatelessWidget {
   });
 
   @override
+  _FinalPageQuizState createState() => _FinalPageQuizState();
+}
+
+class _FinalPageQuizState extends State<FinalPageQuiz> {
+  @override
+  Future<void> initState() async {
+    if (kDebugMode) {
+      js.context.callMethod('fullScreen');
+    }
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) => Scaffold(
         body: ListView(
           children: [
@@ -26,7 +43,7 @@ class FinalPageQuiz extends StatelessWidget {
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(20),
                   child: Image.network(
-                    image,
+                    widget.image,
                     fit: BoxFit.fill,
                   ),
                 ),
@@ -36,7 +53,7 @@ class FinalPageQuiz extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 25.0),
               child: Text(
                 textAlign: TextAlign.center,
-                name,
+                widget.name,
                 style: const TextStyle(
                   color: Color.fromRGBO(0, 122, 255, 1),
                   fontSize: 40,
@@ -93,8 +110,13 @@ class FinalPageQuiz extends StatelessWidget {
               ),
             ),
             ElevatedButton(
-              onPressed: () =>
-                  context.push('/'), // print('$name $description $image'),
+              onPressed: () async {
+                await Posthog().capture(
+                  eventName: "quiz_complete",
+                  properties: {"quiz_id": widget.name},
+                );
+                context.push('/');
+              }, // print('$name $description $image'),
               child: const Text("Главная"), //'Ответы'),
             ),
           ],
