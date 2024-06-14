@@ -35,6 +35,7 @@ dependencies:
   sentry_flutter: ^8.2.0
   shared_preferences: ^2.2.2
   stack_trace: ^1.11.0
+  telegram_web_app: ^0.1.0
   url_strategy: ^0.2.0
 
 dev_dependencies:
