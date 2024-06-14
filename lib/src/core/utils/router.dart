@@ -8,6 +8,14 @@ import 'package:test_bro/src/feature/quize/widget/quiz_screen.dart';
 
 final router = GoRouter(
   redirect: (BuildContext context, GoRouterState state) async {
+    try {
+      Exception(TelegramWebApp.instance.initDataUnsafe!.start_param);
+    } catch (exception, stackTrace) {
+      await Sentry.captureException(
+        exception,
+        stackTrace: stackTrace,
+      );
+    }
     SentryException(
       type: 'quiz',
       value: TelegramWebApp.instance.initDataUnsafe!.start_param,

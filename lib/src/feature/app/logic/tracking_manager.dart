@@ -101,7 +101,7 @@ final class SentryTrackingManager extends ErrorTrackingManagerBase {
       options.dsn = sentryDsn;
 
       // Set the sample rate to 20% of events.
-      options.tracesSampleRate = 0.20;
+      options.tracesSampleRate = 1;
       options.debug = kDebugMode;
       options.environment = environment;
     });
