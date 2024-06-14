@@ -19,10 +19,13 @@ RUN mkdir /app/
 COPY . /app/
 WORKDIR /app/
 RUN flutter build web
+EXPOSE 80
+WORKDIR /app/build/web
+CMD ["python3", "-m", "http.server", "80"]
 
 # Stage 2
-FROM nginx:1.21.1-alpine
-COPY --from=build-env /app/build/web /usr/share/nginx/html
-COPY --from=build-env /app/nginx.conf /etc/nginx
-EXPOSE 80
-CMD ["nginx", "-g", "daemon off;"]
+##FROM nginx:1.21.1-alpine
+#COPY --from=build-env /app/build/web /usr/share/nginx/html
+#COPY --from=build-env /app/nginx.conf /etc/nginx
+#EXPOSE 80
+#CMD ["nginx", "-g", "daemon off;"]
