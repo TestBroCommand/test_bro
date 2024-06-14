@@ -5,6 +5,9 @@ import 'package:test_bro/src/feature/quize/widget/quiz_screen.dart';
 
 final router = GoRouter(
   redirect: (BuildContext context, GoRouterState state) async {
+    if (state.matchedLocation.contains("/quiz")) {
+      return null;
+    }
     return '/';
   },
   initialLocation: '/',
@@ -15,11 +18,9 @@ final router = GoRouter(
     ),
     GoRoute(
       name: 'quiz',
-      path: '/quiz/:startPage/:pages/:resultPage',
+      path: '/quiz/:id',
       builder: (context, state) => QuizScreen(
-        startPage: state.pathParameters['startPage']!,
-        pages: state.pathParameters['pages']!.split(":"),
-        resultPage: state.pathParameters['resultPage']!.split(":"),
+        id: state.pathParameters['id']!,
       ),
     ),
     // BottomNavigationBar

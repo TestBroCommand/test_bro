@@ -10,14 +10,9 @@ import 'package:test_bro/src/feature/quize/widget/first_page.dart';
 import 'package:test_bro/src/feature/quize/widget/question_page.dart';
 
 class QuizScreen extends StatefulWidget {
-  final String startPage;
-  final List<String> resultPage;
-  final List<String> pages;
+  final String id;
   const QuizScreen({
-    required this.startPage,
-    required this.pages,
-    required this.resultPage,
-    super.key,
+    required this.id, super.key,
   });
 
   @override
@@ -69,9 +64,7 @@ class _QuizScreenState extends State<QuizScreen> {
   void _loadData(BuildContext context) {
     context.read<QuizBloc>().add(
           LoadDataEvent(
-            startPageId: widget.startPage,
-            finalPageId: widget.resultPage,
-            pagesId: widget.pages,
+            id: widget.id,
           ),
         );
   }
