@@ -29,27 +29,29 @@ class QuizBloc extends Bloc<QuizEvent, QuizState> {
     on<AnswerSelected>((event, emit) async {
       await _selectAnswer(event, emit);
     });
-    on<GenerateFinalScreen>((event, emit) async {
+    on<QuizCompletedEvent>((event, emit) async {
       await _generateFinalScreen(event, emit);
+    });
+    on<UpdateCompleteFieldEvent>((event, emit) async {
+      await _updateTakers(event, emit);
     });
   }
 
   Future<void> _generateFinalScreen(
-    GenerateFinalScreen event,
+    QuizCompletedEvent event,
     Emitter<QuizState> emit,
   ) async {
     if (state is QuizLoaded) {
       final loadedState = state as QuizLoaded;
       final answers = loadedState.answers;
-
-      emit(
-        QuizLoaded(
-          startPage: loadedState.startPage,
-          finalPage: loadedState.finalPage,
-          pages: loadedState.pages,
-          answers: answers,
-        ),
+      final finalsEntities = loadedState.finalPage;
+      final finalPageEntity = _determineFinalPage(
+        finalEntities: finalsEntities,
+        answers: answers,
       );
+      emit(QuizCompleted(
+        finalpage: finalPageEntity,
+      ));
     }
   }
 
@@ -57,11 +59,11 @@ class QuizBloc extends Bloc<QuizEvent, QuizState> {
     try {
       final startPage = await repository.getStartPage(id ?? "");
       final pages = await repository.getAllPages(id ?? "");
-      final resultPage = await repository.getAllFinalles(id ?? "");
+      final resultPages = await repository.getAllFinalles(id ?? "");
       emit(
         QuizLoaded(
           startPage: startPage,
-          finalPage: resultPage,
+          finalPage: resultPages,
           pages: pages,
           answers: const {},
         ),
@@ -99,5 +101,46 @@ class QuizBloc extends Bloc<QuizEvent, QuizState> {
     } catch (e) {
       emit(QuizFailure(e.toString()));
     }
+  }
+
+  Future<void> _updateTakers(
+    UpdateCompleteFieldEvent event,
+    Emitter<QuizState> emit,
+  ) async {
+    try {
+      await repository.updateTakers(event.quizId);
+    } catch (e) {
+      emit(QuizFailure(e.toString()));
+    }
+  }
+
+  FinalEntity _determineFinalPage({
+    required List<FinalEntity> finalEntities,
+    required Map<int, int> answers,
+  }) {
+    final Map<int, int> valueCounts = {};
+
+    for (final value in answers.values) {
+      if (valueCounts.containsKey(value)) {
+        valueCounts[value] = valueCounts[value]! + 1;
+      } else {
+        valueCounts[value] = 1;
+      }
+    }
+    int mostFrequentValue = valueCounts.keys.first;
+    int maxCount = valueCounts[mostFrequentValue]!;
+
+    valueCounts.forEach((key, count) {
+      if (count > maxCount) {
+        mostFrequentValue = key;
+        maxCount = count;
+      }
+    });
+
+    final finalPage = finalEntities.firstWhere(
+      (finalpage) => finalpage.mostFrequentDigit == mostFrequentValue,
+      orElse: () => finalEntities.first,
+    );
+    return finalPage;
   }
 }

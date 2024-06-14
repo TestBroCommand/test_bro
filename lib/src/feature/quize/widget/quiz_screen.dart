@@ -12,7 +12,8 @@ import 'package:test_bro/src/feature/quize/widget/question_page.dart';
 class QuizScreen extends StatefulWidget {
   final String id;
   const QuizScreen({
-    required this.id, super.key,
+    required this.id,
+    super.key,
   });
 
   @override
@@ -37,23 +38,37 @@ class _QuizScreenState extends State<QuizScreen> {
             if (state is QuizLoading) {
               return const Center(child: CircularProgressIndicator());
             } else if (state is QuizFailure) {
-              return const Center(child: Text("ferg"));
+              return Center(child: Text(state.error.toString()));
             } else if (state is QuizLoaded) {
               final StartEntity startEntity = state.props[0] as StartEntity;
-              final FinalEntity finalEntity =
-                  (state.props[1] as List<FinalEntity>)[0];
+              final List<FinalEntity> finalEntites =
+                  state.props[1] as List<FinalEntity>;
               final List<PageEntity> pageEntities =
                   state.props[2] as List<PageEntity>;
               return PreloadPageView(
                 controller: _pageController,
+                onPageChanged: (index) {
+                  if (index == pageEntities.length) {
+                    context.read<QuizBloc>().add(QuizCompletedEvent());
+                  }
+                },
                 children: _buildPages(
                   context: context,
                   startEntity: startEntity,
                   pageEntities: pageEntities,
                   pageController: _pageController,
-                  finalEntity: finalEntity,
+                  finalEntities: finalEntites,
                   answers: state.answers,
                 ),
+              );
+            } else if (state is QuizCompleted) {
+              final finalPage = state.finalpage;
+              return FinalPageQuiz(
+                quizId: widget.id,
+                image: finalPage.image,
+                name: finalPage.name,
+                description: finalPage.description,
+                mostFrequentDigit: finalPage.mostFrequentDigit,
               );
             }
             return Container();
@@ -61,7 +76,7 @@ class _QuizScreenState extends State<QuizScreen> {
         ),
       );
 
-  void _loadData(BuildContext context) {
+  Future<void> _loadData(BuildContext context) async {
     context.read<QuizBloc>().add(
           LoadDataEvent(
             id: widget.id,
@@ -74,7 +89,7 @@ class _QuizScreenState extends State<QuizScreen> {
     required StartEntity startEntity,
     required List<PageEntity> pageEntities,
     required PreloadPageController pageController,
-    required FinalEntity finalEntity,
+    required List<FinalEntity> finalEntities,
     required Map<int, int> answers,
   }) {
     final List<Widget> pages = [];
@@ -82,21 +97,19 @@ class _QuizScreenState extends State<QuizScreen> {
     pages.add(
       FirstPageQuiz(
         description: startEntity.description,
-        image:
-            "https://pb.testbroapp.ru/api/files/start_pages/${startEntity.id.toString()}/${startEntity.image}",
+        image: startEntity.image,
         name: startEntity.name,
         pageController: pageController,
       ),
     );
+
     for (int i = 0; i < pageEntities.length; i++) {
-      if (i != pages.length) {}
       pages.add(
         QuestionPage(
           currentQuestion: i,
           sumQuestions: pageEntities.length,
           question: pageEntities[i].question,
-          pathToImage:
-              "https://pb.testbroapp.ru/api/files/quiz_page/${pageEntities[i].id.toString()}/${pageEntities[i].image}",
+          pathToImage: pageEntities[i].image,
           answers: Map<int, String>.from(
             pageEntities[i].answers.map(
                   (key, value) => MapEntry(
@@ -110,14 +123,14 @@ class _QuizScreenState extends State<QuizScreen> {
       );
     }
 
-    pages.add(
-      FinalPageQuiz(
-        image: finalEntity.image,
-        name: finalEntity.name,
-        description: finalEntity.description,
-        answers: answers,
-      ),
-    );
+    // pages.add(
+    //   FinalPageQuiz(
+    //     image: finalPage.image,
+    //     name: finalPage.name,
+    //     description: finalPage.description,
+    //     mostFrequentDigit: finalPage.mostFrequentDigit,
+    //   ),
+    // );
     return pages;
   }
 }

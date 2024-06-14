@@ -121,7 +121,7 @@ class _QuestionPageState extends State<QuestionPage> {
     context.read<QuizBloc>().add(
           AnswerSelected(
             widget.currentQuestion,
-            selectedAnswer!,
+            selectedAnswer! + 1,
           ),
         );
   }

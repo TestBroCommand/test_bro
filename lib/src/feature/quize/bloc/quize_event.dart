@@ -34,10 +34,14 @@ class AnswerSelected extends QuizEvent {
   List<Object> get props => [questionIndex, answerIndex];
 }
 
-class GenerateFinalScreen extends QuizEvent {
-  final Map<int, int> answers;
-  GenerateFinalScreen({required this.answers});
+class QuizCompletedEvent extends QuizEvent {}
+
+class UpdateCompleteFieldEvent extends QuizEvent {
+  final String quizId;
+  UpdateCompleteFieldEvent({
+    required this.quizId,
+  });
 
   @override
-  List<Object> get props => [answers];
+  List<Object> get props => [quizId];
 }

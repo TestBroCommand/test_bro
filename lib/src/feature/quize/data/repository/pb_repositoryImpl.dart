@@ -1,3 +1,4 @@
+import 'package:meta/meta.dart';
 import 'package:test_bro/src/feature/quize/data/data_source/pb_dataSource.dart';
 import 'package:test_bro/src/feature/quize/data/repository/pb_respository.dart';
 import 'package:test_bro/src/feature/quize/model/enities/page_enity.dart';
@@ -28,5 +29,10 @@ class PBrepositoryImpl implements PBrepository {
     final pagesDTOs = await dataSource.getPages(id);
     final pages = pagesDTOs.map((dto) => PageEntity.fromDto(dto)).toList();
     return pages;
+  }
+
+  @override
+  Future<void> updateTakers(String id) async {
+    await dataSource.addNewTaker(id);
   }
 }

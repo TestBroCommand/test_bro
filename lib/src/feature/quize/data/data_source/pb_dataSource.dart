@@ -56,4 +56,18 @@ class PBdataSource {
         response.map((record) => PageDTO.fromJson(record.toJson())).toList();
     return pageDTO;
   }
+
+
+  Future<void> addNewTaker(String id) async {
+    const config = Config();
+    final pb = PocketBase('https://pb.testbroapp.ru');
+    await pb.admins.authWithPassword(
+      config.pbEmail,
+      config.pbPass,
+    );
+    final lastCompleteRecordModel = await pb.collection('quizes').getOne(id);
+    final lastComplete = lastCompleteRecordModel.getIntValue("complete");
+    final updatedData = {'complete': lastComplete + 1};
+    await pb.collection('quizes').update(id, body: updatedData);
+  }
 }

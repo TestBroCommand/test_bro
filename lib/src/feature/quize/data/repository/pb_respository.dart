@@ -6,4 +6,5 @@ abstract interface class PBrepository {
   Future<StartEntity> getStartPage(String id);
   Future<List<FinalEntity>> getAllFinalles(String id);
   Future<List<PageEntity>> getAllPages(String id);
+  Future<void> updateTakers(String id);
 }
