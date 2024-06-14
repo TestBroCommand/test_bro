@@ -8,20 +8,12 @@ sealed class QuizEvent extends Equatable {
 }
 
 class LoadDataEvent extends QuizEvent {
-  final String startPageId;
-  final List<String> finalPageId;
-  final List<String> pagesId;
-  LoadDataEvent({
-    required this.startPageId,
-    required this.finalPageId,
-    required this.pagesId,
-  });
+  final String id;
+  LoadDataEvent({required this.id});
 
   @override
   List<Object> get props => [
-        startPageId,
-        finalPageId,
-        pagesId,
+        id,
       ];
 }
 
@@ -42,11 +34,14 @@ class AnswerSelected extends QuizEvent {
   List<Object> get props => [questionIndex, answerIndex];
 }
 
-class GenerateFinalScreen extends QuizEvent {
-  final Map<int, int> answers;
-  GenerateFinalScreen({required this.answers});
+class QuizCompletedEvent extends QuizEvent {}
 
+class UpdateCompleteFieldEvent extends QuizEvent {
+  final String quizId;
+  UpdateCompleteFieldEvent({
+    required this.quizId,
+  });
 
   @override
-  List<Object> get props => [answers];
+  List<Object> get props => [quizId];
 }

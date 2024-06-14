@@ -17,16 +17,21 @@ class PBrepositoryImpl implements PBrepository {
   }
 
   @override
-  Future<List<FinalEntity>> getAllFinalles(List<String> id) async {
+  Future<List<FinalEntity>> getAllFinalles(String id) async {
     final finalDTOs = await dataSource.getFinalPage(id);
     final finals = finalDTOs.map((dto) => FinalEntity.fromDto(dto)).toList();
     return finals;
   }
 
   @override
-  Future<List<PageEntity>> getAllPages(List<String> id) async {
+  Future<List<PageEntity>> getAllPages(String id) async {
     final pagesDTOs = await dataSource.getPages(id);
     final pages = pagesDTOs.map((dto) => PageEntity.fromDto(dto)).toList();
     return pages;
+  }
+
+  @override
+  Future<void> updateTakers(String id) async {
+    await dataSource.addNewTaker(id);
   }
 }

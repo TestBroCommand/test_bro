@@ -143,4 +143,6 @@ pubspec.lock
 
 # FVM Version Cache
 .fvm/
+.vscode/settings.json
 Dockerfile
+

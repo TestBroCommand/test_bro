@@ -1,18 +1,39 @@
-import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
+import 'dart:js' as js;
 
-class FinalPageQuiz extends StatelessWidget {
-  final Map<int, int> answers;
+import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
+import 'package:posthog_flutter/posthog_flutter.dart';
+import 'package:test_bro/src/feature/quize/bloc/quize_bloc.dart';
+
+class FinalPageQuiz extends StatefulWidget {
+  final String quizId;
   final String image;
   final String name;
   final String description;
+  final int mostFrequentDigit;
   const FinalPageQuiz({
-    required this.answers,
     required this.image,
     required this.name,
     required this.description,
+    required this.mostFrequentDigit,
+    required this.quizId,
     super.key,
   });
+
+  @override
+  _FinalPageQuizState createState() => _FinalPageQuizState();
+}
+
+class _FinalPageQuizState extends State<FinalPageQuiz> {
+  @override
+  void initState() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _initialize(context);
+    });
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) => Scaffold(
@@ -26,7 +47,7 @@ class FinalPageQuiz extends StatelessWidget {
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(20),
                   child: Image.network(
-                    image,
+                    widget.image,
                     fit: BoxFit.fill,
                   ),
                 ),
@@ -36,7 +57,7 @@ class FinalPageQuiz extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 25.0),
               child: Text(
                 textAlign: TextAlign.center,
-                name,
+                widget.name,
                 style: const TextStyle(
                   color: Color.fromRGBO(0, 122, 255, 1),
                   fontSize: 40,
@@ -93,11 +114,26 @@ class FinalPageQuiz extends StatelessWidget {
               ),
             ),
             ElevatedButton(
-              onPressed: () =>
-                  context.push('/'), // print('$name $description $image'),
-              child: const Text("Главная"), //'Ответы'),
+              onPressed: () async {
+                await Posthog().capture(
+                  eventName: "quiz_complete",
+                  properties: {"quiz_id": widget.name},
+                );
+
+                context.push('/');
+              },
+              child: const Text("Главная"),
             ),
           ],
         ),
       );
+
+  Future<void> _initialize(BuildContext context) async {
+    if (kDebugMode) {
+      js.context.callMethod('fullScreen');
+    }
+    context
+        .read<QuizBloc>()
+        .add(UpdateCompleteFieldEvent(quizId: widget.quizId));
+  }
 }

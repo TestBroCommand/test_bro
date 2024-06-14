@@ -4,11 +4,21 @@
   // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
   "version": "0.2.0",
   "configurations": [
+
+
     {
-      "name": "sizzle_starter",
-      "request": "launch",
-      "type": "dart"
-    },
+			"name": "sizzle_starter",
+			"request": "launch",
+			"type": "dart",
+			"args": [
+ //       "--dart-define=SENTRY_DSN=https://6b3248858ed34f2abe97adf6b2af0c34@glitchtip.testbroapp.ru/1",
+  //"--dart-define=SENTRY_ENVIRONMENT=dev"
+        //			"--flavor",
+//				"development",
+	//			"--target",
+		//		"lib/main_development.dart"
+			]
+		},
     {
       "name": "sizzle_starter (profile mode)",
       "request": "launch",
