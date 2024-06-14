@@ -4,7 +4,7 @@ import 'package:test_bro/src/feature/home/widget/home_screen.dart';
 import 'package:test_bro/src/feature/quize/widget/quiz_screen.dart';
 
 final router = GoRouter(
-  redirect: (BuildContext context, GoRouterState state) {
+  redirect: (BuildContext context, GoRouterState state) async {
     if (state.matchedLocation.contains("/quiz")) {
       return null;
     }
