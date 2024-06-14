@@ -24,8 +24,8 @@ class FinalPageQuiz extends StatefulWidget {
 
 class _FinalPageQuizState extends State<FinalPageQuiz> {
   @override
-  Future<void> initState() async {
-    if (kDebugMode) {
+  void initState() {
+    if (!kDebugMode) {
       js.context.callMethod('fullScreen');
     }
     super.initState();
