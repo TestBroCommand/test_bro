@@ -48,7 +48,6 @@ class _QuizScreenState extends State<QuizScreen> {
               return PreloadPageView(
                 controller: _pageController,
                 onPageChanged: (index) {
-                  print(index);
                   if (index == pageEntities.length) {
                     context.read<QuizBloc>().add(QuizCompletedEvent());
                   }
@@ -65,6 +64,7 @@ class _QuizScreenState extends State<QuizScreen> {
             } else if (state is QuizCompleted) {
               final finalPage = state.finalpage;
               return FinalPageQuiz(
+                quizId: widget.id,
                 image: finalPage.image,
                 name: finalPage.name,
                 description: finalPage.description,

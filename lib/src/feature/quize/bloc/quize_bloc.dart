@@ -32,6 +32,9 @@ class QuizBloc extends Bloc<QuizEvent, QuizState> {
     on<QuizCompletedEvent>((event, emit) async {
       await _generateFinalScreen(event, emit);
     });
+    on<UpdateCompleteFieldEvent>((event, emit) async {
+      await _updateTakers(event, emit);
+    });
   }
 
   Future<void> _generateFinalScreen(
@@ -95,6 +98,17 @@ class QuizBloc extends Bloc<QuizEvent, QuizState> {
           ),
         );
       }
+    } catch (e) {
+      emit(QuizFailure(e.toString()));
+    }
+  }
+
+  Future<void> _updateTakers(
+    UpdateCompleteFieldEvent event,
+    Emitter<QuizState> emit,
+  ) async {
+    try {
+      await repository.updateTakers(event.quizId);
     } catch (e) {
       emit(QuizFailure(e.toString()));
     }

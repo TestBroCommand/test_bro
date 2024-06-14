@@ -2,10 +2,14 @@ import 'dart:js' as js;
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:posthog_flutter/posthog_flutter.dart';
+import 'package:test_bro/src/feature/home/bloc/home_bloc.dart';
+import 'package:test_bro/src/feature/quize/bloc/quize_bloc.dart';
 
 class FinalPageQuiz extends StatefulWidget {
+  final String quizId;
   final String image;
   final String name;
   final String description;
@@ -15,6 +19,7 @@ class FinalPageQuiz extends StatefulWidget {
     required this.name,
     required this.description,
     required this.mostFrequentDigit,
+    required this.quizId,
     super.key,
   });
 
@@ -26,7 +31,7 @@ class _FinalPageQuizState extends State<FinalPageQuiz> {
   @override
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      _initialize();
+      _initialize(context);
     });
     super.initState();
   }
@@ -115,6 +120,7 @@ class _FinalPageQuizState extends State<FinalPageQuiz> {
                   eventName: "quiz_complete",
                   properties: {"quiz_id": widget.name},
                 );
+
                 context.push('/');
               },
               child: const Text("Главная"),
@@ -123,9 +129,12 @@ class _FinalPageQuizState extends State<FinalPageQuiz> {
         ),
       );
 
-  Future<void> _initialize() async {
+  Future<void> _initialize(BuildContext context) async {
     if (kDebugMode) {
       js.context.callMethod('fullScreen');
     }
+    context
+        .read<QuizBloc>()
+        .add(UpdateCompleteFieldEvent(quizId: widget.quizId));
   }
 }

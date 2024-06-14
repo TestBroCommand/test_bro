@@ -35,3 +35,13 @@ class AnswerSelected extends QuizEvent {
 }
 
 class QuizCompletedEvent extends QuizEvent {}
+
+class UpdateCompleteFieldEvent extends QuizEvent {
+  final String quizId;
+  UpdateCompleteFieldEvent({
+    required this.quizId,
+  });
+
+  @override
+  List<Object> get props => [quizId];
+}
