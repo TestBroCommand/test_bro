@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:telegram_web_app/telegram_web_app.dart';
 import 'package:test_bro/src/core/utils/logger.dart';
 import 'package:test_bro/src/feature/home/widget/home_screen.dart';
@@ -9,8 +10,11 @@ final router = GoRouter(
   redirect: (BuildContext context, GoRouterState state) async {
     if (TelegramWebApp.instance.initDataUnsafe?.start_param != null) {
       if (TelegramWebApp.instance.initDataUnsafe!.start_param == "quiz") {
+        SentryException(
+            type: 'quiz',
+            value: TelegramWebApp.instance.initDataUnsafe!.start_param,);
         logger.info(
-            "Start param: ${TelegramWebApp.instance.initDataUnsafe!.start_param}");
+            "Start param: ${TelegramWebApp.instance.initDataUnsafe!.start_param}",);
         return null;
       }
     }
