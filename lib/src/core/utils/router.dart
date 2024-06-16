@@ -8,6 +8,8 @@ final router = GoRouter(
   redirect: (BuildContext context, GoRouterState state) async {
     print(TelegramWebApp.instance.initDataUnsafe!.query_id);
     print(TelegramWebApp.instance.initDataUnsafe!.start_param);
+    print(TelegramWebApp.instance.initData.user.firstname);
+    print(TelegramWebApp.instance.initDataUnsafe?.query_id);
     if (TelegramWebApp.instance.initDataUnsafe?.start_param != null) {
       return "/quiz/${TelegramWebApp.instance.initDataUnsafe!.start_param}";
     }
