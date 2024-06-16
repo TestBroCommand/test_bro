@@ -3,8 +3,7 @@ import 'dart:async';
 import 'package:test_bro/src/core/utils/logger.dart';
 import 'package:test_bro/src/feature/app/logic/app_runner.dart';
 
-void main() async {
-  //setPathUrlStrategy();
+void main() {
   logger.runLogging(
     () => runZonedGuarded(
       () => const AppRunner().initializeAndRun(),

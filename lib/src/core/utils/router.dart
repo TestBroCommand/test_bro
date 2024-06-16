@@ -6,10 +6,6 @@ import 'package:test_bro/src/feature/quize/widget/quiz_screen.dart';
 
 final router = GoRouter(
   redirect: (BuildContext context, GoRouterState state) async {
-    print(TelegramWebApp.instance.initDataUnsafe!.query_id);
-    print(TelegramWebApp.instance.initDataUnsafe!.toString());
-    print(TelegramWebApp.instance.initData.user.firstname);
-    print(TelegramWebApp.instance.initDataUnsafe?.query_id);
     if (TelegramWebApp.instance.initDataUnsafe?.start_param != null) {
       return "/quiz/${TelegramWebApp.instance.initDataUnsafe!.start_param}";
     }
