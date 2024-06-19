@@ -40,6 +40,7 @@ class _QuestionPageState extends State<QuestionPage> {
     setState(() {
       answerChecker = value;
       selectedAnswer = answerIndex;
+      nextPage();
     });
   }
 
