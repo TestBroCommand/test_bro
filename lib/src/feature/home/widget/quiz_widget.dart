@@ -30,10 +30,6 @@ class QuizWidget extends StatelessWidget {
               );
             },
             child: Card(
-              clipBehavior: Clip.hardEdge,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(5.0),
-              ),
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -46,19 +42,27 @@ class QuizWidget extends StatelessWidget {
                     "https://pb.testbroapp.ru/api/files/quizes/" +
                         "${currentQuiz.id.toString()}/${currentQuiz.image}",
                   ),
-                  Row(
-                    children: [
-                      Text(currentQuiz.takers.toString()),
-                      const SizedBox(width: 5),
-                      const Icon(Icons.ads_click_rounded),
-                    ],
-                  ),
-                  const SizedBox(width: 15),
-                  Text(
-                    currentQuiz.title,
-                    style: const TextStyle(overflow: TextOverflow.ellipsis),
-                    maxLines: 1,
-                  ),
+                  Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            currentQuiz.title,
+                            maxLines: 1,
+                          ),
+                          const SizedBox(height: 17),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            children: [
+                              Text(currentQuiz.takers.toString()),
+                              const SizedBox(width: 5),
+                              const Icon(Icons.check_circle_outline_rounded),
+                            ],
+                          ),
+                        ],
+                      ),),
                 ],
               ),
             ),

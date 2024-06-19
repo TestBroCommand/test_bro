@@ -2,6 +2,7 @@ import 'dart:js' as js;
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:posthog_flutter/posthog_flutter.dart';
@@ -9,6 +10,7 @@ import 'package:test_bro/src/feature/quize/bloc/quize_bloc.dart';
 
 class FinalPageQuiz extends StatefulWidget {
   final String quizId;
+  final String finalId;
   final String image;
   final String name;
   final String description;
@@ -19,6 +21,7 @@ class FinalPageQuiz extends StatefulWidget {
     required this.description,
     required this.mostFrequentDigit,
     required this.quizId,
+    required this.finalId,
     super.key,
   });
 
@@ -47,7 +50,7 @@ class _FinalPageQuizState extends State<FinalPageQuiz> {
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(20),
                   child: Image.network(
-                    widget.image,
+                    "https://pb.testbroapp.ru/api/files/final_page/${widget.finalId}/${widget.image}",
                     fit: BoxFit.fill,
                   ),
                 ),
@@ -109,7 +112,11 @@ class _FinalPageQuizState extends State<FinalPageQuiz> {
                     Icons.copy_outlined,
                     color: Colors.white,
                   ),
-                  onPressed: () {},
+                  onPressed: () async {
+                    await Clipboard.setData(ClipboardData(
+                        text:
+                            "t.me/testquizebro_bot/base?startapp=${widget.quizId}"));
+                  },
                 ),
               ),
             ),
@@ -129,7 +136,7 @@ class _FinalPageQuizState extends State<FinalPageQuiz> {
       );
 
   Future<void> _initialize(BuildContext context) async {
-    if (kDebugMode) {
+    if (!kDebugMode) {
       js.context.callMethod('fullScreen');
     }
     context

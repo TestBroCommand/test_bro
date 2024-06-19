@@ -61,8 +61,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           child: TextField(
                             controller: _textController,
                             decoration: const InputDecoration(
-                              labelText: 'Search',
-                              border: OutlineInputBorder(),
+                              label: Text('Поиск'),
                             ),
                             onChanged: (value) => setState(() {
                               _searchText = _textController.text.toLowerCase();

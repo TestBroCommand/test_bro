@@ -8,6 +8,8 @@ import 'package:test_bro/src/feature/quize/widget/custom_progress_bar.dart';
 
 class QuestionPage extends StatefulWidget {
   final int sumQuestions;
+  final String id;
+  final String questionId;
   final int currentQuestion;
   final String question;
   final String pathToImage;
@@ -21,6 +23,8 @@ class QuestionPage extends StatefulWidget {
     required this.currentQuestion,
     required this.sumQuestions,
     required this.pageController,
+    required this.id,
+    required this.questionId,
     super.key,
   });
 
@@ -76,7 +80,7 @@ class _QuestionPageState extends State<QuestionPage> {
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(20),
                 child: Image.network(
-                  widget.pathToImage,
+                  "https://pb.testbroapp.ru/api/files/quiz_page/${widget.questionId}/${widget.pathToImage}",
                   fit: BoxFit.fill,
                 ),
               ),
@@ -102,9 +106,12 @@ class _QuestionPageState extends State<QuestionPage> {
           ),
           const SizedBox(height: 20),
           if (answerChecker)
-            ElevatedButton(
-              onPressed: nextPage,
-              child: const Text('Дальше'),
+            Padding(
+              padding: const EdgeInsets.all(10),
+              child: ElevatedButton(
+                onPressed: nextPage,
+                child: const Text('Дальше'),
+              ),
             )
           else
             Container(),

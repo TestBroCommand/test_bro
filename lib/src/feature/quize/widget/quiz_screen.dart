@@ -65,6 +65,7 @@ class _QuizScreenState extends State<QuizScreen> {
               final finalPage = state.finalpage;
               return FinalPageQuiz(
                 quizId: widget.id,
+                finalId: finalPage.id,
                 image: finalPage.image,
                 name: finalPage.name,
                 description: finalPage.description,
@@ -96,6 +97,7 @@ class _QuizScreenState extends State<QuizScreen> {
 
     pages.add(
       FirstPageQuiz(
+        id: startEntity.id,
         description: startEntity.description,
         image: startEntity.image,
         name: startEntity.name,
@@ -106,6 +108,7 @@ class _QuizScreenState extends State<QuizScreen> {
     for (int i = 0; i < pageEntities.length; i++) {
       pages.add(
         QuestionPage(
+          questionId: pageEntities[i].id,
           currentQuestion: i,
           sumQuestions: pageEntities.length,
           question: pageEntities[i].question,
@@ -119,6 +122,7 @@ class _QuizScreenState extends State<QuizScreen> {
                 ),
           ),
           pageController: pageController,
+          id: widget.id,
         ),
       );
     }
