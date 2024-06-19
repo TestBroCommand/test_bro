@@ -93,7 +93,7 @@ class _QuestionPageState extends State<QuestionPage> {
               textAlign: TextAlign.center,
               style: const TextStyle(
                 color: Color.fromRGBO(0, 122, 255, 1),
-                fontSize: 35,
+                fontSize: 25,
                 fontWeight: FontWeight.bold,
               ),
             ),

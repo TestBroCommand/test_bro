@@ -100,7 +100,7 @@ class _FinalPageQuizState extends State<FinalPageQuiz> {
                     ),
                   ),
                   label: const Text(
-                    'Copy link',
+                    'Поделиться',
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 17,
@@ -116,6 +116,9 @@ class _FinalPageQuizState extends State<FinalPageQuiz> {
                     await Clipboard.setData(ClipboardData(
                         text:
                             "t.me/testquizebro_bot/base?startapp=${widget.quizId}"));
+                    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                      content: Text("Скопировано"),
+                    ));
                   },
                 ),
               ),
