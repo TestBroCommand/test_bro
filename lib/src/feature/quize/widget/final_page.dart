@@ -129,7 +129,7 @@ class _FinalPageQuizState extends State<FinalPageQuiz> {
       );
 
   Future<void> _initialize(BuildContext context) async {
-    if (kDebugMode) {
+    if (!kDebugMode) {
       js.context.callMethod('fullScreen');
     }
     context

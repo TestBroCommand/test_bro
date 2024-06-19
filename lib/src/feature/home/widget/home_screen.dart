@@ -60,10 +60,6 @@ class _HomeScreenState extends State<HomeScreen> {
                           padding: const EdgeInsets.all(16.0),
                           child: TextField(
                             controller: _textController,
-                            decoration: const InputDecoration(
-                              labelText: 'Search',
-                              border: OutlineInputBorder(),
-                            ),
                             onChanged: (value) => setState(() {
                               _searchText = _textController.text.toLowerCase();
                             }),

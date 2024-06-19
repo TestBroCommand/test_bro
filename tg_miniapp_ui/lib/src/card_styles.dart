@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-final CardTheme darkAndroidCardTheme = CardTheme(
+final CardTheme darkCardTheme = CardTheme(
   clipBehavior: Clip.hardEdge,
   color: Colors.black,
   shape: RoundedRectangleBorder(
@@ -8,23 +8,9 @@ final CardTheme darkAndroidCardTheme = CardTheme(
   ),
 );
 
-final CardTheme lightIosCardTheme = CardTheme(
+final CardTheme lightCardTheme = CardTheme(
   clipBehavior: Clip.hardEdge,
   color: Colors.white,
-  shape: RoundedRectangleBorder(
-    borderRadius: BorderRadius.circular(5.0),
-  ),
-);
-final CardTheme lightAndroidCardTheme = CardTheme(
-  clipBehavior: Clip.hardEdge,
-  color: Colors.white,
-  shape: RoundedRectangleBorder(
-    borderRadius: BorderRadius.circular(5.0),
-  ),
-);
-final CardTheme darkIosCardTheme = CardTheme(
-  clipBehavior: Clip.hardEdge,
-  color: Colors.black,
   shape: RoundedRectangleBorder(
     borderRadius: BorderRadius.circular(5.0),
   ),
