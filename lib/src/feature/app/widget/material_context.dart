@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:test_bro/src/core/constant/localization/localization.dart';
-import 'package:test_bro/src/core/utils/layout/detect_platform.dart';
 import 'package:test_bro/src/core/utils/router.dart';
 import 'package:test_bro/src/feature/settings/widget/settings_scope.dart';
 import 'package:tg_miniapp_ui/src/tg_miniapp_ui.dart';

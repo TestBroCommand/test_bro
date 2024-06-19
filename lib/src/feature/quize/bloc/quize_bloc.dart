@@ -49,9 +49,11 @@ class QuizBloc extends Bloc<QuizEvent, QuizState> {
         finalEntities: finalsEntities,
         answers: answers,
       );
-      emit(QuizCompleted(
-        finalpage: finalPageEntity,
-      ),);
+      emit(
+        QuizCompleted(
+          finalpage: finalPageEntity,
+        ),
+      );
     }
   }
 

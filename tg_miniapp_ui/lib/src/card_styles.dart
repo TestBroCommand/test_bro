@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 
 final CardTheme darkCardTheme = CardTheme(
   clipBehavior: Clip.hardEdge,
-  color: Colors.black,
+  color: Color.fromRGBO(6, 28, 51, 1),
   shape: RoundedRectangleBorder(
-    borderRadius: BorderRadius.circular(5.0),
+    borderRadius: BorderRadius.circular(20.0),
   ),
 );
 

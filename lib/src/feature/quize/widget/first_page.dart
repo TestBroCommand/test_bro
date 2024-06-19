@@ -7,6 +7,7 @@ import 'package:test_bro/src/feature/quize/bloc/quize_bloc.dart';
 class FirstPageQuiz extends StatelessWidget {
   final String image;
   final String name;
+  final String id;
   final String description;
   final PreloadPageController pageController;
   const FirstPageQuiz({
@@ -14,7 +15,7 @@ class FirstPageQuiz extends StatelessWidget {
     required this.name,
     required this.description,
     required this.pageController,
-    super.key,
+    required this.id, super.key,
   });
 
   @override
@@ -29,7 +30,7 @@ class FirstPageQuiz extends StatelessWidget {
                   const SizedBox(width: 10),
                   IconButton(
                     alignment: Alignment.topLeft,
-                    onPressed: () => context.pop(),
+                    onPressed: () => context.go('/'),
                     icon: const Icon(Icons.arrow_back_ios_rounded),
                   ),
                 ],
@@ -42,7 +43,7 @@ class FirstPageQuiz extends StatelessWidget {
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(20),
                     child: Image.network(
-                      image,
+                      "https://pb.testbroapp.ru/api/files/start_pages/$id/$image",
                       fit: BoxFit.fill,
                     ),
                   ),
@@ -54,7 +55,9 @@ class FirstPageQuiz extends StatelessWidget {
                   name,
                   textAlign: TextAlign.center,
                   style: const TextStyle(
-                      fontSize: 35, fontWeight: FontWeight.bold,),
+                    fontSize: 35,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ),
               Padding(
@@ -71,8 +74,8 @@ class FirstPageQuiz extends StatelessWidget {
                     child: const Text(
                       'Начать тест',
                       style: TextStyle(
-                        color: Colors.white,
                         fontSize: 17,
+                        color: Colors.white,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
@@ -89,7 +92,9 @@ class FirstPageQuiz extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(horizontal: 37.0),
                 child: Text(
                   description,
-                  style: const TextStyle(fontSize: 17, color: Colors.black87),
+                  style: const TextStyle(
+                    fontSize: 17,
+                  ),
                 ),
               ),
             ],
