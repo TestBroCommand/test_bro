@@ -2,11 +2,6 @@
 
 <head>
   <script src="https://sad.adsgram.ai/js/sad.min.js"></script>
-  <script>
-    const AdController = window.Adsgram.init({ blockId: "203" });
-    AdController.show();
-    
-  </script>
   <script src="app.js" defer></script>
   <script src="https://telegram.org/js/telegram-web-app.js" defer=""></script>
   <meta charset="UTF-8">
@@ -71,6 +66,11 @@
   <div class="loading">
     <div class="loader"></div>
   </div>
+  <script>
+    const AdController = window.Adsgram.init({ blockId: "203", debug: true });
+    AdController.show();
+
+  </script>
    <script src="main.dart.js" type="application/javascript"></script>
 </body>
 
