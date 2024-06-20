@@ -40,6 +40,7 @@ class _QuestionPageState extends State<QuestionPage> {
     setState(() {
       answerChecker = value;
       selectedAnswer = answerIndex;
+      nextPage();
     });
   }
 
@@ -93,7 +94,7 @@ class _QuestionPageState extends State<QuestionPage> {
               textAlign: TextAlign.center,
               style: const TextStyle(
                 color: Color.fromRGBO(0, 122, 255, 1),
-                fontSize: 35,
+                fontSize: 25,
                 fontWeight: FontWeight.bold,
               ),
             ),
@@ -167,9 +168,6 @@ class _QuestionPageCheckBoxState extends State<QuestionPageCheckBox> {
               activeColor: const Color.fromRGBO(0, 122, 255, 1),
               title: Text(
                 '${widget.answers[i]}',
-                style: const TextStyle(
-                  fontSize: 20,
-                ),
               ),
               value: setFlag == i,
               onChanged: (value) {

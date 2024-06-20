@@ -79,7 +79,7 @@ class _FinalPageQuizState extends State<FinalPageQuiz> {
             const Padding(
               padding: EdgeInsets.symmetric(horizontal: 35.0),
               child: Text(
-                "Поделитесь результатами с друзьями!",
+                "Поделитесь тестом с друзьями!",
                 style: TextStyle(
                   color: Color.fromRGBO(0, 122, 255, 1),
                   fontSize: 20,
@@ -100,7 +100,7 @@ class _FinalPageQuizState extends State<FinalPageQuiz> {
                     ),
                   ),
                   label: const Text(
-                    'Copy link',
+                    'Поделиться',
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 17,
@@ -113,23 +113,34 @@ class _FinalPageQuizState extends State<FinalPageQuiz> {
                     color: Colors.white,
                   ),
                   onPressed: () async {
-                    await Clipboard.setData(ClipboardData(
+                    await Clipboard.setData(
+                      ClipboardData(
                         text:
-                            "t.me/testquizebro_bot/base?startapp=${widget.quizId}"));
+                            "t.me/testquizebro_bot/base?startapp=${widget.quizId}",
+                      ),
+                    );
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text("Скопирована ссылка"),
+                      ),
+                    );
                   },
                 ),
               ),
             ),
-            ElevatedButton(
-              onPressed: () async {
-                await Posthog().capture(
-                  eventName: "quiz_complete",
-                  properties: {"quiz_id": widget.name},
-                );
+            Padding(
+              padding: const EdgeInsets.all(10),
+              child: ElevatedButton(
+                onPressed: () async {
+                  await Posthog().capture(
+                    eventName: "quiz_complete",
+                    properties: {"quiz_id": widget.name},
+                  );
 
-                context.push('/');
-              },
-              child: const Text("Главная"),
+                  context.push('/');
+                },
+                child: const Text("Еще  тесты!"),
+              ),
             ),
           ],
         ),

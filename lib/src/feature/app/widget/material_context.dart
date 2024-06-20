@@ -23,7 +23,12 @@ class MaterialContext extends StatelessWidget {
     final locale = SettingsScope.localeOf(context).locale;
 
     return MaterialApp.router(
-      theme: lightTheme,
+      theme: lightTheme.copyWith(
+        textTheme: Theme.of(context).textTheme.apply(
+              bodyColor: Colors.black, //<-- SEE HERE
+              displayColor: Colors.black, //<-- SEE HERE
+            ),
+      ),
       darkTheme: darkTheme,
       themeMode: theme.mode,
       localizationsDelegates: Localization.localizationDelegates,

@@ -12,6 +12,6 @@ final CardTheme lightCardTheme = CardTheme(
   clipBehavior: Clip.hardEdge,
   color: Colors.white,
   shape: RoundedRectangleBorder(
-    borderRadius: BorderRadius.circular(5.0),
+    borderRadius: BorderRadius.circular(20.0),
   ),
 );

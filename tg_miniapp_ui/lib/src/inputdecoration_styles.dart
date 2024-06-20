@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 
 final inputDecorationLightStyle = InputDecorationTheme(
-  border: OutlineInputBorder(),
-);
+    enabledBorder: OutlineInputBorder(),
+    border: OutlineInputBorder(borderSide: BorderSide(color: Colors.black)),
+    floatingLabelStyle: TextStyle(color: Colors.black),
+    helperStyle: TextStyle(color: Colors.black),
+    hintStyle: TextStyle(color: Colors.black),
+    labelStyle: TextStyle(color: Colors.black));
 final inputDecorationDarkStyle = InputDecorationTheme(
     border: OutlineInputBorder(),
     floatingLabelStyle:

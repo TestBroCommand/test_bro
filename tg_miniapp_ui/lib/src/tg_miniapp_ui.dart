@@ -13,7 +13,8 @@ final ThemeData _lightTheme = ThemeData.light();
 final ThemeData lightTheme = _lightTheme.copyWith(
     brightness: Brightness.light,
     scaffoldBackgroundColor: Colors.white,
-    colorScheme: darkColorScheme,
+    colorScheme: whiteColorScheme,
+    textTheme: GoogleFonts.latoTextTheme(_lightTheme.textTheme),
     cardTheme: lightCardTheme,
     inputDecorationTheme: inputDecorationLightStyle);
 final ThemeData darkTheme = _darkTheme.copyWith(
