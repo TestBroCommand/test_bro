@@ -136,8 +136,7 @@ class _FinalPageQuizState extends State<FinalPageQuiz> {
                     eventName: "quiz_complete",
                     properties: {"quiz_id": widget.name},
                   );
-
-                  context.push('/');
+                  context.go('/');
                 },
                 child: const Text("Еще  тесты!"),
               ),
