@@ -48,7 +48,7 @@ class _QuizScreenState extends State<QuizScreen> {
               return PreloadPageView(
                 controller: _pageController,
                 onPageChanged: (index) {
-                  if (index == pageEntities.length) {
+                  if (index - 1 == pageEntities.length) {
                     context.read<QuizBloc>().add(QuizCompletedEvent());
                   }
                 },
