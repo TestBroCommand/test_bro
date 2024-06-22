@@ -13,60 +13,58 @@ class QuizWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => LayoutBuilder(
-        builder: (context, constraints) {
-          final double height = constraints.maxHeight;
-          final double cardHeight = height * 0.3;
-          return GestureDetector(
-            onTap: () async {
-              await Posthog().capture(
-                eventName: "quiz_start",
-                properties: {"quiz_id": currentQuiz.id.toString()},
-              );
-              context.pushNamed(
-                "quiz",
-                pathParameters: {
-                  "id": currentQuiz.id,
-                },
-              );
-            },
-            child: Card(
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  //SizedBox(height: cardHeight * 1),
-                  Image.network(
-                    height: 80,
-                    width: double.infinity,
-                    fit: BoxFit.fill,
-                    "https://pb.testbroapp.ru/api/files/quizes/" +
-                        "${currentQuiz.id.toString()}/${currentQuiz.image}",
-                  ),
-                  Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+        builder: (context, constraints) => GestureDetector(
+          onTap: () async {
+            await Posthog().capture(
+              eventName: "quiz_start",
+              properties: {"quiz_id": currentQuiz.id.toString()},
+            );
+            context.pushNamed(
+              "quiz",
+              pathParameters: {
+                "id": currentQuiz.id,
+              },
+            );
+          },
+          child: Card(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                //SizedBox(height: cardHeight * 1),
+                Image.network(
+                  height: 80,
+                  width: double.infinity,
+                  fit: BoxFit.fill,
+                  "https://pb.testbroapp.ru/api/files/quizes/" +
+                      "${currentQuiz.id.toString()}/${currentQuiz.image}",
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        currentQuiz.title,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                      const SizedBox(height: 17),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
-                          Text(
-                            currentQuiz.title,
-                            maxLines: 1,
-                          ),
-                          const SizedBox(height: 17),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            crossAxisAlignment: CrossAxisAlignment.end,
-                            children: [
-                              Text(currentQuiz.takers.toString()),
-                              const SizedBox(width: 5),
-                              const Icon(Icons.check_circle_outline_rounded),
-                            ],
-                          ),
+                          Text(currentQuiz.takers.toString()),
+                          const SizedBox(width: 5),
+                          const Icon(Icons.check_circle_outline_rounded),
                         ],
-                      ),),
-                ],
-              ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
             ),
-          );
-        },
+          ),
+        ),
       );
 }
