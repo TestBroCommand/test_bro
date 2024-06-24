@@ -134,7 +134,7 @@ class _FinalPageQuizState extends State<FinalPageQuiz> {
               child: ElevatedButton(
                 onPressed: () async {
                   await posthog.capture(
-                    eventName: "quiz_complete",
+                    eventName: "quiz_other_tests",
                     properties: {"quiz_id": widget.name},
                   );
                   context.go('/');

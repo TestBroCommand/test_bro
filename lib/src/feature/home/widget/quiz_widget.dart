@@ -17,7 +17,7 @@ class QuizWidget extends StatelessWidget {
         builder: (context, constraints) => GestureDetector(
           onTap: () async {
             await posthog.capture(
-              eventName: "quiz_start",
+              eventName: "quiz_start_from_home",
               properties: {"quiz_id": currentQuiz.id.toString()},
             );
             context.pushNamed(
