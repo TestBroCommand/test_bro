@@ -39,6 +39,25 @@ class PageEntity extends Equatable {
         id: dto.id ?? "",
         question: dto.question ?? '',
         image: dto.image ?? '',
-        answers: dto.answers ?? {},
+        answers: processEntities(dto.answers ?? {}),
       );
+
+  static Map<dynamic, dynamic> processEntities(Map<dynamic, dynamic> entities) {
+    final Map<dynamic, dynamic> processedAnswers = {};
+    int counter = 0;
+
+    entities.forEach((key, value) {
+      if (value is Map) {
+        value.forEach((innerKey, innerValue) {
+          processedAnswers[counter] = innerKey.toString();
+          counter++;
+        });
+      } else {
+        processedAnswers[counter] = value.toString();
+        counter++;
+      }
+    });
+
+    return processedAnswers;
+  }
 }

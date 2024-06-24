@@ -17,7 +17,9 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     emit(HomeLoading());
     try {
       final quizzes = await repository.getAllQuizzes();
-      emit(HomeLoaded(quizzes));
+      final uquizzes = await repository.getAllUQuizzes();
+      final allQuizzes = [...quizzes, ...uquizzes];
+      emit(HomeLoaded(allQuizzes));
     } catch (e) {
       emit(HomeFailure(e));
     }

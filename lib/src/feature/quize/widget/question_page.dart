@@ -47,6 +47,17 @@ class _QuestionPageState extends State<QuestionPage> {
   Widget build(BuildContext context) {
     final progressValue =
         ((widget.currentQuestion + 1) / widget.sumQuestions) * 100;
+    String photoLink = '';
+    if (widget.pathToImage == 'og:img meta tag not found' ||
+        widget.pathToImage.isEmpty) {
+      photoLink = 'default';
+    } else if (widget.pathToImage.contains('https')) {
+      photoLink = widget.pathToImage;
+    } else if (!widget.pathToImage.contains('https') ||
+        widget.pathToImage.contains('istock')) {
+      photoLink =
+          "https://pb-dev.testbroapp.ru/api/files/quiz_page/${widget.questionId}/${widget.pathToImage}";
+    }
 
     return Scaffold(
       body: ListView(
@@ -74,20 +85,23 @@ class _QuestionPageState extends State<QuestionPage> {
               ),
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.fromLTRB(18, 15, 18, 30),
-            child: SizedBox(
-              width: 326,
-              height: 217,
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(20),
-                child: Image.network(
-                  "https://pb.testbroapp.ru/api/files/quiz_page/${widget.questionId}/${widget.pathToImage}",
-                  fit: BoxFit.fill,
+          if (photoLink == 'default')
+            const SizedBox(height: 20)
+          else
+            Padding(
+              padding: const EdgeInsets.fromLTRB(18, 15, 18, 30),
+              child: SizedBox(
+                width: 326,
+                height: 217,
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(20),
+                  child: Image.network(
+                    photoLink,
+                    fit: BoxFit.fill,
+                  ),
                 ),
               ),
             ),
-          ),
           Padding(
             padding: const EdgeInsets.fromLTRB(30, 0, 30, 25),
             child: Text(

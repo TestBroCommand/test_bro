@@ -11,8 +11,10 @@ import 'package:test_bro/src/feature/quize/widget/question_page.dart';
 
 class QuizScreen extends StatefulWidget {
   final String id;
+  final String isUquiz;
   const QuizScreen({
     required this.id,
+    required this.isUquiz,
     super.key,
   });
 
@@ -81,6 +83,7 @@ class _QuizScreenState extends State<QuizScreen> {
     context.read<QuizBloc>().add(
           LoadDataEvent(
             id: widget.id,
+            isUQuiz: widget.isUquiz,
           ),
         );
   }
@@ -137,4 +140,6 @@ class _QuizScreenState extends State<QuizScreen> {
     // );
     return pages;
   }
+
+  
 }

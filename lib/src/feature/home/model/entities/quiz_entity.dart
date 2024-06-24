@@ -11,6 +11,7 @@ class QuizEntity extends Equatable {
   final String image;
   final List<String> startPage;
   final List<String> finalPage;
+  final bool isUquiz;
 
   const QuizEntity({
     required this.title,
@@ -20,6 +21,7 @@ class QuizEntity extends Equatable {
     required this.startPage,
     required this.finalPage,
     required this.id,
+    required this.isUquiz,
   });
 
   @override
@@ -31,6 +33,7 @@ class QuizEntity extends Equatable {
         image,
         startPage,
         finalPage,
+        isUquiz,
       ];
 
   QuizEntity copyWith({
@@ -41,6 +44,7 @@ class QuizEntity extends Equatable {
     String? image,
     List<String>? startPage,
     List<String>? finalPage,
+    bool? isUquiz,
   }) =>
       QuizEntity(
         id: id ?? this.id,
@@ -50,9 +54,10 @@ class QuizEntity extends Equatable {
         image: image ?? this.image,
         startPage: startPage ?? this.startPage,
         finalPage: finalPage ?? this.finalPage,
+        isUquiz: isUquiz ?? this.isUquiz,
       );
 
-  factory QuizEntity.fromDto(QuizDTO dto) => QuizEntity(
+  factory QuizEntity.fromDto(QuizDTO dto, {bool isUquiz = false}) => QuizEntity(
         id: dto.id ?? '',
         title: dto.name ?? '',
         takers: dto.complete ?? 0,
@@ -60,5 +65,6 @@ class QuizEntity extends Equatable {
         image: dto.image ?? '',
         startPage: dto.startPage != null ? [dto.startPage!] : [],
         finalPage: dto.finalPage ?? [],
+        isUquiz: isUquiz,
       );
 }

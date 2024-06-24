@@ -13,4 +13,12 @@ class PBrepositoryImpl implements PBrepository {
     final quizzes = quizDTOs.map((dto) => QuizEntity.fromDto(dto)).toList();
     return quizzes;
   }
+
+  @override
+  Future<List<QuizEntity>> getAllUQuizzes() async {
+    final uquizDTOs = await dataSource.getAllUQuizes();
+    final uquzzes =
+        uquizDTOs.map((dto) => QuizEntity.fromDto(dto, isUquiz: true)).toList();
+    return uquzzes;
+  }
 }
