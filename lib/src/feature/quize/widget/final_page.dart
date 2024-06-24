@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:posthog_flutter/posthog_flutter.dart';
+import 'package:test_bro/src/core/utils/analytics.dart';
 import 'package:test_bro/src/feature/quize/bloc/quize_bloc.dart';
 
 class FinalPageQuiz extends StatefulWidget {
@@ -132,7 +133,7 @@ class _FinalPageQuizState extends State<FinalPageQuiz> {
               padding: const EdgeInsets.all(10),
               child: ElevatedButton(
                 onPressed: () async {
-                  await Posthog().capture(
+                  await posthog.capture(
                     eventName: "quiz_complete",
                     properties: {"quiz_id": widget.name},
                   );
@@ -147,7 +148,11 @@ class _FinalPageQuizState extends State<FinalPageQuiz> {
 
   Future<void> _initialize(BuildContext context) async {
     if (!kDebugMode) {
-      js.context.callMethod('fullScreen');
+      if (posthog.getFeatureFlag('ads') == 'control') {
+        js.context.callMethod('fullScreen');
+      } else {
+        js.context.callMethod('adsgram');
+      }
     }
     context
         .read<QuizBloc>()
