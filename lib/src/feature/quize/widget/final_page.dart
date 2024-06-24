@@ -115,7 +115,7 @@ class _FinalPageQuizState extends State<FinalPageQuiz> {
                   ),
                   onPressed: () async {
                     await TelegramWebApp.instance.openTelegramLink(
-                        "tg://msg_url?url=https://t.me/testquizebro_bot/base?startapp=${widget.quizId}&text=Заходи в TestBro");
+                        "msg_url?url=https://t.me/testquizebro_bot/base?startapp=${widget.quizId}&text=Заходи в TestBro");
                     await Clipboard.setData(
                       ClipboardData(
                         text:
