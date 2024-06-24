@@ -28,11 +28,5 @@ function fullScreen() {
 }
 
 function adsgram() {
-    AdController.show().then((result: ShowPromiseResult) => {
-    // user watch ad till the end
-    // your code to reward user
-}).catch((result: ShowPromiseResult) => {
-    // user skipped video or get error during playing ad
-    // do nothing or whatever you want
-})
+    AdController.show();
 }
