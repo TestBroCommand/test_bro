@@ -5,7 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:posthog_flutter/posthog_flutter.dart';
+import 'package:telegram_web_app/telegram_web_app.dart';
+import 'package:test_bro/src/core/utils/analytics.dart';
 import 'package:test_bro/src/feature/quize/bloc/quize_bloc.dart';
 
 class FinalPageQuiz extends StatefulWidget {
@@ -39,36 +40,48 @@ class _FinalPageQuizState extends State<FinalPageQuiz> {
   }
 
   @override
-  Widget build(BuildContext context) => Scaffold(
-        body: ListView(
-          children: [
-            Padding(
-              padding: const EdgeInsets.fromLTRB(21, 42, 21, 40),
-              child: SizedBox(
-                width: 204,
-                height: 225,
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(20),
-                  child: Image.network(
-                    "https://pb.testbroapp.ru/api/files/final_page/${widget.finalId}/${widget.image}",
-                    fit: BoxFit.fill,
-                  ),
+  Widget build(BuildContext context) {
+    String photoLink = '';
+    if (widget.image == 'og:img meta tag not found') {
+      photoLink = 'default';
+    } else if (widget.image.contains('https')) {
+      photoLink = widget.image;
+    } else if (!widget.image.contains('https') ||
+        widget.image.contains('istock')) {
+      photoLink =
+          "https://pb-dev.testbroapp.ru/api/files/final_page/${widget.finalId}/${widget.image}";
+    }
+
+    return Scaffold(
+      body: ListView(
+        children: [
+          Padding(
+            padding: const EdgeInsets.fromLTRB(21, 42, 21, 40),
+            child: SizedBox(
+              width: 204,
+              height: 225,
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(20),
+                child: Image.network(
+                  photoLink,
+                  fit: BoxFit.fill,
                 ),
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 25.0),
-              child: Text(
-                textAlign: TextAlign.center,
-                widget.name,
-                style: const TextStyle(
-                  color: Color.fromRGBO(0, 122, 255, 1),
-                  fontSize: 40,
-                  fontWeight: FontWeight.bold,
-                ),
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 25.0),
+            child: Text(
+              textAlign: TextAlign.center,
+              widget.name,
+              style: const TextStyle(
+                color: Color.fromRGBO(0, 122, 255, 1),
+                fontSize: 40,
+                fontWeight: FontWeight.bold,
               ),
             ),
-            /* Padding(
+          ),
+          /* Padding(
               padding: const EdgeInsets.symmetric(horizontal: 35, vertical: 24),
               child: Text(
                 description,
@@ -76,82 +89,102 @@ class _FinalPageQuizState extends State<FinalPageQuiz> {
                     const TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
               ),
             ), */
-            const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 35.0),
-              child: Text(
-                "Поделитесь тестом с друзьями!",
-                style: TextStyle(
-                  color: Color.fromRGBO(0, 122, 255, 1),
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                ),
-                textAlign: TextAlign.center,
+          const Padding(
+            padding: EdgeInsets.symmetric(horizontal: 35.0),
+            child: Text(
+              "Поделитесь тестом с друзьями!",
+              style: TextStyle(
+                color: Color.fromRGBO(0, 122, 255, 1),
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
               ),
+              textAlign: TextAlign.center,
             ),
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 15),
-              child: Center(
-                child: ElevatedButton.icon(
-                  style: ElevatedButton.styleFrom(
-                    fixedSize: const Size(180, 50),
-                    backgroundColor: const Color.fromRGBO(0, 122, 255, 1),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(5),
-                    ),
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 15),
+            child: Center(
+              child: ElevatedButton.icon(
+                style: ElevatedButton.styleFrom(
+                  fixedSize: const Size(180, 50),
+                  backgroundColor: const Color.fromRGBO(0, 122, 255, 1),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(5),
                   ),
-                  label: const Text(
-                    'Поделиться',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 17,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  iconAlignment: IconAlignment.end,
-                  icon: const Icon(
-                    Icons.copy_outlined,
+                ),
+                label: const Text(
+                  'Поделиться',
+                  style: TextStyle(
                     color: Colors.white,
+                    fontSize: 17,
+                    fontWeight: FontWeight.bold,
                   ),
-                  onPressed: () async {
-                    await Clipboard.setData(
-                      ClipboardData(
-                        text:
-                            "t.me/testquizebro_bot/base?startapp=${widget.quizId}",
-                      ),
-                    );
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                        content: Text("Скопирована ссылка"),
-                      ),
-                    );
-                  },
                 ),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(10),
-              child: ElevatedButton(
+                iconAlignment: IconAlignment.end,
+                icon: const Icon(
+                  Icons.copy_outlined,
+                  color: Colors.white,
+                ),
                 onPressed: () async {
-                  await Posthog().capture(
-                    eventName: "quiz_complete",
+                  TelegramWebApp.instance.openTelegramLink(
+                      "t.me/testquizebro_bot/base?startapp=${widget.quizId}");
+                  await posthog.capture(
+                    eventName: "quiz_share",
                     properties: {"quiz_id": widget.name},
                   );
-
-                  context.push('/');
+                  await Clipboard.setData(
+                    ClipboardData(
+                      text:
+                          "t.me/testquizebro_bot/base?startapp=${widget.quizId}",
+                    ),
+                  );
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text("Скопирована ссылка"),
+                    ),
+                  );
                 },
-                child: const Text("Еще  тесты!"),
               ),
             ),
-          ],
-        ),
-      );
+          ),
+          Padding(
+            padding: const EdgeInsets.all(10),
+            child: ElevatedButton(
+              onPressed: onPressed,
+              child: const Text("Еще  тесты!"),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
 
   Future<void> _initialize(BuildContext context) async {
     if (!kDebugMode) {
-      js.context.callMethod('fullScreen');
+      if (posthog.getFeatureFlag('ads') == 'control') {
+        js.context.callMethod('fullScreen');
+      } else {
+        js.context.callMethod('adsgram');
+      }
     }
     context
         .read<QuizBloc>()
         .add(UpdateCompleteFieldEvent(quizId: widget.quizId));
+  }
+
+  Future<void> onPressed() async {
+    if (!kDebugMode) {
+      if (posthog.getFeatureFlag('ads') == 'control') {
+        js.context.callMethod('fullScreen');
+      } else {
+        js.context.callMethod('adsgram');
+      }
+    }
+    await posthog.capture(
+      eventName: "quiz_complete",
+      properties: {"quiz_id": widget.name},
+    );
+    context.go('/');
+    context.read<QuizBloc>().add(ResetStateEvent());
   }
 }

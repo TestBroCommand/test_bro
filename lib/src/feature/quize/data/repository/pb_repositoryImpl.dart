@@ -10,28 +10,54 @@ class PBrepositoryImpl implements PBrepository {
   const PBrepositoryImpl({required this.dataSource});
 
   @override
-  Future<StartEntity> getStartPage(String id) async {
-    final startDTOs = await dataSource.getStartPage(id);
+  Future<StartEntity> getQuizStartPage(String id) async {
+    final startDTOs = await dataSource.getQuizStartPage(id);
     final start = StartEntity.fromDto(startDTOs);
     return start;
   }
 
   @override
-  Future<List<FinalEntity>> getAllFinalles(String id) async {
-    final finalDTOs = await dataSource.getFinalPage(id);
+  Future<List<FinalEntity>> getQuizAllFinalles(String id) async {
+    final finalDTOs = await dataSource.getQuizFinalPage(id);
     final finals = finalDTOs.map((dto) => FinalEntity.fromDto(dto)).toList();
     return finals;
   }
 
   @override
-  Future<List<PageEntity>> getAllPages(String id) async {
-    final pagesDTOs = await dataSource.getPages(id);
+  Future<List<PageEntity>> getQuizAllPages(String id) async {
+    final pagesDTOs = await dataSource.getQuizPages(id);
     final pages = pagesDTOs.map((dto) => PageEntity.fromDto(dto)).toList();
     return pages;
   }
 
   @override
-  Future<void> updateTakers(String id) async {
-    await dataSource.addNewTaker(id);
+  Future<void> updateQuizTakers(String id) async {
+    await dataSource.addQuizNewTaker(id);
+  }
+
+  @override
+  Future<StartEntity> getUQuizStartPage(String id) async {
+    final startDTO = await dataSource.getUQuizStartPage(id);
+    final start = StartEntity.fromDto(startDTO);
+    return start;
+  }
+
+  @override
+  Future<List<FinalEntity>> getUQuizAllFinalles(String id) async {
+    final finalDTOs = await dataSource.getUQuizFinalPage(id);
+    final finals = finalDTOs.map((dto) => FinalEntity.fromDto(dto)).toList();
+    return finals;
+  }
+
+  @override
+  Future<List<PageEntity>> getUQuizAllPages(String id) async {
+    final pagesDTOs = await dataSource.getUQuizPages(id);
+    final pages = pagesDTOs.map((dto) => PageEntity.fromDto(dto)).toList();
+    return pages;
+  }
+
+  @override
+  Future<void> updateUQuizTakers(String id) async {
+    await dataSource.addUQuizNewTaker(id);
   }
 }

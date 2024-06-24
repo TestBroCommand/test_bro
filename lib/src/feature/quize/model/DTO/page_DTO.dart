@@ -7,10 +7,10 @@ class PageDTO {
   PageDTO({this.id, this.question, this.image, this.answers});
 
   PageDTO.fromJson(Map<String, dynamic> json) {
-    id = json['id'] as String;
-    question = json['question'] as String;
-    image = json['image'] as String;
-    answers = json['answers'] as Map<dynamic, dynamic>?;
+    id = json['id'] as String? ?? '';
+    question = json['question'] as String? ?? '';
+    image = json['image'] as String? ?? '';
+    answers = (json['answers'] as Map<dynamic, dynamic>? ?? '') as Map?;
   }
 
   Map<String, dynamic> toJson() {

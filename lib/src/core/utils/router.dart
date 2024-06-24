@@ -22,11 +22,38 @@ final router = GoRouter(
     ),
     GoRoute(
       name: 'quiz',
-      path: '/quiz/:id',
+      path: '/quiz/:id/:isUquiz',
       builder: (context, state) => QuizScreen(
         id: state.pathParameters['id']!,
+        isUquiz: state.pathParameters['isUquiz']!,
       ),
     ),
+    // GoRoute(
+    //   name: 'finalPage',
+    //   path: '/quiz/:quizId',
+    //   pageBuilder: (context, state) {
+    //     final finalEntity = state.extra! as FinalEntity;
+    //     final quizId = state.pathParameters['quizId']!;
+    //     return CustomTransitionPage(
+    //       key: state.pageKey,
+    //       child: FinalPageQuiz(
+    //         image: finalEntity.image,
+    //         finalId: finalEntity.id,
+    //         name: finalEntity.name,
+    //         description: finalEntity.description,
+    //         mostFrequentDigit: finalEntity.mostFrequentDigit,
+    //         quizId: quizId,
+    //       ),
+    //       transitionDuration: const Duration(seconds: 1),
+    //       transitionsBuilder: (context, animation, secondaryAnimation, child) =>
+    //           FadeTransition(
+    //         opacity: CurveTween(curve: Curves.easeInOutCirc).animate(animation),
+    //         child: child,
+    //       ),
+    //     );
+    //   },
+    // ),
+
     // BottomNavigationBar
     /*  StatefulShellRoute.indexedStack(
       //  builder: (context, state, navigationShell) =>

@@ -12,14 +12,14 @@ final ThemeData _lightTheme = ThemeData.light();
 /// {@endtemplate}
 final ThemeData lightTheme = _lightTheme.copyWith(
     brightness: Brightness.light,
-    scaffoldBackgroundColor: Colors.white,
+    scaffoldBackgroundColor: const Color(0xFF8B8B9E),
     colorScheme: whiteColorScheme,
     textTheme: GoogleFonts.latoTextTheme(_lightTheme.textTheme),
     cardTheme: lightCardTheme,
-    inputDecorationTheme: inputDecorationLightStyle);
+    inputDecorationTheme: inputDecorationLightStyle,);
 final ThemeData darkTheme = _darkTheme.copyWith(
   brightness: Brightness.dark,
-  scaffoldBackgroundColor: Color.fromRGBO(24, 34, 45, 1),
+  scaffoldBackgroundColor: const Color(0xFF17212B),
   colorScheme: darkColorScheme,
   textTheme: GoogleFonts.latoTextTheme(ThemeData.dark().textTheme),
   cardTheme: darkCardTheme,

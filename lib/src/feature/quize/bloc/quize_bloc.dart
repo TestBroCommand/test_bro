@@ -59,9 +59,21 @@ class QuizBloc extends Bloc<QuizEvent, QuizState> {
 
   Future<void> _loadData(LoadDataEvent event, Emitter<QuizState> emit) async {
     try {
-      final startPage = await repository.getStartPage(id ?? "");
-      final pages = await repository.getAllPages(id ?? "");
-      final resultPages = await repository.getAllFinalles(id ?? "");
+      final id = event.id;
+      StartEntity startPage;
+      List<PageEntity> pages = [];
+      List<FinalEntity> resultPages = [];
+
+      if (event.isUQuiz == 'true') {
+        startPage = await repository.getUQuizStartPage(id ?? "");
+        pages = await repository.getUQuizAllPages(id ?? "");
+        resultPages = await repository.getUQuizAllFinalles(id ?? "");
+      } else {
+        startPage = await repository.getQuizStartPage(id ?? "");
+        pages = await repository.getQuizAllPages(id ?? "");
+        resultPages = await repository.getQuizAllFinalles(id ?? "");
+      }
+
       emit(
         QuizLoaded(
           startPage: startPage,
@@ -71,7 +83,7 @@ class QuizBloc extends Bloc<QuizEvent, QuizState> {
         ),
       );
     } catch (e) {
-      emit(QuizFailure(e));
+      emit(QuizFailure(e.toString()));
     }
   }
 
@@ -110,7 +122,7 @@ class QuizBloc extends Bloc<QuizEvent, QuizState> {
     Emitter<QuizState> emit,
   ) async {
     try {
-      await repository.updateTakers(event.quizId);
+      await repository.updateQuizTakers(event.quizId);
     } catch (e) {
       emit(QuizFailure(e.toString()));
     }

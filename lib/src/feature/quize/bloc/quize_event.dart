@@ -9,11 +9,16 @@ sealed class QuizEvent extends Equatable {
 
 class LoadDataEvent extends QuizEvent {
   final String id;
-  LoadDataEvent({required this.id});
+  final String isUQuiz;
+  LoadDataEvent({
+    required this.id,
+    required this.isUQuiz,
+  });
 
   @override
   List<Object> get props => [
         id,
+        isUQuiz,
       ];
 }
 
