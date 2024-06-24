@@ -24,9 +24,10 @@ final router = GoRouter(
     ),
     GoRoute(
       name: 'quiz',
-      path: '/quiz/:id',
+      path: '/quiz/:id/:isUquiz',
       builder: (context, state) => QuizScreen(
         id: state.pathParameters['id']!,
+        isUquiz: state.pathParameters['isUquiz']!,
       ),
     ),
     // GoRoute(

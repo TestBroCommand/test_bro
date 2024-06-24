@@ -47,6 +47,17 @@ class _QuestionPageState extends State<QuestionPage> {
   Widget build(BuildContext context) {
     final progressValue =
         ((widget.currentQuestion + 1) / widget.sumQuestions) * 100;
+    print("Question page ${widget.answers}");
+    String photoLink = '';
+    if (widget.pathToImage == 'og:img meta tag not found') {
+      photoLink = 'default';
+    } else if (widget.pathToImage.contains('https')) {
+      photoLink = widget.pathToImage;
+    } else if (!widget.pathToImage.contains('https') ||
+        widget.pathToImage.contains('istock')) {
+      photoLink =
+          "https://pb-dev.testbroapp.ru/api/files/quiz_page/${widget.questionId}/${widget.pathToImage}";
+    }
 
     return Scaffold(
       body: ListView(
@@ -82,7 +93,7 @@ class _QuestionPageState extends State<QuestionPage> {
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(20),
                 child: Image.network(
-                  "https://pb.testbroapp.ru/api/files/quiz_page/${widget.questionId}/${widget.pathToImage}",
+                  photoLink,
                   fit: BoxFit.fill,
                 ),
               ),

@@ -19,7 +19,7 @@ class Config {
   }
 
   String get pbEmail => 'uohucku3ne@mail.authpass.app';
-  String get pbPass => "'PIGwYyX@VDw)rM~7feT)VG\$pntQTrhwkLq432ad";
+  String get pbPass => "\'PIGwYyX@VDw)rM~7feT)VG\$pntQTrhwkLq432ad";
 
   /// The Sentry DSN.
   String get sentryDsn => const String.fromEnvironment('SENTRY_DSN');

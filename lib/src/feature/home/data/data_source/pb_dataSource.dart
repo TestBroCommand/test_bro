@@ -5,13 +5,28 @@ import 'package:test_bro/src/feature/home/model/DTO/quiz_DTO.dart';
 class PBdataSource {
   Future<List<QuizDTO>> getAllQuizes() async {
     const config = Config();
-    final pb = PocketBase('https://pb.testbroapp.ru');
+    final pb = PocketBase('https://pb-dev.testbroapp.ru');
     await pb.admins.authWithPassword(
       config.pbEmail,
       config.pbPass,
     );
     final ResultList<RecordModel> response =
         await pb.collection('quizes').getList();
+    final quizesDTO = response.items
+        .map((record) => QuizDTO.fromJson(record.toJson()))
+        .toList();
+    return quizesDTO;
+  }
+
+  Future<List<QuizDTO>> getAllUQuizes() async {
+    const config = Config();
+    final pb = PocketBase('https://pb-dev.testbroapp.ru');
+    await pb.admins.authWithPassword(
+      config.pbEmail,
+      config.pbPass,
+    );
+    final ResultList<RecordModel> response =
+        await pb.collection('quizes_uquiz').getList();
     final quizesDTO = response.items
         .map((record) => QuizDTO.fromJson(record.toJson()))
         .toList();
