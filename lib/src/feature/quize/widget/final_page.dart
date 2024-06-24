@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:posthog_flutter/posthog_flutter.dart';
+import 'package:telegram_web_app/telegram_web_app.dart';
 import 'package:test_bro/src/core/utils/analytics.dart';
 import 'package:test_bro/src/feature/quize/bloc/quize_bloc.dart';
 
@@ -114,6 +114,8 @@ class _FinalPageQuizState extends State<FinalPageQuiz> {
                     color: Colors.white,
                   ),
                   onPressed: () async {
+                    TelegramWebApp.instance.openTelegramLink(
+                        'https://t.me/share?url=https://t.me/testquizebro_bot/base?startapp=${widget.quizId}');
                     await Clipboard.setData(
                       ClipboardData(
                         text:
