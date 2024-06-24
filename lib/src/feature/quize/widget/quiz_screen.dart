@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:preload_page_view/preload_page_view.dart';
+import 'package:test_bro/src/core/utils/analytics.dart';
 import 'package:test_bro/src/feature/quize/bloc/quize_bloc.dart';
 import 'package:test_bro/src/feature/quize/model/enities/page_enity.dart';
 import 'package:test_bro/src/feature/quize/model/enities/result_enity.dart';
