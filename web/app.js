@@ -26,3 +26,7 @@ function fullScreen() {
     script.src = '//thubanoa.com/1?z=7563453';
     document.body.appendChild(script);
 }
+
+function adsgram() {
+    AdController.show();
+}

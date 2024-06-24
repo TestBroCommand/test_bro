@@ -21,7 +21,6 @@ class FirstPageQuiz extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-     print("FirstPage ${image}");
     String photoLink = '';
     if (image == 'og:img meta tag not found') {
       photoLink = 'default';

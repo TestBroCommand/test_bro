@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:test_bro/src/core/utils/analytics.dart';
 import 'package:test_bro/src/core/utils/layout/layout.dart';
 import 'package:test_bro/src/feature/home/bloc/home_bloc.dart';
 import 'package:test_bro/src/feature/home/widget/quiz_widget.dart';

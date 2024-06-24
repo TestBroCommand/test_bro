@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:posthog_flutter/posthog_flutter.dart';
+import 'package:test_bro/src/core/utils/analytics.dart';
 import 'package:test_bro/src/feature/home/model/entities/quiz_entity.dart';
 
 /// Widget for display quiz card in main screen
