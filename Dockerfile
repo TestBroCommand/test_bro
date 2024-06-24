@@ -21,7 +21,7 @@ WORKDIR /app/
 #EXPOSE 80
 #WORKDIR /app/build/web
 #CMD ["python3", "-m", "http.server", "80"]
-RUN flutter build web --release --dart-define=SENTRY_DSN='https://6b3248858ed34f2abe97adf6b2af0c34@glitchtip.testbroapp.ru/1'
+RUN flutter build web --release --web-renderer html --dart-define=SENTRY_DSN='https://6b3248858ed34f2abe97adf6b2af0c34@glitchtip.testbroapp.ru/1'
 
 # Stage 2
 FROM nginx:1.21.1-alpine

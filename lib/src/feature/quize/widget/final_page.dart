@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:telegram_web_app/telegram_web_app.dart';
 import 'package:test_bro/src/core/utils/analytics.dart';
 import 'package:test_bro/src/feature/quize/bloc/quize_bloc.dart';
 
@@ -125,6 +126,12 @@ class _FinalPageQuizState extends State<FinalPageQuiz> {
                   color: Colors.white,
                 ),
                 onPressed: () async {
+                  TelegramWebApp.instance.openTelegramLink(
+                      "t.me/testquizebro_bot/base?startapp=${widget.quizId}");
+                  await posthog.capture(
+                    eventName: "quiz_share",
+                    properties: {"quiz_id": widget.name},
+                  );
                   await Clipboard.setData(
                     ClipboardData(
                       text:
@@ -166,6 +173,13 @@ class _FinalPageQuizState extends State<FinalPageQuiz> {
   }
 
   Future<void> onPressed() async {
+    if (!kDebugMode) {
+      if (posthog.getFeatureFlag('ads') == 'control') {
+        js.context.callMethod('fullScreen');
+      } else {
+        js.context.callMethod('adsgram');
+      }
+    }
     await posthog.capture(
       eventName: "quiz_complete",
       properties: {"quiz_id": widget.name},
