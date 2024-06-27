@@ -69,6 +69,15 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                         ),
                       ),
+                      const SliverToBoxAdapter(
+                        child: SingleChildScrollView(
+                            scrollDirection: Axis.horizontal,
+                            child: Row(
+                              children: [
+                                Chip(label: Text("erge")),
+                              ],
+                            ),),
+                      ),
                       SliverPadding(
                         padding: HorizontalSpacing.centered(windowWidth),
                         sliver: SliverGrid.builder(

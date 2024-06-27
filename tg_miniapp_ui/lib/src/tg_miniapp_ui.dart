@@ -11,12 +11,13 @@ final ThemeData _lightTheme = ThemeData.light();
 /// Flutter ui kit for tapps
 /// {@endtemplate}
 final ThemeData lightTheme = _lightTheme.copyWith(
-    brightness: Brightness.light,
-    scaffoldBackgroundColor: const Color(0xFF8B8B9E),
-    colorScheme: whiteColorScheme,
-    textTheme: GoogleFonts.latoTextTheme(_lightTheme.textTheme),
-    cardTheme: lightCardTheme,
-    inputDecorationTheme: inputDecorationLightStyle,);
+  brightness: Brightness.light,
+  scaffoldBackgroundColor: const Color.fromRGBO(247, 247, 247, 1),
+  colorScheme: whiteColorScheme,
+  textTheme: GoogleFonts.latoTextTheme(_lightTheme.textTheme),
+  cardTheme: lightCardTheme,
+  inputDecorationTheme: inputDecorationLightStyle,
+);
 final ThemeData darkTheme = _darkTheme.copyWith(
   brightness: Brightness.dark,
   scaffoldBackgroundColor: const Color(0xFF17212B),

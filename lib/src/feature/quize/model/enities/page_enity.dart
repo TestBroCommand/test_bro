@@ -5,7 +5,7 @@ class PageEntity extends Equatable {
   final String id;
   final String question;
   final String image;
-  final Map<dynamic, dynamic> answers;
+  final Map<int, Map<String, int>> answers;
 
   const PageEntity({
     required this.id,
@@ -26,7 +26,7 @@ class PageEntity extends Equatable {
     String? id,
     String? question,
     String? image,
-    Map<dynamic, dynamic>? answers,
+    Map<int, Map<String, int>>? answers,
   }) =>
       PageEntity(
         id: id ?? this.id,
@@ -39,25 +39,47 @@ class PageEntity extends Equatable {
         id: dto.id ?? "",
         question: dto.question ?? '',
         image: dto.image ?? '',
-        answers: processEntities(dto.answers ?? {}),
+        answers: processEntities(dto.answers!),
       );
 
-  static Map<dynamic, dynamic> processEntities(Map<dynamic, dynamic> entities) {
-    final Map<dynamic, dynamic> processedAnswers = {};
+  static Map<int, Map<String, int>> processEntities(
+    Map<dynamic, dynamic> entities,
+  ) {
+    final Map<int, Map<String, int>> newMap = {};
+
+    entities.forEach((key, value) {
+      final int intKey = int.parse(key.toString()); // convert key to int
+      final Map<String, int> innerMap = {
+        for (final innerEntry in (value as Map).entries)
+          innerEntry.key as String: int.parse(innerEntry.value.toString()),
+      }; // convert value to Map<String, int>
+      newMap[intKey] = innerMap;
+    });
+    return newMap;
+  }
+  /* 
+  static Map<int, Map<String, int>> processEntities(
+      Map<dynamic, dynamic> entities) {
+    final Map<int, Map<String, int>> processedAnswers = {};
     int counter = 0;
 
     entities.forEach((key, value) {
       if (value is Map) {
+        final innerMap = <String, int>{};
         value.forEach((innerKey, innerValue) {
-          processedAnswers[counter] = innerKey.toString();
-          counter++;
+          innerMap[innerKey.toString()] = innerValue[key];
         });
+        processedAnswers[counter] = innerMap;
+        counter++;
       } else {
-        processedAnswers[counter] = value.toString();
+        final innerMap = <String, int>{};
+        innerMap[key.toString()] = value as int;
+        processedAnswers[counter] = innerMap;
         counter++;
       }
     });
 
     return processedAnswers;
   }
+  */
 }

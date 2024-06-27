@@ -51,7 +51,7 @@ class QuizWidget extends StatelessWidget {
                 height: 105,
                 width: double.infinity,
                 color: getRandomColor(),
-              ))
+              ),)
             else
               Expanded(
                   child: Image.network(
@@ -59,7 +59,7 @@ class QuizWidget extends StatelessWidget {
                 width: double.infinity,
                 fit: BoxFit.fill,
                 photoLink,
-              )),
+              ),),
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Column(

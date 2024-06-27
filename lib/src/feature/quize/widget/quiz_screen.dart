@@ -116,14 +116,17 @@ class _QuizScreenState extends State<QuizScreen> {
           sumQuestions: pageEntities.length,
           question: pageEntities[i].question,
           pathToImage: pageEntities[i].image,
-          answers: Map<int, String>.from(
+          answers: pageEntities[i].answers as Map<int, dynamic>,
+          /* Map<int, dynamic>.from(
             pageEntities[i].answers.map(
                   (key, value) => MapEntry(
                     int.parse(key.toString()),
                     value.toString(),
                   ),
+                  
                 ),
-          ),
+*/
+
           pageController: pageController,
           id: widget.id,
         ),
@@ -140,6 +143,4 @@ class _QuizScreenState extends State<QuizScreen> {
     // );
     return pages;
   }
-
-  
 }

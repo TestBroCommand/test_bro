@@ -127,7 +127,8 @@ class _FinalPageQuizState extends State<FinalPageQuiz> {
                 ),
                 onPressed: () async {
                   TelegramWebApp.instance.openTelegramLink(
-                      "t.me/testquizebro_bot/base?startapp=${widget.quizId}");
+                    "t.me/testquizebro_bot/base?startapp=${widget.quizId}",
+                  );
                   await posthog.capture(
                     eventName: "quiz_share",
                     properties: {"quiz_id": widget.name},
@@ -173,13 +174,6 @@ class _FinalPageQuizState extends State<FinalPageQuiz> {
   }
 
   Future<void> onPressed() async {
-    if (!kDebugMode) {
-      if (posthog.getFeatureFlag('ads') == 'control') {
-        js.context.callMethod('fullScreen');
-      } else {
-        js.context.callMethod('adsgram');
-      }
-    }
     await posthog.capture(
       eventName: "quiz_complete",
       properties: {"quiz_id": widget.name},
