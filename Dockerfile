@@ -1,4 +1,4 @@
-FROM alpine
+FROM alpine as build-env
 RUN apk update
 
 ## Make sure to install gcompat
@@ -23,6 +23,8 @@ COPY . /app/
 WORKDIR /app/
 RUN flutter build web --release --web-renderer html --dart-define=SENTRY_DSN='https://6b3248858ed34f2abe97adf6b2af0c34@glitchtip.testbroapp.ru/1'
 # Stage 2
-RUN mv build/web/* /usr/share/nginx/html
+FROM nginx:1.21.1-alpine
+COPY --from=build-env /app/build/web /usr/share/nginx/html
+#RUN mv build/web/* /usr/share/nginx/html
 EXPOSE 80
 CMD ["nginx", "-g", "daemon off;"]
