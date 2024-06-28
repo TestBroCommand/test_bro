@@ -106,5 +106,7 @@ dart_code_metrics:
     - prefer-trailing-comma
     - unnecessary-trailing-comma
     - prefer-declaring-const-constructor
+  ignore: 
+    - public_member_api_docs
     # - prefer-single-widget-per-file:
         # ignore-private-widgets: true

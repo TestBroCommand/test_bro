@@ -9,9 +9,13 @@ import 'package:test_bro/src/feature/quize/widget/final_page.dart';
 import 'package:test_bro/src/feature/quize/widget/first_page.dart';
 import 'package:test_bro/src/feature/quize/widget/question_page.dart';
 
+// ignore: public_member_api_docs
 class QuizScreen extends StatefulWidget {
+  // ignore: public_member_api_docs
   final String id;
+  // ignore: public_member_api_docs
   final String isUquiz;
+  // ignore: public_member_api_docs
   const QuizScreen({
     required this.id,
     required this.isUquiz,

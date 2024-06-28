@@ -185,7 +185,9 @@ class _QuestionPageCheckBoxState extends State<QuestionPageCheckBox> {
       setFlag = newFlag;
     });
     widget.onAnswerSelected(
-        true, int.parse(widget.answers[newFlag].values.first.toString()),);
+      true,
+      int.parse(widget.answers[newFlag].values.first.toString()),
+    );
   }
 
   @override
@@ -196,7 +198,7 @@ class _QuestionPageCheckBoxState extends State<QuestionPageCheckBox> {
               controlAffinity: ListTileControlAffinity.leading,
               activeColor: const Color.fromRGBO(0, 122, 255, 1),
               title: Text(
-                '${widget.answers[i]}',
+                '${widget.answers[i].keys.first}',
               ),
               value: setFlag == i,
               onChanged: (value) {

@@ -66,13 +66,13 @@ class QuizBloc extends Bloc<QuizEvent, QuizState> {
       List<FinalEntity> resultPages;
 
       if (event.isUQuiz == 'true') {
-        startPage = await repository.getUQuizStartPage(id ?? "");
-        pages = await repository.getUQuizAllPages(id ?? "");
+        startPage = await repository.getUQuizStartPage(id);
+        pages = await repository.getUQuizAllPages(id);
         resultPages = await repository.getUQuizAllFinalles(id);
       } else {
-        startPage = await repository.getQuizStartPage(id ?? "");
-        pages = await repository.getQuizAllPages(id ?? "");
-        resultPages = await repository.getQuizAllFinalles(id ?? "");
+        startPage = await repository.getQuizStartPage(id);
+        pages = await repository.getQuizAllPages(id);
+        resultPages = await repository.getQuizAllFinalles(id);
       }
 
       emit(
@@ -151,9 +151,15 @@ class QuizBloc extends Bloc<QuizEvent, QuizState> {
         maxCount = count;
       }
     });
-    print(mostFrequentValue);
+
     final FinalEntity finalPage = finalEntities.firstWhere(
-      (finalpage) => finalpage.mostFrequentDigit == mostFrequentValue,
+      (finalpage) {
+        if (finalpage.mostFrequentDigit == mostFrequentValue - 1) {
+          return true;
+        }
+
+        return false;
+      },
       orElse: () => finalEntities.first,
     );
     return finalPage;

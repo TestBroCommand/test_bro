@@ -18,7 +18,7 @@ class FinalDTO {
     image = json['image'] as String?;
     name = json['name'] as String?;
     description = json['description'] as String?;
-    mostFrequentDigit = int.parse(json['most_frequent_digit'].toString());
+    mostFrequentDigit = int.parse(json['digit'].toString());
   }
 
   Map<String, dynamic> toJson() {
