@@ -6,7 +6,9 @@ RUN apk add bash curl file git unzip which zip gcompat nginx
 
 # # download Flutter SDK from Flutter Github repo
 RUN git clone https://github.com/flutter/flutter.git /usr/local/flutter
-
+RUN export PUB_HOSTED_URL="https://pub.flutter-io.cn"
+RUN export FLUTTER_STORAGE_BASE_URL="https://storage.flutter-io.cn"
+RUN source
 # # Set flutter environment path
 ENV PATH="/usr/local/flutter/bin:/usr/local/flutter/bin/cache/dart-sdk/bin:${PATH}"
 
