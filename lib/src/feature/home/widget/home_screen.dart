@@ -58,8 +58,9 @@ class _HomeScreenState extends State<HomeScreen> {
                     label: Text(tags[i]),
                     onSelected: (value) async {
                       await posthog.capture(
-                          eventName: "tag_click",
-                          properties: {"tag": tags[i]},);
+                        eventName: "tag_click",
+                        properties: {"tag": tags[i]},
+                      );
                       context.read<HomeBloc>().add(
                             LoadTagEvent(ids: _tagsQuizes[i]),
                           );
@@ -68,7 +69,6 @@ class _HomeScreenState extends State<HomeScreen> {
                 );
                 chips.add(const SizedBox(width: 10));
               }
-
               return LayoutBuilder(
                 builder: (context, constraints) => CustomScrollView(
                   slivers: [
@@ -91,7 +91,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                     SliverToBoxAdapter(
                       child: Padding(
-                        padding: const EdgeInsets.only(left: 10),
+                        padding: const EdgeInsets.only(left: 10, top: 10),
                         child: SingleChildScrollView(
                           scrollDirection: Axis.horizontal,
                           child: Row(
@@ -141,8 +141,10 @@ class _HomeScreenState extends State<HomeScreen> {
 
                   final filteredQuizzes = allQuizzes.where((quiz) {
                     final searchWords = _searchText.split(' ');
-                    return searchWords.every((word) =>
-                        quiz.title.toLowerCase().contains(word.toLowerCase()),);
+                    return searchWords.every(
+                      (word) =>
+                          quiz.title.toLowerCase().contains(word.toLowerCase()),
+                    );
                   }).toList();
                   return CustomScrollView(
                     slivers: [
@@ -150,19 +152,21 @@ class _HomeScreenState extends State<HomeScreen> {
                         child: Padding(
                           padding: const EdgeInsets.all(16.0),
                           child: TextField(
-                              controller: _textController,
-                              decoration: const InputDecoration(
-                                hintText: 'Поиск',
-                              ),
-                              onChanged: (value) {
-                                setState(() {
-                                  _searchText =
-                                      _textController.text.toLowerCase().trim();
-                                  posthog.capture(
-                                      eventName: "quiz_search",
-                                      properties: {"search": _searchText},);
-                                });
-                              },),
+                            controller: _textController,
+                            decoration: const InputDecoration(
+                              hintText: 'Поиск',
+                            ),
+                            onChanged: (value) {
+                              setState(() {
+                                _searchText =
+                                    _textController.text.toLowerCase().trim();
+                                posthog.capture(
+                                  eventName: "quiz_search",
+                                  properties: {"search": _searchText},
+                                );
+                              });
+                            },
+                          ),
                         ),
                       ),
                       SliverToBoxAdapter(
