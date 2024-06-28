@@ -9,7 +9,7 @@ RUN apt-get clean
 RUN git clone https://github.com/flutter/flutter.git /usr/local/flutter
 
 ENV PATH="/usr/local/flutter/bin:/usr/local/flutter/bin/cache/dart-sdk/bin:${PATH}"
-
+RUN export FLUTTER_STORAGE_BASE_URL="https://storage.flutter-io.cn"
 RUN flutter doctor -v
 
 RUN flutter channel master
