@@ -12,7 +12,7 @@ RUN export FLUTTER_STORAGE_BASE_URL="https://storage.flutter-io.cn"
 ENV PATH="/usr/local/flutter/bin:/usr/local/flutter/bin/cache/dart-sdk/bin:${PATH}"
 
 # # Run flutter doctor
-RUN flutter doctor
+RUN FLUTTER_STORAGE_BASE_URL="https://storage.flutter-io.cn" PUB_HOSTED_URL="https://pub.flutter-io.cn" flutter doctor
 
 # # Enable flutter web
 RUN flutter channel master
