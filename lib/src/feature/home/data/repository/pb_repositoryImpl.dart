@@ -1,6 +1,7 @@
 import 'package:test_bro/src/feature/home/data/data_source/pb_dataSource.dart';
 import 'package:test_bro/src/feature/home/data/repository/pb_repository.dart';
 import 'package:test_bro/src/feature/home/model/entities/quiz_entity.dart';
+import 'package:test_bro/src/feature/home/model/entities/tag_entity.dart';
 
 class PBrepositoryImpl implements PBrepository {
   final PBdataSource dataSource;
@@ -20,5 +21,20 @@ class PBrepositoryImpl implements PBrepository {
     final uquzzes =
         uquizDTOs.map((dto) => QuizEntity.fromDto(dto, isUquiz: true)).toList();
     return uquzzes;
+  }
+
+  @override
+  Future<List<TagEntity>> getTags() async {
+    final tagDtos = await dataSource.getAllTagsSource();
+    final tag = tagDtos.map((dto) => TagEntity.fromDto(dto)).toList();
+    return tag;
+  }
+
+  @override
+  Future<List<QuizEntity>> getAllTagsByIds(List<String> ids) async {
+    final quizDtos = await dataSource.getAllUQuizesByIds(ids);
+    final List<QuizEntity> quizzes =
+        quizDtos.map((dto) => QuizEntity.fromDto(dto, isUquiz: true)).toList();
+    return quizzes;
   }
 }

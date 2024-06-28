@@ -51,7 +51,7 @@ class _FinalPageQuizState extends State<FinalPageQuiz> {
       photoLink =
           "https://pb-dev.testbroapp.ru/api/files/final_page/${widget.finalId}/${widget.image}";
     }
-
+    print(photoLink);
     return Scaffold(
       body: ListView(
         children: [
@@ -126,8 +126,9 @@ class _FinalPageQuizState extends State<FinalPageQuiz> {
                   color: Colors.white,
                 ),
                 onPressed: () async {
-                  TelegramWebApp.instance.openTelegramLink(
-                      "t.me/testquizebro_bot/base?startapp=${widget.quizId}");
+                  await TelegramWebApp.instance.openTelegramLink(
+                    "t.me/testquizebro_bot/base?startapp=${widget.quizId}",
+                  );
                   await posthog.capture(
                     eventName: "quiz_share",
                     properties: {"quiz_id": widget.name},
@@ -138,6 +139,8 @@ class _FinalPageQuizState extends State<FinalPageQuiz> {
                           "t.me/testquizebro_bot/base?startapp=${widget.quizId}",
                     ),
                   );
+
+                  if (!mounted) return;
                   ScaffoldMessenger.of(context).showSnackBar(
                     const SnackBar(
                       content: Text("Скопирована ссылка"),
@@ -161,7 +164,7 @@ class _FinalPageQuizState extends State<FinalPageQuiz> {
 
   Future<void> _initialize(BuildContext context) async {
     if (!kDebugMode) {
-      if (posthog.getFeatureFlag('ads') == 'control') {
+      if (posthog.getFeatureFlag('ads').toString() == 'control') {
         js.context.callMethod('fullScreen');
       } else {
         js.context.callMethod('adsgram');
@@ -173,18 +176,13 @@ class _FinalPageQuizState extends State<FinalPageQuiz> {
   }
 
   Future<void> onPressed() async {
-    if (!kDebugMode) {
-      if (posthog.getFeatureFlag('ads') == 'control') {
-        js.context.callMethod('fullScreen');
-      } else {
-        js.context.callMethod('adsgram');
-      }
-    }
     await posthog.capture(
       eventName: "quiz_complete",
       properties: {"quiz_id": widget.name},
     );
+    if (!mounted) return;
     context.go('/');
+
     context.read<QuizBloc>().add(ResetStateEvent());
   }
 }

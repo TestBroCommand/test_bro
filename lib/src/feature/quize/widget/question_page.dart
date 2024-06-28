@@ -13,7 +13,7 @@ class QuestionPage extends StatefulWidget {
   final int currentQuestion;
   final String question;
   final String pathToImage;
-  final Map<int, String> answers;
+  final Map<int, dynamic> answers;
   final PreloadPageController pageController;
 
   const QuestionPage({
@@ -60,74 +60,82 @@ class _QuestionPageState extends State<QuestionPage> {
     }
 
     return Scaffold(
-      body: ListView(
+      body: Stack(
         children: [
-          Padding(
-            padding: const EdgeInsets.fromLTRB(85, 20, 74, 6),
-            child: SizedBox(
-              width: MediaQuery.of(context).size.width * 0.3,
-              child: AnimatedLinearProgressIndicator(
-                value: progressValue,
-                color: const Color.fromRGBO(0, 122, 255, 1),
-                duration: 1500,
-                height: 10,
-                radius: 20,
-                padding: 2,
-              ),
-            ),
-          ),
-          Center(
-            child: Text(
-              '${widget.currentQuestion + 1}/${widget.sumQuestions}',
-              style: const TextStyle(
-                fontSize: 14,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-          ),
-          if (photoLink == 'default')
-            const SizedBox(height: 20)
-          else
-            Padding(
-              padding: const EdgeInsets.fromLTRB(18, 15, 18, 30),
-              child: SizedBox(
-                width: 326,
-                height: 217,
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(20),
-                  child: Image.network(
-                    photoLink,
-                    fit: BoxFit.fill,
+          ListView(
+            children: [
+              Padding(
+                padding: const EdgeInsets.fromLTRB(85, 20, 74, 6),
+                child: SizedBox(
+                  width: MediaQuery.of(context).size.width * 0.3,
+                  child: AnimatedLinearProgressIndicator(
+                    value: progressValue,
+                    color: const Color.fromRGBO(0, 122, 255, 1),
+                    duration: 1500,
+                    height: 10,
+                    radius: 20,
+                    padding: 2,
                   ),
                 ),
               ),
-            ),
-          Padding(
-            padding: const EdgeInsets.fromLTRB(30, 0, 30, 25),
-            child: Text(
-              widget.question,
-              textAlign: TextAlign.center,
-              style: const TextStyle(
-                color: Color.fromRGBO(0, 122, 255, 1),
-                fontSize: 25,
-                fontWeight: FontWeight.bold,
+              Center(
+                child: Text(
+                  '${widget.currentQuestion + 1}/${widget.sumQuestions}',
+                  style: const TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
               ),
-            ),
+              if (photoLink == 'default')
+                const SizedBox(height: 20)
+              else
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(18, 15, 18, 30),
+                  child: SizedBox(
+                    width: 326,
+                    height: 217,
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(20),
+                      child: Image.network(
+                        photoLink,
+                        fit: BoxFit.fill,
+                      ),
+                    ),
+                  ),
+                ),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(30, 0, 30, 25),
+                child: Text(
+                  widget.question,
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(
+                    color: Color.fromRGBO(0, 122, 255, 1),
+                    fontSize: 25,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+              QuestionPageCheckBox(
+                answers: widget.answers,
+                onAnswerSelected: (isSelected, answerIndex) {
+                  updateAnswerChecker(isSelected, answerIndex);
+                },
+              ),
+              const SizedBox(height: 20),
+              const SizedBox(height: 20),
+            ],
           ),
-          QuestionPageCheckBox(
-            answers: widget.answers,
-            onAnswerSelected: (isSelected, answerIndex) {
-              updateAnswerChecker(isSelected, answerIndex);
-            },
-          ),
-          const SizedBox(height: 20),
           if (answerChecker)
-            Padding(
-              padding: const EdgeInsets.all(10),
-              child: ElevatedButton(
-                onPressed: () =>
-                    nextPage(widget.currentQuestion, widget.sumQuestions),
-                child: const Text('Дальше'),
+            Align(
+              alignment: const Alignment(0, 0.9),
+              child: SizedBox(
+                width: MediaQuery.of(context).size.width - 30,
+                child: ElevatedButton(
+                  onPressed: () =>
+                      nextPage(widget.currentQuestion, widget.sumQuestions),
+                  child: const Text('Дальше'),
+                ),
               ),
             )
           else
@@ -156,7 +164,7 @@ class _QuestionPageState extends State<QuestionPage> {
 }
 
 class QuestionPageCheckBox extends StatefulWidget {
-  final Map<int, String> answers;
+  final Map<int, dynamic> answers;
   final Function(bool, int) onAnswerSelected;
 
   const QuestionPageCheckBox({
@@ -176,7 +184,10 @@ class _QuestionPageCheckBoxState extends State<QuestionPageCheckBox> {
     setState(() {
       setFlag = newFlag;
     });
-    widget.onAnswerSelected(true, newFlag);
+    widget.onAnswerSelected(
+      true,
+      int.parse(widget.answers[newFlag].values.first.toString()),
+    );
   }
 
   @override
@@ -187,7 +198,7 @@ class _QuestionPageCheckBoxState extends State<QuestionPageCheckBox> {
               controlAffinity: ListTileControlAffinity.leading,
               activeColor: const Color.fromRGBO(0, 122, 255, 1),
               title: Text(
-                '${widget.answers[i]}',
+                '${widget.answers[i].keys.first}',
               ),
               value: setFlag == i,
               onChanged: (value) {

@@ -39,6 +39,7 @@ abstract interface class SettingsScopeController
     implements ThemeScopeController, LocaleScopeController {
   /// Get the [HomeBloc].
   HomeBloc get homeBloc;
+  // ignore: public_member_api_docs
   QuizBloc get quizBloc;
 }
 
@@ -76,7 +77,7 @@ class SettingsScope extends StatefulWidget {
 
   /// The [SettingsBloc] instance.
   final HomeBloc homeBloc;
-
+// ignore: public_member_api_docs
   final QuizBloc quizBloc;
 
   /// Get the [SettingsScopeController] of the closest [SettingsScope] ancestor.
@@ -155,7 +156,6 @@ class _SettingsScopeState extends State<SettingsScope>
       );
 
   @override
-  // TODO: implement quizBloc
   QuizBloc get quizBloc => widget.quizBloc;
 }
 
