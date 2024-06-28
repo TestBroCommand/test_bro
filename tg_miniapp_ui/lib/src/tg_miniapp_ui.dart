@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:tg_miniapp_ui/src/colorshemes.dart';
+import 'package:tg_miniapp_ui/src/elevated_button_styles.dart';
 import 'package:tg_miniapp_ui/src/inputdecoration_styles.dart';
 import 'package:tg_miniapp_ui/tg_miniapp_ui.dart';
 
@@ -11,6 +12,7 @@ final ThemeData _lightTheme = ThemeData.light();
 /// Flutter ui kit for tapps
 /// {@endtemplate}
 final ThemeData lightTheme = _lightTheme.copyWith(
+  elevatedButtonTheme: elevatedStyleLight,
   brightness: Brightness.light,
   scaffoldBackgroundColor: const Color.fromRGBO(247, 247, 247, 1),
   colorScheme: whiteColorScheme,
@@ -19,6 +21,7 @@ final ThemeData lightTheme = _lightTheme.copyWith(
   inputDecorationTheme: inputDecorationLightStyle,
 );
 final ThemeData darkTheme = _darkTheme.copyWith(
+  elevatedButtonTheme: elevatedStyleDark,
   brightness: Brightness.dark,
   scaffoldBackgroundColor: const Color(0xFF17212B),
   colorScheme: darkColorScheme,

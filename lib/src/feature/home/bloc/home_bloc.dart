@@ -19,10 +19,10 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   Future<void> _loadData(LoadDataEvent event, Emitter<HomeState> emit) async {
     emit(HomeLoading());
     try {
-      final quizzes = await repository.getAllQuizzes();
+      // final quizzes = await repository.getAllQuizzes();
       final uquizzes = await repository.getAllUQuizzes();
       final tags = await repository.getTags();
-      final allQuizzes = [...quizzes, ...uquizzes];
+      final allQuizzes = [...uquizzes];
       emit(HomeLoaded(allQuizzes, tags));
     } catch (e) {
       emit(HomeFailure(e));
@@ -30,10 +30,10 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   }
 
   Future<void> _loadTag(LoadTagEvent event, Emitter<HomeState> emit) async {
-    emit(HomeLoading());
+    final tags = await repository.getTags();
+    emit(HomeTagLoading(tags));
     try {
       final quizzes = await repository.getAllTagsByIds(event.ids);
-      final tags = await repository.getTags();
       emit(HomeLoadTag(quizzes, tags));
     } catch (e) {
       emit(HomeFailure(e));

@@ -45,6 +45,66 @@ class _HomeScreenState extends State<HomeScreen> {
               return const Center(child: CircularProgressIndicator());
             } else if (state is HomeFailure) {
               return Center(child: Text(state.error.toString()));
+            } else if (state is HomeTagLoading) {
+              final List<String> tags = state.tags.map((e) => e.name!).toList();
+              final _tagsQuizes = state.tags.map((e) => e.quizes!).toList();
+              final List<Widget> chips = [];
+
+              for (int i = 0; i < tags.length; i++) {
+                chips.add(
+                  FilterChip(
+                    backgroundColor: Colors.transparent,
+                    label: Text(tags[i]),
+                    onSelected: (value) {
+                      context.read<HomeBloc>().add(
+                            LoadTagEvent(ids: _tagsQuizes[i]),
+                          );
+                    },
+                  ),
+                );
+                chips.add(const SizedBox(width: 10));
+              }
+
+              return LayoutBuilder(
+                builder: (context, constraints) => CustomScrollView(
+                  slivers: [
+                    SliverToBoxAdapter(
+                      child: Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: TextField(
+                          controller: _textController,
+                          decoration: const InputDecoration(
+                            hintText: 'Поиск',
+                          ),
+                          onChanged: (value) {
+                            setState(() {
+                              _searchText =
+                                  _textController.text.toLowerCase().trim();
+                            });
+                          },
+                        ),
+                      ),
+                    ),
+                    SliverToBoxAdapter(
+                      child: Padding(
+                        padding: const EdgeInsets.only(left: 10),
+                        child: SingleChildScrollView(
+                          scrollDirection: Axis.horizontal,
+                          child: Row(
+                            children: chips,
+                          ),
+                        ),
+                      ),
+                    ),
+                    const SliverFillRemaining(
+                      hasScrollBody: false,
+                      child: Center(
+                        child: CircularProgressIndicator(),
+                      ),
+                    ),
+                  ],
+                ),
+              );
             } else if (state is HomeLoaded) {
               return LayoutBuilder(
                 builder: (context, constraints) {
@@ -55,6 +115,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   for (int i = 0; i < tags.length; i++) {
                     chips.add(
                       FilterChip(
+                        backgroundColor: Colors.transparent,
                         label: Text(tags[i]),
                         onSelected: (value) => {
                           context.read<HomeBloc>().add(
@@ -65,17 +126,19 @@ class _HomeScreenState extends State<HomeScreen> {
                         },
                       ),
                     );
-                    chips.add(const SizedBox(
-                      width: 10,
-                    ),);
+                    chips.add(
+                      const SizedBox(
+                        width: 10,
+                      ),
+                    );
                   }
                   final windowSize = constraints.materialBreakpoint;
                   final allQuizzes = state.quizzes;
 
-                  filteredQuizzes = allQuizzes.where((quiz) {
-                    final quizTitleWords = quiz.title.toLowerCase().split(' ');
-                    return quizTitleWords
-                        .any((word) => word.startsWith(_searchText));
+                  final filteredQuizzes = allQuizzes.where((quiz) {
+                    final searchWords = _searchText.split(' ');
+                    return searchWords.every((word) =>
+                        quiz.title.toLowerCase().contains(word.toLowerCase()));
                   }).toList();
                   return CustomScrollView(
                     slivers: [
@@ -83,14 +146,16 @@ class _HomeScreenState extends State<HomeScreen> {
                         child: Padding(
                           padding: const EdgeInsets.all(16.0),
                           child: TextField(
-                            controller: _textController,
-                            decoration: const InputDecoration(
-                              hintText: 'Поиск',
-                            ),
-                            onChanged: (value) => setState(() {
-                              _searchText = _textController.text.toLowerCase();
-                            }),
-                          ),
+                              controller: _textController,
+                              decoration: const InputDecoration(
+                                hintText: 'Поиск',
+                              ),
+                              onChanged: (value) {
+                                setState(() {
+                                  _searchText =
+                                      _textController.text.toLowerCase().trim();
+                                });
+                              }),
                         ),
                       ),
                       SliverToBoxAdapter(
@@ -150,9 +215,11 @@ class _HomeScreenState extends State<HomeScreen> {
                         },
                       ),
                     );
-                    chips.add(const SizedBox(
-                      width: 10,
-                    ),);
+                    chips.add(
+                      const SizedBox(
+                        width: 10,
+                      ),
+                    );
                   }
                   final windowSize = constraints.materialBreakpoint;
                   final allQuizzes = state.quizzes;
@@ -160,7 +227,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   filteredQuizzes = allQuizzes.where((quiz) {
                     final quizTitleWords = quiz.title.toLowerCase().split(' ');
                     return quizTitleWords
-                        .any((word) => word.startsWith(_searchText));
+                        .any((word) => word.contains(_searchText));
                   }).toList();
                   return CustomScrollView(
                     slivers: [

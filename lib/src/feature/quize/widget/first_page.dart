@@ -109,12 +109,14 @@ class FirstPageQuiz extends StatelessWidget {
             ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 37.0),
-              child: Text(
-                description,
-                style: const TextStyle(
-                  fontSize: 17,
-                ),
-              ),
+              child: description == 'og:description meta tag not found'
+                  ? const SizedBox.shrink()
+                  : Text(
+                      description,
+                      style: const TextStyle(
+                        fontSize: 17,
+                      ),
+                    ),
             ),
           ],
         ),
