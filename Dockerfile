@@ -2,7 +2,7 @@ FROM alpine
 RUN apk update
 
 ## Make sure to install gcompat
-RUN apk add bash curl file git unzip which zip gcompat
+RUN apk add bash curl file git unzip which zip gcompat nginx
 
 # # download Flutter SDK from Flutter Github repo
 RUN git clone https://github.com/flutter/flutter.git /usr/local/flutter
@@ -23,7 +23,6 @@ WORKDIR /app/
 RUN flutter build web --release --web-renderer html --dart-define=SENTRY_DSN='https://6b3248858ed34f2abe97adf6b2af0c34@glitchtip.testbroapp.ru/1'
 
 # Stage 2
-FROM nginx:1.21.1-alpine
 COPY --from=build-env /app/build/web /usr/share/nginx/html
 EXPOSE 80
 CMD ["nginx", "-g", "daemon off;"]
