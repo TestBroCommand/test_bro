@@ -37,7 +37,7 @@ class QuizWidget extends StatelessWidget {
           "quiz",
           pathParameters: {
             "id": currentQuiz.id,
-            "isUquiz": currentQuiz.isUquiz ? 'true' : 'false',
+            "isUquiz": 'true',
           },
         );
       },
