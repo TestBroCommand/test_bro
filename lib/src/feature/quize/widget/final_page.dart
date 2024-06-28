@@ -124,12 +124,12 @@ class _FinalPageQuizState extends State<FinalPageQuiz> {
                   color: Colors.white,
                 ),
                 onPressed: () async {
-                  await TelegramWebApp.instance.openTelegramLink(
-                    "t.me/testquizebro_bot/base?startapp=${widget.quizId}",
-                  );
                   await posthog.capture(
                     eventName: "quiz_share",
                     properties: {"quiz_id": widget.name},
+                  );
+                  await TelegramWebApp.instance.openTelegramLink(
+                    "https://t.me/share/url?url=https://t.me/testquizebro_bot/base?startapp=${widget.quizId}",
                   );
                   await Clipboard.setData(
                     ClipboardData(
@@ -160,6 +160,10 @@ class _FinalPageQuizState extends State<FinalPageQuiz> {
   }
 
   Future<void> _initialize(BuildContext context) async {
+    await posthog.capture(
+      eventName: "quiz_complete",
+      properties: {"quiz_id": widget.quizId},
+    );
     if (!kDebugMode) {
       if (posthog.getFeatureFlag('ads').toString() == 'control') {
         js.context.callMethod('fullScreen');
@@ -174,8 +178,8 @@ class _FinalPageQuizState extends State<FinalPageQuiz> {
 
   Future<void> onPressed() async {
     await posthog.capture(
-      eventName: "quiz_complete",
-      properties: {"quiz_id": widget.name},
+      eventName: "quiz_other_tests",
+      properties: {"quiz_id": widget.quizId},
     );
     if (!mounted) return;
     context.go('/');

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:test_bro/src/core/utils/analytics.dart';
 import 'package:test_bro/src/core/utils/layout/layout.dart';
 import 'package:test_bro/src/feature/home/bloc/home_bloc.dart';
 import 'package:test_bro/src/feature/home/model/entities/quiz_entity.dart';
@@ -55,7 +56,10 @@ class _HomeScreenState extends State<HomeScreen> {
                   FilterChip(
                     backgroundColor: Colors.transparent,
                     label: Text(tags[i]),
-                    onSelected: (value) {
+                    onSelected: (value) async {
+                      await posthog.capture(
+                          eventName: "tag_click",
+                          properties: {"tag": tags[i]},);
                       context.read<HomeBloc>().add(
                             LoadTagEvent(ids: _tagsQuizes[i]),
                           );
@@ -138,7 +142,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   final filteredQuizzes = allQuizzes.where((quiz) {
                     final searchWords = _searchText.split(' ');
                     return searchWords.every((word) =>
-                        quiz.title.toLowerCase().contains(word.toLowerCase()));
+                        quiz.title.toLowerCase().contains(word.toLowerCase()),);
                   }).toList();
                   return CustomScrollView(
                     slivers: [
@@ -154,8 +158,11 @@ class _HomeScreenState extends State<HomeScreen> {
                                 setState(() {
                                   _searchText =
                                       _textController.text.toLowerCase().trim();
+                                  posthog.capture(
+                                      eventName: "quiz_search",
+                                      properties: {"search": _searchText},);
                                 });
-                              }),
+                              },),
                         ),
                       ),
                       SliverToBoxAdapter(

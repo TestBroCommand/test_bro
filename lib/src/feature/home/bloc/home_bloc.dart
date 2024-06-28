@@ -2,6 +2,8 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:meta/meta.dart';
+import 'package:telegram_web_app/telegram_web_app.dart';
+import 'package:test_bro/src/core/utils/analytics.dart';
 import 'package:test_bro/src/feature/home/data/repository/pb_repository.dart';
 import 'package:test_bro/src/feature/home/model/entities/quiz_entity.dart';
 import 'package:test_bro/src/feature/home/model/entities/tag_entity.dart';
@@ -19,6 +21,9 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   Future<void> _loadData(LoadDataEvent event, Emitter<HomeState> emit) async {
     emit(HomeLoading());
     try {
+      await posthog.identify(
+          userId: TelegramWebApp.instance.initData.user.username!,
+          userProperties: {"Theme": "${TelegramWebApp.instance.themeParams}"},);
       // final quizzes = await repository.getAllQuizzes();
       final uquizzes = await repository.getAllUQuizzes();
       final tags = await repository.getTags();
