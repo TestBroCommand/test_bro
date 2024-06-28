@@ -51,7 +51,6 @@ class _FinalPageQuizState extends State<FinalPageQuiz> {
       photoLink =
           "https://pb-dev.testbroapp.ru/api/files/final_page/${widget.finalId}/${widget.image}";
     }
-    print(photoLink);
     return Scaffold(
       body: ListView(
         children: [
@@ -81,14 +80,13 @@ class _FinalPageQuizState extends State<FinalPageQuiz> {
               ),
             ),
           ),
-          /* Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 35, vertical: 24),
-              child: Text(
-                description,
-                style:
-                    const TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
-              ),
-            ), */
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 35, vertical: 24),
+            child: Text(
+              widget.description,
+              style: const TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
+            ),
+          ),
           const Padding(
             padding: EdgeInsets.symmetric(horizontal: 35.0),
             child: Text(
