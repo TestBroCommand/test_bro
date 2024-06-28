@@ -12,23 +12,26 @@ final ThemeData _lightTheme = ThemeData.light();
 /// Flutter ui kit for tapps
 /// {@endtemplate}
 final ThemeData lightTheme = _lightTheme.copyWith(
-  elevatedButtonTheme: elevatedStyleLight,
-  brightness: Brightness.light,
-  scaffoldBackgroundColor: const Color.fromRGBO(247, 247, 247, 1),
-  colorScheme: whiteColorScheme,
-  textTheme: GoogleFonts.latoTextTheme(_lightTheme.textTheme),
-  cardTheme: lightCardTheme,
-  inputDecorationTheme: inputDecorationLightStyle,
-);
+    elevatedButtonTheme: elevatedStyleLight,
+    brightness: Brightness.light,
+    scaffoldBackgroundColor: const Color.fromRGBO(247, 247, 247, 1),
+    colorScheme: whiteColorScheme,
+    textTheme: GoogleFonts.latoTextTheme(_lightTheme.textTheme),
+    cardTheme: lightCardTheme,
+    inputDecorationTheme: inputDecorationLightStyle,
+    chipTheme: ChipThemeData(
+      backgroundColor: const Color.fromRGBO(247, 247, 247, 1),
+      
+    ));
 final ThemeData darkTheme = _darkTheme.copyWith(
-  elevatedButtonTheme: elevatedStyleDark,
-  brightness: Brightness.dark,
-  scaffoldBackgroundColor: const Color(0xFF17212B),
-  colorScheme: darkColorScheme,
-  textTheme: GoogleFonts.latoTextTheme(ThemeData.dark().textTheme),
-  cardTheme: darkCardTheme,
-  inputDecorationTheme: inputDecorationDarkStyle,
-);
+    elevatedButtonTheme: elevatedStyleDark,
+    brightness: Brightness.dark,
+    scaffoldBackgroundColor: const Color(0xFF17212B),
+    colorScheme: darkColorScheme,
+    textTheme: GoogleFonts.latoTextTheme(ThemeData.dark().textTheme),
+    cardTheme: darkCardTheme,
+    inputDecorationTheme: inputDecorationDarkStyle,
+    chipTheme: ChipThemeData(backgroundColor: const Color(0xFF17212B)));
 
 class TgMiniappUi {
   /// {@macro tg_miniapp_ui}
