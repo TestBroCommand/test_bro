@@ -45,6 +45,7 @@ class QuizBloc extends Bloc<QuizEvent, QuizState> {
       final loadedState = state as QuizLoaded;
       final answers = loadedState.answers;
       final finalsEntities = loadedState.finalPage;
+
       final finalPageEntity = _determineFinalPage(
         finalEntities: finalsEntities,
         answers: answers,
@@ -62,16 +63,16 @@ class QuizBloc extends Bloc<QuizEvent, QuizState> {
       final id = event.id;
       StartEntity startPage;
       List<PageEntity> pages = [];
-      List<FinalEntity> resultPages = [];
+      List<FinalEntity> resultPages;
 
       if (event.isUQuiz == 'true') {
-        startPage = await repository.getUQuizStartPage(id ?? "");
-        pages = await repository.getUQuizAllPages(id ?? "");
-        resultPages = await repository.getUQuizAllFinalles(id ?? "");
+        startPage = await repository.getUQuizStartPage(id);
+        pages = await repository.getUQuizAllPages(id);
+        resultPages = await repository.getUQuizAllFinalles(id);
       } else {
-        startPage = await repository.getQuizStartPage(id ?? "");
-        pages = await repository.getQuizAllPages(id ?? "");
-        resultPages = await repository.getQuizAllFinalles(id ?? "");
+        startPage = await repository.getQuizStartPage(id);
+        pages = await repository.getQuizAllPages(id);
+        resultPages = await repository.getQuizAllFinalles(id);
       }
 
       emit(
@@ -151,8 +152,14 @@ class QuizBloc extends Bloc<QuizEvent, QuizState> {
       }
     });
 
-    final finalPage = finalEntities.firstWhere(
-      (finalpage) => finalpage.mostFrequentDigit == mostFrequentValue,
+    final FinalEntity finalPage = finalEntities.firstWhere(
+      (finalpage) {
+        if (finalpage.mostFrequentDigit == mostFrequentValue - 1) {
+          return true;
+        }
+
+        return false;
+      },
       orElse: () => finalEntities.first,
     );
     return finalPage;

@@ -12,10 +12,29 @@ final class HomeInitial extends HomeState {}
 
 final class HomeLoading extends HomeState {}
 
+final class HomeTagLoading extends HomeState {
+  final List<TagEntity> tags;
+  const HomeTagLoading(this.tags);
+
+  @override
+  List<Object> get props => [tags];
+}
+
 final class HomeLoaded extends HomeState {
   final List<QuizEntity> quizzes;
+  final List<TagEntity> tags;
 
-  const HomeLoaded(this.quizzes);
+  const HomeLoaded(this.quizzes, this.tags);
+
+  @override
+  List<Object> get props => [quizzes];
+}
+
+final class HomeLoadTag extends HomeState {
+  final List<TagEntity> tags;
+  final List<QuizEntity> quizzes;
+
+  const HomeLoadTag(this.quizzes, this.tags);
 
   @override
   List<Object> get props => [quizzes];

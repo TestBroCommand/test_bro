@@ -4,12 +4,19 @@ import 'package:go_router/go_router.dart';
 import 'package:preload_page_view/preload_page_view.dart';
 import 'package:test_bro/src/feature/quize/bloc/quize_bloc.dart';
 
+// ignore: public_member_api_docs
 class FirstPageQuiz extends StatelessWidget {
+  // ignore: public_member_api_docs
   final String image;
+  // ignore: public_member_api_docs
   final String name;
+  // ignore: public_member_api_docs
   final String id;
+  // ignore: public_member_api_docs
   final String description;
+  // ignore: public_member_api_docs
   final PreloadPageController pageController;
+  // ignore: public_member_api_docs
   const FirstPageQuiz({
     required this.image,
     required this.name,
@@ -102,12 +109,14 @@ class FirstPageQuiz extends StatelessWidget {
             ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 37.0),
-              child: Text(
-                description,
-                style: const TextStyle(
-                  fontSize: 17,
-                ),
-              ),
+              child: description == 'og:description meta tag not found'
+                  ? const SizedBox.shrink()
+                  : Text(
+                      description,
+                      style: const TextStyle(
+                        fontSize: 17,
+                      ),
+                    ),
             ),
           ],
         ),

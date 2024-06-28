@@ -51,7 +51,6 @@ class _FinalPageQuizState extends State<FinalPageQuiz> {
       photoLink =
           "https://pb-dev.testbroapp.ru/api/files/final_page/${widget.finalId}/${widget.image}";
     }
-
     return Scaffold(
       body: ListView(
         children: [
@@ -81,14 +80,13 @@ class _FinalPageQuizState extends State<FinalPageQuiz> {
               ),
             ),
           ),
-          /* Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 35, vertical: 24),
-              child: Text(
-                description,
-                style:
-                    const TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
-              ),
-            ), */
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 35, vertical: 24),
+            child: Text(
+              widget.description,
+              style: const TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
+            ),
+          ),
           const Padding(
             padding: EdgeInsets.symmetric(horizontal: 35.0),
             child: Text(
@@ -126,11 +124,12 @@ class _FinalPageQuizState extends State<FinalPageQuiz> {
                   color: Colors.white,
                 ),
                 onPressed: () async {
-                  TelegramWebApp.instance.openTelegramLink(
-                      "t.me/testquizebro_bot/base?startapp=${widget.quizId}");
                   await posthog.capture(
                     eventName: "quiz_share",
                     properties: {"quiz_id": widget.name},
+                  );
+                  await TelegramWebApp.instance.openTelegramLink(
+                    "https://t.me/share/url?url=https://t.me/testquizebro_bot/base?startapp=${widget.quizId}",
                   );
                   await Clipboard.setData(
                     ClipboardData(
@@ -138,6 +137,7 @@ class _FinalPageQuizState extends State<FinalPageQuiz> {
                           "t.me/testquizebro_bot/base?startapp=${widget.quizId}",
                     ),
                   );
+                  if (!mounted) return;
                   ScaffoldMessenger.of(context).showSnackBar(
                     const SnackBar(
                       content: Text("Скопирована ссылка"),
@@ -160,8 +160,12 @@ class _FinalPageQuizState extends State<FinalPageQuiz> {
   }
 
   Future<void> _initialize(BuildContext context) async {
+    await posthog.capture(
+      eventName: "quiz_complete",
+      properties: {"quiz_id": widget.quizId},
+    );
     if (!kDebugMode) {
-      if (posthog.getFeatureFlag('ads') == 'control') {
+      if (posthog.getFeatureFlag('ads').toString() == 'control') {
         js.context.callMethod('fullScreen');
       } else {
         js.context.callMethod('adsgram');
@@ -173,18 +177,13 @@ class _FinalPageQuizState extends State<FinalPageQuiz> {
   }
 
   Future<void> onPressed() async {
-    if (!kDebugMode) {
-      if (posthog.getFeatureFlag('ads') == 'control') {
-        js.context.callMethod('fullScreen');
-      } else {
-        js.context.callMethod('adsgram');
-      }
-    }
     await posthog.capture(
-      eventName: "quiz_complete",
-      properties: {"quiz_id": widget.name},
+      eventName: "quiz_other_tests",
+      properties: {"quiz_id": widget.quizId},
     );
+    if (!mounted) return;
     context.go('/');
+
     context.read<QuizBloc>().add(ResetStateEvent());
   }
 }
