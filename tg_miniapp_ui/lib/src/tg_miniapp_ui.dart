@@ -19,6 +19,9 @@ final ThemeData lightTheme = _lightTheme.copyWith(
   textTheme: GoogleFonts.latoTextTheme(_lightTheme.textTheme),
   cardTheme: lightCardTheme,
   inputDecorationTheme: inputDecorationLightStyle,
+  chipTheme: ChipThemeData(
+    backgroundColor: const Color.fromRGBO(247, 247, 247, 1),
+  ),
 );
 final ThemeData darkTheme = _darkTheme.copyWith(
   elevatedButtonTheme: elevatedStyleDark,
@@ -28,6 +31,9 @@ final ThemeData darkTheme = _darkTheme.copyWith(
   textTheme: GoogleFonts.latoTextTheme(ThemeData.dark().textTheme),
   cardTheme: darkCardTheme,
   inputDecorationTheme: inputDecorationDarkStyle,
+  chipTheme: ChipThemeData(
+    backgroundColor: const Color(0xFF17212B),
+  ),
 );
 
 class TgMiniappUi {

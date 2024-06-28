@@ -129,8 +129,7 @@ class _FinalPageQuizState extends State<FinalPageQuiz> {
                     properties: {"quiz_id": widget.name},
                   );
                   await TelegramWebApp.instance.openTelegramLink(
-                    "https://t.me/testquizebro_bot?start=${widget.quizId}&text={Если хотите провести время с пользой и узнать что-то новое, проходите этот тест! Я уже попробовал(а), теперь ваша очередь!}",
-                  );
+                      'https://t.me/share/url?url=https://t.me/testquizebro_bot?start=${widget.quizId}');
                   await Clipboard.setData(
                     ClipboardData(
                       text:

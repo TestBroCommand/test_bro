@@ -21,9 +21,9 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   Future<void> _loadData(LoadDataEvent event, Emitter<HomeState> emit) async {
     emit(HomeLoading());
     try {
-      await posthog.identify(
-          userId: TelegramWebApp.instance.initData.user.username!,
-          userProperties: {"Theme": "${TelegramWebApp.instance.themeParams}"},);
+      // await posthog.identify(
+      //     userId: TelegramWebApp.instance.initData.user.username!,
+      //     userProperties: {"Theme": "${TelegramWebApp.instance.themeParams}"},);
       // final quizzes = await repository.getAllQuizzes();
       final uquizzes = await repository.getAllUQuizzes();
       final tags = await repository.getTags();
