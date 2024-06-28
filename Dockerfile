@@ -23,6 +23,6 @@ WORKDIR /app/
 RUN flutter build web --release --web-renderer html --dart-define=SENTRY_DSN='https://6b3248858ed34f2abe97adf6b2af0c34@glitchtip.testbroapp.ru/1'
 
 # Stage 2
-COPY --from=build-env /app/build/web /usr/share/nginx/html
+RUN mv /app/build/web/* /usr/share/nginx/html
 EXPOSE 80
 CMD ["nginx", "-g", "daemon off;"]
