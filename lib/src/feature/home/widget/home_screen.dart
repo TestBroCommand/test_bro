@@ -54,7 +54,6 @@ class _HomeScreenState extends State<HomeScreen> {
               for (int i = 0; i < tags.length; i++) {
                 chips.add(
                   FilterChip(
-                    backgroundColor: Colors.transparent,
                     label: Text(tags[i]),
                     onSelected: (value) async {
                       await posthog.capture(
@@ -84,6 +83,10 @@ class _HomeScreenState extends State<HomeScreen> {
                             setState(() {
                               _searchText =
                                   _textController.text.toLowerCase().trim();
+                              posthog.capture(
+                                eventName: "quiz_search",
+                                properties: {"search": _searchText},
+                              );
                             });
                           },
                         ),
@@ -91,7 +94,11 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                     SliverToBoxAdapter(
                       child: Padding(
-                        padding: const EdgeInsets.only(left: 10, top: 10),
+                        padding: const EdgeInsets.only(
+                          left: 16,
+                          right: 16,
+                          bottom: 10,
+                        ),
                         child: SingleChildScrollView(
                           scrollDirection: Axis.horizontal,
                           child: Row(
@@ -119,7 +126,6 @@ class _HomeScreenState extends State<HomeScreen> {
                   for (int i = 0; i < tags.length; i++) {
                     chips.add(
                       FilterChip(
-                        backgroundColor: Colors.transparent,
                         label: Text(tags[i]),
                         onSelected: (value) => {
                           context.read<HomeBloc>().add(
@@ -171,7 +177,11 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                       SliverToBoxAdapter(
                         child: Padding(
-                          padding: const EdgeInsets.only(left: 10),
+                          padding: const EdgeInsets.only(
+                            left: 16,
+                            right: 16,
+                            bottom: 10,
+                          ),
                           child: SingleChildScrollView(
                             scrollDirection: Axis.horizontal,
                             child: Row(
@@ -258,7 +268,11 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                       SliverToBoxAdapter(
                         child: Padding(
-                          padding: const EdgeInsets.only(left: 10),
+                          padding: const EdgeInsets.only(
+                            left: 16,
+                            right: 16,
+                            bottom: 10,
+                          ),
                           child: SingleChildScrollView(
                             scrollDirection: Axis.horizontal,
                             child: Row(

@@ -19,9 +19,15 @@ final ThemeData lightTheme = _lightTheme.copyWith(
   textTheme: GoogleFonts.latoTextTheme(_lightTheme.textTheme),
   cardTheme: lightCardTheme,
   inputDecorationTheme: inputDecorationLightStyle,
+  chipTheme: ChipThemeData(
+    backgroundColor: const Color.fromRGBO(247, 247, 247, 1),
+  ),
 );
 final ThemeData darkTheme = _darkTheme.copyWith(
   elevatedButtonTheme: elevatedStyleDark,
+  chipTheme: ChipThemeData(
+    backgroundColor: const Color(0xFF17212B),
+  ),
   brightness: Brightness.dark,
   scaffoldBackgroundColor: const Color(0xFF17212B),
   colorScheme: darkColorScheme,
