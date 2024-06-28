@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tg_miniapp_ui/src/colors.dart';
 
 final elevatedStyleDark = ElevatedButtonThemeData(
     style: ElevatedButton.styleFrom(
@@ -18,6 +19,6 @@ final elevatedStyleLight = ElevatedButtonThemeData(
     borderRadius: BorderRadius.circular(10),
     side: BorderSide.none,
   ),
-  foregroundColor: Color(0xFF111820),
+  foregroundColor: primaryColor,
   backgroundColor: const Color.fromRGBO(247, 247, 247, 1),
 ));

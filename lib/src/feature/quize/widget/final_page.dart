@@ -137,7 +137,6 @@ class _FinalPageQuizState extends State<FinalPageQuiz> {
                           "t.me/testquizebro_bot/base?startapp=${widget.quizId}",
                     ),
                   );
-
                   if (!mounted) return;
                   ScaffoldMessenger.of(context).showSnackBar(
                     const SnackBar(
