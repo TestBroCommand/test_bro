@@ -14,11 +14,10 @@ class QuizScreen extends StatefulWidget {
   // ignore: public_member_api_docs
   final String id;
   // ignore: public_member_api_docs
-  final String isUquiz;
+  final String isUquiz = 'true';
   // ignore: public_member_api_docs
   const QuizScreen({
     required this.id,
-    required this.isUquiz,
     super.key,
   });
 
