@@ -21,6 +21,8 @@ import 'package:test_bro/src/feature/settings/data/theme_datasource.dart';
 import 'package:test_bro/src/feature/settings/data/theme_mode_codec.dart';
 import 'package:test_bro/src/feature/settings/data/theme_repository.dart';
 
+late SharedPreferences sharedPreferences;
+
 /// {@template composition_root}
 /// A place where all dependencies are initialized.
 /// {@endtemplate}
@@ -58,7 +60,7 @@ final class CompositionRoot {
 
   Future<Dependencies> _initDependencies() async {
     final errorTrackingManager = await _initErrorTrackingManager();
-    final sharedPreferences = await SharedPreferences.getInstance();
+    sharedPreferences = await SharedPreferences.getInstance();
     final settingsBloc = await _initSettingsBloc(sharedPreferences);
     final homeBloc = await _initHomeBloc();
     final quizBloc = await _initQuizBloc();

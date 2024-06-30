@@ -164,7 +164,8 @@ class _FinalPageQuizState extends State<FinalPageQuiz> {
       eventName: "quiz_complete",
       properties: {"quiz_id": widget.quizId},
     );
-    //! По верх этиx if нужно делать проверку из shared preference 
+
+    //! По верх этиx if нужно делать проверку из shared preference
     if (!kDebugMode) {
       if (posthog.getFeatureFlag('ads').toString() == 'control') {
         js.context.callMethod('fullScreen');
