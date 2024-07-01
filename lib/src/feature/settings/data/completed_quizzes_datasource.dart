@@ -9,7 +9,7 @@ import 'package:test_bro/src/core/utils/preferences_dao.dart';
 /// {@endtemplate}
 abstract interface class CompletedQuizzesDatasource {
   /// Get completed quizzes
-  Future<int?> getCompletedQuizzes();
+  Future<int> getCompletedQuizzes();
 
   /// Set completed quizzes
   Future<void> setCompletedQuizzes(int completedQuiz);
@@ -23,13 +23,13 @@ final class CompletedQuizzesDatasourceLocal extends PreferencesDao
   PreferencesEntry<int> get _completedQuizzes => intEntry('completedQuizzes');
   
   @override
-  Future<int?> getCompletedQuizzes() async{
+  Future<int> getCompletedQuizzes() async{
     final completedQuiz = _completedQuizzes.read();
     return Future.value(completedQuiz ?? 0);
   }
   
   @override
-  Future<void> setCompletedQuizzes(int completedQuiz) async{
-    await _completedQuizzes.set(completedQuiz);
-  }    
+  Future<void> setCompletedQuizzes(int newCompletedQuiz) async{
+    await _completedQuizzes.set(newCompletedQuiz);
+  }
 }
