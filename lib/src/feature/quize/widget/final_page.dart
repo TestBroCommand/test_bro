@@ -7,7 +7,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:telegram_web_app/telegram_web_app.dart';
 import 'package:test_bro/src/core/utils/analytics.dart';
+import 'package:test_bro/src/feature/initialization/logic/composition_root.dart';
 import 'package:test_bro/src/feature/quize/bloc/quize_bloc.dart';
+import 'package:test_bro/src/feature/settings/data/completed_quizzes_datasource.dart';
+import 'package:test_bro/src/feature/settings/data/completed_quizzes_repository.dart';
 
 class FinalPageQuiz extends StatefulWidget {
   final String quizId;
@@ -31,6 +34,15 @@ class FinalPageQuiz extends StatefulWidget {
 }
 
 class _FinalPageQuizState extends State<FinalPageQuiz> {
+  
+  final completedQuizzesRepository = CompletedQuizzesRepositoryImpl(
+    completedQuizzesDatasource: CompletedQuizzesDatasourceLocal(
+      sharedPreferences: sharedPreferences
+    ) 
+  );
+
+
+
   @override
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -164,12 +176,21 @@ class _FinalPageQuizState extends State<FinalPageQuiz> {
       eventName: "quiz_complete",
       properties: {"quiz_id": widget.quizId},
     );
-    if (!kDebugMode) {
-      if (posthog.getFeatureFlag('ads').toString() == 'control') {
-        js.context.callMethod('fullScreen');
-      } else {
-        js.context.callMethod('adsgram');
+
+    int completedQuizzes = await completedQuizzesRepository.getCompletedQuizzes();
+    completedQuizzes += 1;
+    
+    if(completedQuizzes >= 5){
+      await completedQuizzesRepository.setCompletedQuizzes(0);
+      if (!kDebugMode) {
+        if (posthog.getFeatureFlag('ads').toString() == 'control') {
+          js.context.callMethod('fullScreen');
+        } else {
+          js.context.callMethod('adsgram');
+        }
       }
+    } else {
+        await completedQuizzesRepository.setCompletedQuizzes(completedQuizzes);
     }
     context
         .read<QuizBloc>()
