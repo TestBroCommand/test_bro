@@ -306,9 +306,34 @@
       }
     }
   </style>
+
+  <style>
+    body {
+      height: 10000vh !important;
+      position: static !important;
+      overscroll-behavior: none;
+    }
+
+    flutter-view {
+      position: fixed !important;
+      max-width: 100vw !important;
+      max-height: 100vh !important;
+    }
+
+    /* Safari-specific CSS */
+    @supports (-webkit-touch-callout: inherit) {
+      body {
+        height: 1vh !important;
+      }
+    }
+  </style>
+
 </head>
 
 <body>
+  <script>
+    window.scroll(0, window.document.body.scrollHeight);
+  </script>
   <div class="longfazers">
     <span></span>
     <span></span>
@@ -328,7 +353,7 @@
     </div>
   </div>
   <h1>ЗАГРУЗКА</h1>
-    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
   <script>
     const AdController = window.Adsgram.init({ blockId: "203", debug: false });
   </script>
