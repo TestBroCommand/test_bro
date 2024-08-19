@@ -36,7 +36,7 @@ class PageEntity extends Equatable {
       );
 
   factory PageEntity.fromDto(PageDTO dto) => PageEntity(
-        id: dto.id ?? "",
+        id: dto.id ?? '',
         question: dto.question ?? '',
         image: dto.image ?? '',
         answers: processEntities(dto.answers!),
@@ -45,11 +45,11 @@ class PageEntity extends Equatable {
   static Map<int, Map<String, int>> processEntities(
     Map<dynamic, dynamic> entities,
   ) {
-    final Map<int, Map<String, int>> newMap = {};
+    final newMap = <int, Map<String, int>>{};
 
     entities.forEach((key, value) {
-      final int intKey = int.parse(key.toString()); // convert key to int
-      final Map<String, int> innerMap = {
+      final intKey = int.parse(key.toString()); // convert key to int
+      final innerMap = <String, int>{
         for (final innerEntry in (value as Map).entries)
           innerEntry.key as String: int.parse(innerEntry.value.toString()),
       }; // convert value to Map<String, int>

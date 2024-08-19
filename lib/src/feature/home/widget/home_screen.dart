@@ -47,21 +47,21 @@ class _HomeScreenState extends State<HomeScreen> {
             } else if (state is HomeFailure) {
               return Center(child: Text(state.error.toString()));
             } else if (state is HomeTagLoading) {
-              final List<String> tags = state.tags.map((e) => e.name!).toList();
-              final _tagsQuizes = state.tags.map((e) => e.quizes!).toList();
-              final List<Widget> chips = [];
+              final tags = state.tags.map((e) => e.name!).toList();
+              final tagsQuizes = state.tags.map((e) => e.quizes!).toList();
+              final chips = <Widget>[];
 
-              for (int i = 0; i < tags.length; i++) {
+              for (var i = 0; i < tags.length; i++) {
                 chips.add(
                   FilterChip(
                     label: Text(tags[i]),
                     onSelected: (value) async {
                       await posthog.capture(
-                        eventName: "tag_click",
-                        properties: {"tag": tags[i]},
+                        eventName: 'tag_click',
+                        properties: {'tag': tags[i]},
                       );
                       context.read<HomeBloc>().add(
-                            LoadTagEvent(ids: _tagsQuizes[i]),
+                            LoadTagEvent(ids: tagsQuizes[i]),
                           );
                     },
                   ),
@@ -84,8 +84,8 @@ class _HomeScreenState extends State<HomeScreen> {
                               _searchText =
                                   _textController.text.toLowerCase().trim();
                               posthog.capture(
-                                eventName: "quiz_search",
-                                properties: {"search": _searchText},
+                                eventName: 'quiz_search',
+                                properties: {'search': _searchText},
                               );
                             });
                           },
@@ -119,18 +119,18 @@ class _HomeScreenState extends State<HomeScreen> {
             } else if (state is HomeLoaded) {
               return LayoutBuilder(
                 builder: (context, constraints) {
-                  final List<String> tags =
+                  final tags =
                       state.tags.map((e) => e.name!).toList();
-                  final _tagsQuizes = state.tags.map((e) => e.quizes!).toList();
-                  final List<Widget> chips = [];
-                  for (int i = 0; i < tags.length; i++) {
+                  final tagsQuizes = state.tags.map((e) => e.quizes!).toList();
+                  final chips = <Widget>[];
+                  for (var i = 0; i < tags.length; i++) {
                     chips.add(
                       FilterChip(
                         label: Text(tags[i]),
                         onSelected: (value) => {
                           context.read<HomeBloc>().add(
                                 LoadTagEvent(
-                                  ids: _tagsQuizes[i],
+                                  ids: tagsQuizes[i],
                                 ),
                               ),
                         },
@@ -167,8 +167,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                 _searchText =
                                     _textController.text.toLowerCase().trim();
                                 posthog.capture(
-                                  eventName: "quiz_search",
-                                  properties: {"search": _searchText},
+                                  eventName: 'quiz_search',
+                                  properties: {'search': _searchText},
                                 );
                               });
                             },
@@ -219,18 +219,18 @@ class _HomeScreenState extends State<HomeScreen> {
             } else if (state is HomeLoadTag) {
               return LayoutBuilder(
                 builder: (context, constraints) {
-                  final List<String> tags =
+                  final tags =
                       state.tags.map((e) => e.name!).toList();
-                  final _tagsQuizes = state.tags.map((e) => e.quizes!).toList();
-                  final List<Widget> chips = [];
-                  for (int i = 0; i < tags.length; i++) {
+                  final tagsQuizes = state.tags.map((e) => e.quizes!).toList();
+                  final chips = <Widget>[];
+                  for (var i = 0; i < tags.length; i++) {
                     chips.add(
                       FilterChip(
                         label: Text(tags[i]),
                         onSelected: (value) => {
                           context.read<HomeBloc>().add(
                                 LoadTagEvent(
-                                  ids: _tagsQuizes[i],
+                                  ids: tagsQuizes[i],
                                 ),
                               ),
                         },

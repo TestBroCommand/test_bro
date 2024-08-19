@@ -12,10 +12,10 @@ class PBdataSource {
       config.pbEmail,
       config.pbPass,
     );
-    final RecordModel _idPageRecord = await pb.collection('quizes').getOne(id);
-    final String _idPage = _idPageRecord.getStringValue('start_page');
-    final RecordModel response =
-        await pb.collection('start_pages').getOne(_idPage);
+    final idPageRecord = await pb.collection('quizes').getOne(id);
+    final idPage = idPageRecord.getStringValue('start_page');
+    final response =
+        await pb.collection('start_pages').getOne(idPage);
     final startDTO = StartDTO.fromJson(response.toJson());
     return startDTO;
   }
@@ -27,13 +27,13 @@ class PBdataSource {
       config.pbEmail,
       config.pbPass,
     );
-    final RecordModel _idPageRecord =
+    final idPageRecord =
         await pb.collection('quizes_uquiz').getOne(id);
-    final List<String> _idPage =
-        _idPageRecord.getListValue<String>("final_page");
-    final List<RecordModel> response = List<RecordModel>.empty(growable: true);
-    for (int i = 0; i < _idPage.length; i++) {
-      response.add(await pb.collection('final_page').getOne(_idPage[i]));
+    final idPage =
+        idPageRecord.getListValue<String>('final_page');
+    final response = List<RecordModel>.empty(growable: true);
+    for (var i = 0; i < idPage.length; i++) {
+      response.add(await pb.collection('final_page').getOne(idPage[i]));
     }
     final finalDTO =
         response.map((record) => FinalDTO.fromJson(record.toJson())).toList();
@@ -47,11 +47,11 @@ class PBdataSource {
       config.pbEmail,
       config.pbPass,
     );
-    final RecordModel _idPageRecord = await pb.collection('quizes').getOne(id);
-    final List<String> _idPage = _idPageRecord.getListValue<String>("pages");
-    final List<RecordModel> response = List<RecordModel>.empty(growable: true);
-    for (int i = 0; i < _idPage.length; i++) {
-      response.add(await pb.collection('quiz_page').getOne(_idPage[i]));
+    final idPageRecord = await pb.collection('quizes').getOne(id);
+    final idPage = idPageRecord.getListValue<String>('pages');
+    final response = List<RecordModel>.empty(growable: true);
+    for (var i = 0; i < idPage.length; i++) {
+      response.add(await pb.collection('quiz_page').getOne(idPage[i]));
     }
     final pageDTO =
         response.map((record) => PageDTO.fromJson(record.toJson())).toList();
@@ -67,7 +67,7 @@ class PBdataSource {
     );
     final lastCompleteRecordModel =
         await pb.collection('quizes_uquiz').getOne(id);
-    final lastComplete = lastCompleteRecordModel.getIntValue("complete");
+    final lastComplete = lastCompleteRecordModel.getIntValue('complete');
     final updatedData = {'complete': lastComplete + 1};
     await pb.collection('quizes_uquiz').update(id, body: updatedData);
   }
@@ -79,11 +79,11 @@ class PBdataSource {
       config.pbEmail,
       config.pbPass,
     );
-    final RecordModel _idPageRecord =
+    final idPageRecord =
         await pb.collection('quizes_uquiz').getOne(id);
-    final String _idPage = _idPageRecord.getStringValue('start_page');
-    final RecordModel response =
-        await pb.collection('start_page_uquiz').getOne(_idPage);
+    final idPage = idPageRecord.getStringValue('start_page');
+    final response =
+        await pb.collection('start_page_uquiz').getOne(idPage);
     final startDTO = StartDTO.fromJson(response.toJson());
     return startDTO;
   }
@@ -95,12 +95,12 @@ class PBdataSource {
       config.pbEmail,
       config.pbPass,
     );
-    final RecordModel _idPageRecord =
+    final idPageRecord =
         await pb.collection('quizes_uquiz').getOne(id);
-    final List<String> _idPage = _idPageRecord.getListValue("final_page");
-    final List<RecordModel> response = List<RecordModel>.empty(growable: true);
-    for (int i = 0; i < _idPage.length; i++) {
-      response.add(await pb.collection('final_page_uquiz').getOne(_idPage[i]));
+    final idPage = idPageRecord.getListValue('final_page');
+    final response = List<RecordModel>.empty(growable: true);
+    for (var i = 0; i < idPage.length; i++) {
+      response.add(await pb.collection('final_page_uquiz').getOne(idPage[i]));
     }
 
     final finalDTO = response.map((record) => FinalDTO.fromJson(record.toJson())).toList();
@@ -114,12 +114,12 @@ class PBdataSource {
       config.pbEmail,
       config.pbPass,
     );
-    final RecordModel _idPageRecord =
+    final idPageRecord =
         await pb.collection('quizes_uquiz').getOne(id);
-    final List<String> _idPage = _idPageRecord.getListValue<String>("pages");
-    final List<RecordModel> response = List<RecordModel>.empty(growable: true);
-    for (int i = 0; i < _idPage.length; i++) {
-      response.add(await pb.collection('quiz_page_uquiz').getOne(_idPage[i]));
+    final idPage = idPageRecord.getListValue<String>('pages');
+    final response = List<RecordModel>.empty(growable: true);
+    for (var i = 0; i < idPage.length; i++) {
+      response.add(await pb.collection('quiz_page_uquiz').getOne(idPage[i]));
     }
     final pageDTO =
         response.map((record) => PageDTO.fromJson(record.toJson())).toList();
@@ -135,7 +135,7 @@ class PBdataSource {
     );
     final lastCompleteRecordModel =
         await pb.collection('quizes_uquiz').getOne(id);
-    final lastComplete = lastCompleteRecordModel.getIntValue("complete");
+    final lastComplete = lastCompleteRecordModel.getIntValue('complete');
     final updatedData = {'complete': lastComplete + 1};
     await pb.collection('quizes_uquiz').update(id, body: updatedData);
   }

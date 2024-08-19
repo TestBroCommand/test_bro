@@ -11,7 +11,7 @@ class PBrepositoryImpl implements PBrepository {
   @override
   Future<List<QuizEntity>> getAllQuizzes() async {
     final quizDTOs = await dataSource.getAllQuizes();
-    final quizzes = quizDTOs.map((dto) => QuizEntity.fromDto(dto)).toList();
+    final quizzes = quizDTOs.map(QuizEntity.fromDto).toList();
     return quizzes;
   }
 
@@ -26,14 +26,14 @@ class PBrepositoryImpl implements PBrepository {
   @override
   Future<List<TagEntity>> getTags() async {
     final tagDtos = await dataSource.getAllTagsSource();
-    final tag = tagDtos.map((dto) => TagEntity.fromDto(dto)).toList();
+    final tag = tagDtos.map(TagEntity.fromDto).toList();
     return tag;
   }
 
   @override
   Future<List<QuizEntity>> getAllTagsByIds(List<String> ids) async {
     final quizDtos = await dataSource.getAllUQuizesByIds(ids);
-    final List<QuizEntity> quizzes =
+    final quizzes =
         quizDtos.map((dto) => QuizEntity.fromDto(dto, isUquiz: true)).toList();
     return quizzes;
   }

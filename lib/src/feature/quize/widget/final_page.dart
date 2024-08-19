@@ -37,8 +37,8 @@ class _FinalPageQuizState extends State<FinalPageQuiz> {
   
   final completedQuizzesRepository = CompletedQuizzesRepositoryImpl(
     completedQuizzesDatasource: CompletedQuizzesDatasourceLocal(
-      sharedPreferences: sharedPreferences
-    ) 
+      sharedPreferences: sharedPreferences,
+    ), 
   );
 
 
@@ -53,7 +53,7 @@ class _FinalPageQuizState extends State<FinalPageQuiz> {
 
   @override
   Widget build(BuildContext context) {
-    String photoLink = '';
+    var photoLink = '';
     if (widget.image == 'og:img meta tag not found') {
       photoLink = 'default';
     } else if (widget.image.contains('https')) {
@@ -61,7 +61,7 @@ class _FinalPageQuizState extends State<FinalPageQuiz> {
     } else if (!widget.image.contains('https') ||
         widget.image.contains('istock')) {
       photoLink =
-          "https://pb-dev.testbroapp.ru/api/files/final_page/${widget.finalId}/${widget.image}";
+          'https://pb-dev.testbroapp.ru/api/files/final_page/${widget.finalId}/${widget.image}';
     }
     return Scaffold(
       body: ListView(
@@ -102,7 +102,7 @@ class _FinalPageQuizState extends State<FinalPageQuiz> {
           const Padding(
             padding: EdgeInsets.symmetric(horizontal: 35.0),
             child: Text(
-              "Поделитесь тестом с друзьями!",
+              'Поделитесь тестом с друзьями!',
               style: TextStyle(
                 color: Color.fromRGBO(0, 122, 255, 1),
                 fontSize: 20,
@@ -137,11 +137,11 @@ class _FinalPageQuizState extends State<FinalPageQuiz> {
                 ),
                 onPressed: () async {
                   await posthog.capture(
-                    eventName: "quiz_share",
-                    properties: {"quiz_id": widget.name},
+                    eventName: 'quiz_share',
+                    properties: {'quiz_id': widget.name},
                   );
                   await TelegramWebApp.instance.openTelegramLink(
-                      'https://t.me/share/url?url=https://t.me/testquizebro_bot?start=${widget.quizId}');
+                      'https://t.me/share/url?url=https://t.me/testquizebro_bot?start=${widget.quizId}',);
                   await Clipboard.setData(
                     ClipboardData(
                       text:
@@ -152,7 +152,7 @@ class _FinalPageQuizState extends State<FinalPageQuiz> {
                   if (!mounted) return;
                   ScaffoldMessenger.of(context).showSnackBar(
                     const SnackBar(
-                      content: Text("Скопирована ссылка"),
+                      content: Text('Скопирована ссылка'),
                     ),
                   );
                 },
@@ -163,7 +163,7 @@ class _FinalPageQuizState extends State<FinalPageQuiz> {
             padding: const EdgeInsets.all(10),
             child: ElevatedButton(
               onPressed: onPressed,
-              child: const Text("Еще  тесты!"),
+              child: const Text('Еще  тесты!'),
             ),
           ),
         ],
@@ -173,11 +173,11 @@ class _FinalPageQuizState extends State<FinalPageQuiz> {
 
   Future<void> _initialize(BuildContext context) async {
     await posthog.capture(
-      eventName: "quiz_complete",
-      properties: {"quiz_id": widget.quizId},
+      eventName: 'quiz_complete',
+      properties: {'quiz_id': widget.quizId},
     );
 
-    int completedQuizzes = await completedQuizzesRepository.getCompletedQuizzes();
+    var completedQuizzes = await completedQuizzesRepository.getCompletedQuizzes();
     completedQuizzes += 1;
     
     if(completedQuizzes >= 5){
@@ -199,8 +199,8 @@ class _FinalPageQuizState extends State<FinalPageQuiz> {
 
   Future<void> onPressed() async {
     await posthog.capture(
-      eventName: "quiz_other_tests",
-      properties: {"quiz_id": widget.quizId},
+      eventName: 'quiz_other_tests',
+      properties: {'quiz_id': widget.quizId},
     );
     if (!mounted) return;
     context.go('/');

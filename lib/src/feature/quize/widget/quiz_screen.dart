@@ -36,7 +36,7 @@ class _QuizScreenState extends State<QuizScreen> {
   Widget build(BuildContext context) => Scaffold(
         body: BlocBuilder<QuizBloc, QuizState>(
           builder: (context, state) {
-            final PreloadPageController _pageController =
+            final pageController =
                 PreloadPageController();
             //    logger.info(startPage + " Quiz result");
             //   context.read<QuizBloc>().add(ResetStateEvent());
@@ -45,13 +45,13 @@ class _QuizScreenState extends State<QuizScreen> {
             } else if (state is QuizFailure) {
               return Center(child: Text(state.error.toString()));
             } else if (state is QuizLoaded) {
-              final StartEntity startEntity = state.props[0] as StartEntity;
-              final List<FinalEntity> finalEntites =
+              final startEntity = state.props[0] as StartEntity;
+              final finalEntites =
                   state.props[1] as List<FinalEntity>;
-              final List<PageEntity> pageEntities =
+              final pageEntities =
                   state.props[2] as List<PageEntity>;
               return PreloadPageView(
-                controller: _pageController,
+                controller: pageController,
                 onPageChanged: (index) {
                   if (index - 1 == pageEntities.length) {
                     context.read<QuizBloc>().add(QuizCompletedEvent());
@@ -61,7 +61,7 @@ class _QuizScreenState extends State<QuizScreen> {
                   context: context,
                   startEntity: startEntity,
                   pageEntities: pageEntities,
-                  pageController: _pageController,
+                  pageController: pageController,
                   finalEntities: finalEntites,
                   answers: state.answers,
                 ),
@@ -99,7 +99,7 @@ class _QuizScreenState extends State<QuizScreen> {
     required List<FinalEntity> finalEntities,
     required Map<int, int> answers,
   }) {
-    final List<Widget> pages = [];
+    final pages = <Widget>[];
 
     pages.add(
       FirstPageQuiz(
@@ -111,7 +111,7 @@ class _QuizScreenState extends State<QuizScreen> {
       ),
     );
 
-    for (int i = 0; i < pageEntities.length; i++) {
+    for (var i = 0; i < pageEntities.length; i++) {
       pages.add(
         QuestionPage(
           questionId: pageEntities[i].id,

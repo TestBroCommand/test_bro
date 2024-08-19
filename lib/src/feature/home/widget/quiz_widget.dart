@@ -16,27 +16,26 @@ class QuizWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    String photoLink = '';
+    var photoLink = '';
     if (currentQuiz.image == 'og:img meta tag not found') {
       photoLink = 'default';
     } else if (currentQuiz.image.contains('https')) {
       photoLink = currentQuiz.image;
     } else if (!currentQuiz.image.contains('https') ||
         currentQuiz.image.contains('istock')) {
-      photoLink = "https://pb-dev.testbroapp.ru/api/files/quizes/" +
-          "${currentQuiz.id.toString()}/${currentQuiz.image}";
+      photoLink = 'https://pb-dev.testbroapp.ru/api/files/quizes/' '${currentQuiz.id}/${currentQuiz.image}';
     }
     return GestureDetector(
       onTap: () async {
         await posthog.capture(
-          eventName: "quiz_start_from_home",
-          properties: {"quiz_id": currentQuiz.id.toString()},
+          eventName: 'quiz_start_from_home',
+          properties: {'quiz_id': currentQuiz.id},
         );
 
         context.pushNamed(
-          "quiz",
+          'quiz',
           pathParameters: {
-            "id": currentQuiz.id,
+            'id': currentQuiz.id,
           },
         );
       },
@@ -93,7 +92,7 @@ class QuizWidget extends StatelessWidget {
   }
 
   Color getRandomColor() {
-    final Random random = Random();
+    final random = Random();
     return Color.fromARGB(
       255,
       random.nextInt(256),

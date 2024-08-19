@@ -19,14 +19,14 @@ class PBrepositoryImpl implements PBrepository {
   @override
   Future<List<FinalEntity>> getQuizAllFinalles(String id) async {
     final finalDTOs = await dataSource.getQuizFinalPage(id);
-    final finals = finalDTOs.map((dto) => FinalEntity.fromDto(dto)).toList();
+    final finals = finalDTOs.map(FinalEntity.fromDto).toList();
     return finals;
   }
 
   @override
   Future<List<PageEntity>> getQuizAllPages(String id) async {
     final pagesDTOs = await dataSource.getQuizPages(id);
-    final pages = pagesDTOs.map((dto) => PageEntity.fromDto(dto)).toList();
+    final pages = pagesDTOs.map(PageEntity.fromDto).toList();
     return pages;
   }
 
@@ -45,14 +45,14 @@ class PBrepositoryImpl implements PBrepository {
   @override
   Future<List<FinalEntity>> getUQuizAllFinalles(String id) async {
     final finalDTOs = await dataSource.getUQuizFinalPage(id);
-    final finals = finalDTOs.map((dto) => FinalEntity.fromDto(dto)).toList();
+    final finals = finalDTOs.map(FinalEntity.fromDto).toList();
     return finals;
   }
 
   @override
   Future<List<PageEntity>> getUQuizAllPages(String id) async {
     final pagesDTOs = await dataSource.getUQuizPages(id);
-    final pages = pagesDTOs.map((dto) => PageEntity.fromDto(dto)).toList();
+    final pages = pagesDTOs.map(PageEntity.fromDto).toList();
     return pages;
   }
 

@@ -62,7 +62,7 @@ class QuizBloc extends Bloc<QuizEvent, QuizState> {
     try {
       final id = event.id;
       StartEntity startPage;
-      List<PageEntity> pages = [];
+      var pages = <PageEntity>[];
       List<FinalEntity> resultPages;
 
       if (event.isUQuiz == 'true') {
@@ -133,7 +133,7 @@ class QuizBloc extends Bloc<QuizEvent, QuizState> {
     required List<FinalEntity> finalEntities,
     required Map<int, int> answers,
   }) {
-    final Map<int, int> valueCounts = {};
+    final valueCounts = <int, int>{};
 
     for (final value in answers.values) {
       if (valueCounts.containsKey(value)) {
@@ -142,8 +142,8 @@ class QuizBloc extends Bloc<QuizEvent, QuizState> {
         valueCounts[value] = 1;
       }
     }
-    int mostFrequentValue = valueCounts.keys.first;
-    int maxCount = valueCounts[mostFrequentValue]!;
+    var mostFrequentValue = valueCounts.keys.first;
+    var maxCount = valueCounts[mostFrequentValue]!;
 
     valueCounts.forEach((key, count) {
       if (count > maxCount) {
@@ -152,7 +152,7 @@ class QuizBloc extends Bloc<QuizEvent, QuizState> {
       }
     });
 
-    final FinalEntity finalPage = finalEntities.firstWhere(
+    final finalPage = finalEntities.firstWhere(
       (finalpage) {
         if (finalpage.mostFrequentDigit == mostFrequentValue - 1) {
           return true;

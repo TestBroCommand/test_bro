@@ -7,11 +7,11 @@ import 'package:test_bro/src/feature/quize/widget/quiz_screen.dart';
 final router = GoRouter(
   redirect: (BuildContext context, GoRouterState state) async {
     final initData = TelegramWebApp.instance.initDataUnsafe;
-    if (initData?.start_param != null) {
-      final path = "/quiz/${initData!.start_param}";
+    if (initData?.startParam != null) {
+      final path = '/quiz/${initData!.startParam}';
       return path;
     }
-    if (state.matchedLocation.contains("/quiz")) {
+    if (state.matchedLocation.contains('/quiz')) {
       return null;
     }
     return '/';
@@ -62,12 +62,12 @@ final router = GoRouter(
       branches: [
         StatefulShellBranch(
           routes: [
-           
+
           ],
         ),
         StatefulShellBranch(
           routes: [
-            
+
           ],
         ),
       ],

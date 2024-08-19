@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class AnimatedLinearProgressIndicator extends StatelessWidget {
   const AnimatedLinearProgressIndicator({
     required this.duration, required this.color, required this.value, required this.height, required this.radius, required this.padding, super.key,
-  }) : assert(value >= 0 && value <= 100, "Value must be between 0 and 100");
+  }) : assert(value >= 0 && value <= 100, 'Value must be between 0 and 100');
 
   final int duration;
   final Color color;

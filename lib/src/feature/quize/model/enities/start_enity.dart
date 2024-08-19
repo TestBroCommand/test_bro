@@ -36,7 +36,7 @@ class StartEntity extends Equatable {
       );
 
   factory StartEntity.fromDto(StartDTO dto) => StartEntity(
-        id: dto.id ?? "r",
+        id: dto.id ?? 'r',
         image: dto.image ?? '',
         name: dto.name ?? '',
         description: dto.description ?? '',

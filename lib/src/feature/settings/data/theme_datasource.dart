@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 
-import 'package:flutter/material.dart' show ThemeMode, Color;
+import 'package:flutter/material.dart' show Color, ThemeMode;
 import 'package:test_bro/src/core/utils/preferences_dao.dart';
 import 'package:test_bro/src/feature/app/model/app_theme.dart';
 

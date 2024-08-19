@@ -93,7 +93,7 @@ final class TypedEntry<T extends Object> extends PreferencesEntry<T> {
     if (value is T) return value;
 
     throw Exception(
-      'The value of $key is not of type ${T.runtimeType.toString()}',
+      'The value of $key is not of type ${T.runtimeType}',
     );
   }
 

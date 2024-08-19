@@ -14,7 +14,7 @@ class StartDTO {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
+    final data = <String, dynamic>{};
     data['id'] = id;
     data['name'] = name;
     data['image'] = image;

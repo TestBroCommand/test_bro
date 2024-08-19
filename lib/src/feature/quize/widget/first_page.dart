@@ -28,14 +28,14 @@ class FirstPageQuiz extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    String photoLink = '';
+    var photoLink = '';
     if (image == 'og:img meta tag not found') {
       photoLink = 'default';
     } else if (image.contains('https')) {
       photoLink = image;
     } else if (!image.contains('https') || image.contains('istock')) {
       photoLink =
-          "https://pb-dev.testbroapp.ru/api/files/start_pages/$id/$image";
+          'https://pb-dev.testbroapp.ru/api/files/start_pages/$id/$image';
     }
 
     return Scaffold(

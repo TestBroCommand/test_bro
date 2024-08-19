@@ -27,7 +27,7 @@ class FinalEntity extends Equatable {
       ];
 
   factory FinalEntity.fromDto(FinalDTO dto) => FinalEntity(
-        id: dto.id ?? "",
+        id: dto.id ?? '',
         image: dto.image ?? '',
         name: dto.name ?? '',
         description: dto.description ?? '',

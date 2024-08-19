@@ -11,7 +11,7 @@ class PBdataSource {
       config.pbEmail,
       config.pbPass,
     );
-    final ResultList<RecordModel> response =
+    final response =
         await pb.collection('quizes').getList();
     final quizesDTO = response.items
         .map((record) => QuizDTO.fromJson(record.toJson()))
@@ -26,7 +26,7 @@ class PBdataSource {
       config.pbEmail,
       config.pbPass,
     );
-    final ResultList<RecordModel> response =
+    final response =
         await pb.collection('quizes_uquiz').getList();
     final quizesDTO = response.items
         .map((record) => QuizDTO.fromJson(record.toJson()))
@@ -41,7 +41,7 @@ class PBdataSource {
       config.pbEmail,
       config.pbPass,
     );
-    final List<RecordModel> rec = [];
+    final rec = <RecordModel>[];
     for (final id in ids) {
       rec.add(await pb.collection('quizes_uquiz').getOne(id));
     }
@@ -57,7 +57,7 @@ class PBdataSource {
       config.pbEmail,
       config.pbPass,
     );
-    final ResultList<RecordModel> response =
+    final response =
         await pb.collection('tags_uquiz').getList();
     final tagDto = response.items
         .map((record) => TagDto.fromJson(record.toJson()))

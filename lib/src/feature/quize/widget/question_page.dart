@@ -47,7 +47,7 @@ class _QuestionPageState extends State<QuestionPage> {
   Widget build(BuildContext context) {
     final progressValue =
         ((widget.currentQuestion + 1) / widget.sumQuestions) * 100;
-    String photoLink = '';
+    var photoLink = '';
     if (widget.pathToImage == 'og:img meta tag not found' ||
         widget.pathToImage.isEmpty) {
       photoLink = 'default';
@@ -56,7 +56,7 @@ class _QuestionPageState extends State<QuestionPage> {
     } else if (!widget.pathToImage.contains('https') ||
         widget.pathToImage.contains('istock')) {
       photoLink =
-          "https://pb-dev.testbroapp.ru/api/files/quiz_page/${widget.questionId}/${widget.pathToImage}";
+          'https://pb-dev.testbroapp.ru/api/files/quiz_page/${widget.questionId}/${widget.pathToImage}';
     }
 
     return Scaffold(
